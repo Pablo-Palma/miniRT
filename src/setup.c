@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:31:16 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:15:25 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:38:39 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,8 @@ int	cleanup(t_graph *graph)
 			mlx_destroy_image(graph->mlx, graph->img);
 			graph->img = NULL;
 		}
-		if (graph->win)
-		{
-			mlx_destroy_window(graph->mlx, graph->win);
+		if (graph->win != NULL)
 			graph->win = NULL;
-		}
 	}
 	exit(EXIT_SUCCESS);
 	return (0);
