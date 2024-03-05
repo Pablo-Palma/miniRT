@@ -6,32 +6,11 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/04 15:17:23 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:34:01 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-void	put_pixel_to_image(t_graph *graph, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
-	{
-		dst = graph->addr + (y * graph->line_lenght + x * (graph->bpp / 8));
-		*(unsigned int *)dst = color;
-	}
-}
-
-t_vec3	normalize(t_vec3 v)
-{
-	double	len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z); // Calculamos la longitud(magnitud) del vector v con la formula eucladiana
-	t_vec3	normalized;	//dividimos cada componente del vector por su logitud, manteniendo la dirección del vector original pero ajustando
-	normalized.x = v.x / len;	//su magnitud a 1.
-	normalized.y = v.y / len;
-	normalized.z = v.z / len;
-	return (normalized);
-}
 
 int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, double *t)
 {	//Esta funcion determina si un rayo intersecta con un esfera.
@@ -81,8 +60,16 @@ void	render_scene(t_graph *graph, t_scene *scene)
 {
 	int	x;
 	int	y;
+	int	shadowed;
 	t_vec3	ray_dir;
+	t_vec3	hit_point;
+	t_vec3	normal;
+	t_vec3	light_dir;
+	t_vec3	view_dir;
 	double	t;	//Variable para almacenar la distancia al objeto interceptado.
+	double	diffuse;
+	double	specular;
+	int		color;
 
 	y = 0;
 	while (y < WIN_HEIGHT)
@@ -93,7 +80,27 @@ void	render_scene(t_graph *graph, t_scene *scene)
 			t = 1000000;
 			ray_dir = compute_ray_dir(x, y , scene->cam);	//Calcular dirección del rayo desde la camara hasta el pixel actual.
 			if (intersect_ray_sphere(scene->cam.view_point, ray_dir, scene->sphere, &t)) // Verificar si el rayo intersecta con la esfera
-				put_pixel_to_image(graph, x, y, 0xFFFFFF);	//Si hay intersección colocamos un pixel en blanco.
+			{
+				hit_point = vector_add(scene->cam.view_point, vector_scale(ray_dir, t));
+				normal = normalize(vector_sub(hit_point, scene->sphere.center));
+				light_dir = normalize(vector_sub(scene->light.pos, hit_point));
+				view_dir = vector_negate(ray_dir);
+				shadowed = shadow(scene, hit_point, scene->light);
+				if (!shadowed)
+				{
+					diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
+					specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0);
+				}
+				else
+				{
+					diffuse = 0.0;
+					specular = 0.0;
+				}
+				color = mix_colors(0xFFFFFF, diffuse, specular);
+				put_pixel_to_image(graph, x, y, color);	//Si hay intersección colocamos un pixel color.
+			}
+			else
+				put_pixel_to_image(graph, x, y, 0x000000);	//Si no hay intersección, fondo.
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/04 15:29:11 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:35:06 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include "libft.h"
 # include "struct.h"
 
-# define	WIN_WIDTH 400
-# define WIN_HEIGHT 400
+# define	WIN_WIDTH 800
+# define WIN_HEIGHT 800
 # define KEY_ESC 53
 
 typedef struct s_graph
@@ -63,5 +63,34 @@ void	setup_hooks(t_graph *graph);
 void	render_scene(t_graph *graph, t_scene *scene);
 void	init_scene(t_scene *scene);
 int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, double *t);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  VECTOR                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+t_vec3	normalize(t_vec3 v);
+t_vec3	vector_add(t_vec3 v1, t_vec3 v2);
+t_vec3	vector_sub(t_vec3 v1, t_vec3 v2);
+double	vector_dot_product(t_vec3 v1, t_vec3 v2);
+t_vec3	vector_negate(t_vec3 v);
+t_vec3	vector_scale(t_vec3 v, double s);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  BRIGHT                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+int	shadow(t_scene *scene, t_vec3 hit_point, t_light light);
+double	calculate_specular(t_vec3 view_dir, t_vec3 ligh_dir, t_vec3 normal, double intensity, double shine);
+double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightness);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  COLORS                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+void	put_pixel_to_image(t_graph *graph, int x, int y, int color);
+int	mix_colors(int	base_color, double diffuse, double specular);
 
 #endif
