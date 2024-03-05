@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:38:27 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:58:32 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightnes
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 void	put_pixel_to_image(t_graph *graph, int x, int y, int color);
-int	mix_colors(int	base_color, double diffuse, double specular);
+int	mix_colors(int	base_color, double diffuse, double specular, double ambient);
 
 #endif

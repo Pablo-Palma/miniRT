@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:53:16 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:28:25 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	render_scene(t_graph *graph, t_scene *scene)
 	double	diffuse;
 	double	specular;
 	int		color;
+	double	ambient = 0.1;
 
 	y = 0;
 	while (y < WIN_HEIGHT)
@@ -96,7 +97,7 @@ void	render_scene(t_graph *graph, t_scene *scene)
 					diffuse = 0.0;
 					specular = 0.0;
 				}
-				color = mix_colors(0xFF5733, diffuse, specular);
+				color = mix_colors(0x00FFFF, diffuse, specular, ambient);
 				put_pixel_to_image(graph, x, y, color);	//Si hay intersección colocamos un pixel color.
 			}
 			else
