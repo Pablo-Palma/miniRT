@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:21:44 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 12:25:43 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:45:12 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	mix_colors(int	base_color, double diffuse, double specular)
 	int	b = base_color & 0xFF;
 
 	r = fmin(255, r * diffuse + 255 * specular);
-	r = fmin(255, r * diffuse + 255 * specular);
-	r = fmin(255, r * diffuse + 255 * specular);
+	g = fmin(255, g * diffuse + 255 * specular);
+	b = fmin(255, b * diffuse + 255 * specular);
 
 	return (r << 16) | (g << 8) | b;
 }

@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 12:48:12 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:54:01 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	init_scene(t_scene *scene)
 	scene->sphere = (t_sphere){
 		.center = {0, 0, 0},
 		.radius = 3 
+		//.color = 0xFF5733
 	};
 	scene->light = (t_light){
 		.pos = {2, 2, 5},	//Posicion
-		.brigthness = 0.3	//brillo
+		.brigthness = 0.7	//brillo
 	};
 }
