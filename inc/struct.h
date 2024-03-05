@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 12:30:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/04 15:23:14 by pabpalma         ###   ########.fr       */
+/*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
+/*   Updated: 2024/03/03 18:46:51 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
+#ifndef	STRUCT_H
+# define STRUCT_H
 
-int	main(int argc, char **argv)
+typedef struct s_vec3
 {
-	t_graph graph;
-	t_scene	scene;
+	double	x;
+	double	y;
+	double	z;
+}				t_vec3;
 
-	(void)argv;
-	(void)argc;
-	if (setup_gui(&graph) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	init_scene(&scene);
-	render_scene(&graph, &scene);
-	mlx_put_image_to_window(graph.mlx, graph.win, graph.img, 0, 0);
-	setup_hooks(&graph);
-	mlx_loop(graph.mlx);
-	return (EXIT_SUCCESS);
-}
+typedef struct	s_sphere
+{
+	t_vec3	center;
+	double	radius;
+}				t_sphere;
+
+typedef struct	s_light
+{
+	t_vec3	pos;
+	double	brigthness;
+}				t_light;
+
+typedef struct	s_cam
+{
+	t_vec3	view_point;
+	t_vec3	orientation;
+	double	fov; //Field of view(campo de vision).
+}	t_cam;
+
+#endif
