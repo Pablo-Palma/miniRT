@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/06 14:10:53 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:03:13 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_scene(t_scene *scene)
 	{
 		.point = {0, -1, 0},
 		.normal = {0, 1, 0},
-		.color = GRIS
+		.color = GREY
 
 	};
 	scene->light = (t_light){
