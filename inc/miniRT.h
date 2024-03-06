@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/06 13:34:37 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:00:25 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_scene
 {
 	t_cam		cam;
 	t_sphere	sphere;
+	t_plane		plane;
 	t_light		light;
 }				t_scene;
 

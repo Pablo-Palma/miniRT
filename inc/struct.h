@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:51:14 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:00:06 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ typedef struct	s_sphere
 	double	radius;
 	int		color;
 }				t_sphere;
+
+typedef struct	s_plane
+{
+	t_vec3	point;
+	t_vec3	normal;
+	int		color;
+}				t_plane;
 
 typedef struct	s_light
 {

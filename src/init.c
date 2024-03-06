@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 17:21:10 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:10:53 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ void	init_scene(t_scene *scene)
 		.center = {0, 0, 0},
 		.radius = 3 
 		//.color = 0xFF5733
+	};
+	scene->plane = (t_plane)
+	{
+		.point = {0, -1, 0},
+		.normal = {0, 1, 0},
+		.color = GRIS
+
 	};
 	scene->light = (t_light){
 		.pos = {2, 2, 5},	//Posicion
