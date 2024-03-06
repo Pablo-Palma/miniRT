@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/06 14:00:25 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:29:26 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,13 @@ void	setup_hooks(t_graph *graph);
 ///////////////////////////////////////////////////////////////////////////////
 void	render_scene(t_graph *graph, t_scene *scene);
 void	init_scene(t_scene *scene);
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  SPHERE                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, double *t);
+int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
