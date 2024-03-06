@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 17:28:25 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:34:57 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void	render_scene(t_graph *graph, t_scene *scene)
 					diffuse = 0.0;
 					specular = 0.0;
 				}
-				color = mix_colors(0x00FFFF, diffuse, specular, ambient);
+				color = mix_colors(CIAN, diffuse, specular, ambient);
 				put_pixel_to_image(graph, x, y, color);	//Si hay intersección colocamos un pixel color.
 			}
 			else
-				put_pixel_to_image(graph, x, y, 0x000000);	//Si no hay intersección, fondo.
+				put_pixel_to_image(graph, x, y, NEGRO);	//Si no hay intersección, fondo.
 			x++;
 		}
 		y++;

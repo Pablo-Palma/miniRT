@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:58:32 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:34:37 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,23 @@
 
 # define	WIN_WIDTH 800
 # define WIN_HEIGHT 800
+//EVENTS
 # define KEY_ESC 53
+// COLORS
+# define BLANCO		0xFFFFFF
+# define NEGRO		0x000000
+# define ROJO		0xFF0000
+# define VERDE   	0x00FF00
+# define AZUL    	0x0000FF
+# define AMARILLO	0xFFFF00
+# define CIAN    	0x00FFFF
+# define MAGENTA 	0xFF00FF
+# define GRIS    	0x808080
+# define NARANJA 	0xFFA500
+# define MARRON  	0xA52A2A
+# define ROSA    	0xFFC0CB
+# define VIOLETA 	0x8A2BE2
+# define LIMA    	0x00FF00
 
 typedef struct s_graph
 {
