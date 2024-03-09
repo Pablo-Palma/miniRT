@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 16:38:46 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:55:14 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 t_vec3	cylinder_normal(t_vec3 hit_point, t_cyl cyl)
 {
 	t_vec3 center_to_hit = vector_sub(hit_point, cyl.center);
-    double projection_length = vector_dot_product(center_to_hit, cyl.dir);
-    t_vec3 projected_point = vector_add(cyl.center, vector_scale(cyl.dir, projection_length));
-    t_vec3 normal = vector_sub(hit_point, projected_point);
+    double proj_length = vector_dot_product(center_to_hit, cyl.dir);
+    t_vec3 proj_point = vector_add(cyl.center, vector_scale(cyl.dir, proj_length));
+    t_vec3 normal = vector_sub(hit_point, proj_point);
     return normalize(normal);
 }
 
@@ -27,15 +27,13 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 	double	cap_t[2] = {INFINITY, INFINITY};
 	int		hit = 0;
 	int		i = 0;
+	double	sign = 1.0;
 
 	while(i < 2)
 	{
-		double	sign;
-		if (i == 0)
-			sign = 1.0;
-		else
+		if (i == 1)
 			sign = -1.0;
-		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * cyl.h * 0.5));
+		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * cyl.h * 0.01));
 		double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / vector_dot_product(dir, cap_normal);
 		if (d >= 0 && d < *t_cap)
 		{
@@ -52,10 +50,10 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 
 	if (hit)
 	{
-		if (cap_t[0] < cap_t[1])
-			*t_cap = cap_t[0];
-		else
-			*t_cap = cap_t[1];
+		double	closest_t = cap_t[0];
+		if (cap_t[1] < cap_t[0])
+			closest_t = cap_t[1];
+		*t_cap = closest_t;
 	}
 	return(hit);
 
@@ -81,28 +79,37 @@ int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t)
     double t0 = (-b - sqrt_discriminant) / (2 * a);
     double t1 = (-b + sqrt_discriminant) / (2 * a);
 
-	if (t0 < EPSILON)
-	{
-		if (t1 < EPSILON)
-			return(0);
-		t0 = t1;
-	}
+	double t_body = INFINITY;
+    int body_hit = 0;
+    if (t0 >= EPSILON) {
+        double h0 = vector_dot_product(vector_add(diff, vector_scale(dir, t0)), cyl.dir);
+        if (h0 >= 0 && h0 <= cyl.h) {
+            t_body = t0;
+            body_hit = 1;
+        }
+    }
 
-    // Check if t0 and t1 are within the height of the cylinder
-    double h0 = vector_dot_product(vector_add(diff, vector_scale(dir, t0)), cyl.dir);
-    double h1 = vector_dot_product(vector_add(diff, vector_scale(dir, t1)), cyl.dir);
+    if (t1 >= EPSILON && t1 < t_body) {
+        double h1 = vector_dot_product(vector_add(diff, vector_scale(dir, t1)), cyl.dir);
+        if (h1 >= 0 && h1 <= cyl.h) {
+            t_body = t1;
+            body_hit = 1;
+        }
+    }
 
+    // Intersección con las tapas del cilindro
+    double t_cap = INFINITY;
+    int cap_hit = intersect_cyl_caps(origin, dir, cyl, &t_cap);
 
-    if (h0 >= 0 && h0 <= cyl.h)
-	{
-        *t = t0;
+    // Determina la intersección más cercana
+    if (cap_hit && (t_cap < t_body || !body_hit)) {
+        *t = t_cap;
+        return 1;
+    } else if (body_hit) {
+        *t = t_body;
         return 1;
     }
-	else if (h1 >= 0 && h1 <= cyl.h)
-	{
-        *t = t1;
-        return 1;
-    }
+
     return 0;
 }
 
