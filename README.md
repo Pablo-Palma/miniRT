@@ -5,7 +5,7 @@
 
 ### Investigación Preliminar
 - Aprender sobre el trazado de rayos y sus principios fundamentales.
-- Revisar la documentación de miniLibX y familiarizarse con sus capacidades.
+- Revisar la documentación de miniLibX.
 
 ### Diseño del Sistema
 - Esquematizar la arquitectura general del programa.
@@ -18,7 +18,7 @@
 
 ### Configuración del Proyecto
 - Crear la estructura básica del proyecto y el Makefile.
-- Establecer un repositorio de versiones (por ejemplo, Git).
+- Establecer un repositorio de Git.
 
 ## Fase 3: Desarrollo del Core
 
@@ -62,22 +62,11 @@
 ### Depuración
 - Identificar y corregir errores y problemas de rendimiento.
 
-## Fase 8: Documentación y Entrega
-
-### Documentación
-- Escribir documentación interna del código y guías de usuario.
-
-### Preparación para la Entrega
-- Revisar el cumplimiento de todos los requisitos del proyecto.
-- Preparar el paquete final para la entrega.
-
 ## Fase 9: Bonificaciones (Opcional)
 
 ### Reflexiones, Refracciones, y Efectos Avanzados
 - Investigar y, si el tiempo lo permite, implementar efectos avanzados como reflexiones, refracciones, o texturas avanzadas.
 ## Técnicas para Acelerar el Renderizado
-
-El trazado de rayos es computacionalmente intensivo, por lo que se han desarrollado diversas técnicas para acelerar el proceso sin comprometer significativamente la calidad de la imagen resultante.
 
 ### Culling
 
