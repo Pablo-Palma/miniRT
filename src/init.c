@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 18:50:30 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:03:23 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_scene(t_scene *scene)
 //	double angle = 90.0 * (M_PI / 180.0); // Convertir grados a radianes
 
     t_vec3 dir = {
-        .x = 0.5,  // Componente x del vector de dirección basado en el ángulo
+        .x = -0.5,  // Componente x del vector de dirección basado en el ángulo
         .y = 0,
         .z = -0.5 // Componente y negativa para que apunte hacia la cámara
     };
@@ -50,7 +50,7 @@ void	init_scene(t_scene *scene)
 	};
 
 	scene->light = (t_light){
-		.pos = {0, 10, 0},	//Posicion
+		.pos = {-5, 5, 0},	//Posicion
 		.brigthness = 0.9	//brillo
 	};
 }
