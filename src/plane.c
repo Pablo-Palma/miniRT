@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:03:29 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/06 15:03:29 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:47:59 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double
 
 int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph)
 {
-//	int	shadowed;
+	int	shadowed;
 	int	color;
 	t_vec3	hit_point;
 	t_vec3	normal;
@@ -44,17 +44,17 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 		normal = scene->plane.normal;//**Diferencia2
 		light_dir = normalize(vector_sub(scene->light.pos, hit_point));
 		view_dir = vector_negate(ray_dir);
-//		shadowed = shadow(scene, hit_point, scene->light);
-//		if (!shadowed)
-//		{
+		shadowed = shadow_plane(scene, hit_point);
+		if (!shadowed)
+		{
 			diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
 			specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0);
-//		}
-		/*else
+		}
+		else
 		{
 			diffuse = 0.0;
 			specular = 0.0;
-		}*/
+		}
 		color = mix_colors(WHITE, diffuse, specular, ambient);
 		put_pixel_to_image(graph, x, y, color);
 		return (1);

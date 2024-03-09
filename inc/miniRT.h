@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/06 15:02:26 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:47:10 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ t_vec3	vector_scale(t_vec3 v, double s);
 //                                  BRIGHT                                   //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int	shadow(t_scene *scene, t_vec3 hit_point, t_light light);
+int	shadow(t_scene *scene, t_vec3 hit_point, t_light light, t_vec3 normal);
+int shadow_plane(t_scene *scene, t_vec3 hit_point);
 double	calculate_specular(t_vec3 view_dir, t_vec3 ligh_dir, t_vec3 normal, double intensity, double shine);
 double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightness);
 
