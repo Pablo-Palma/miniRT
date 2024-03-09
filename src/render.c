@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 11:59:03 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:49:38 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	render_scene(t_graph *graph, t_scene *scene)
 			if (!handle_sphere_intersec(ray_dir, scene, x, y, graph)) // Verificar si el rayo intersecta con la esfera
 			{
 				if (!handle_plane_intersec(ray_dir, scene, x, y, graph))
-					put_pixel_to_image(graph, x, y, BLACK);	//Si no hay intersección, fondo.
+				{
+					if (!handle_cyl_intersec(ray_dir, scene, x, y, graph))
+						put_pixel_to_image(graph, x, y, BLACK);	//Si no hay intersección, fondo.
+				}
 			}
 			x++;
 		}

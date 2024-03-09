@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 11:47:10 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:10:09 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_scene
 	t_cam		cam;
 	t_sphere	sphere;
 	t_plane		plane;
+	t_cyl		cyl;
 	t_light		light;
 }				t_scene;
 
@@ -89,6 +90,13 @@ int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
+//                                  CYL                                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
 //                                  PLANE                                    //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,6 +113,7 @@ t_vec3	vector_sub(t_vec3 v1, t_vec3 v2);
 double	vector_dot_product(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_negate(t_vec3 v);
 t_vec3	vector_scale(t_vec3 v, double s);
+t_vec3	vector_cross(t_vec3 v1, t_vec3	v2);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
