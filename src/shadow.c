@@ -6,15 +6,12 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:26:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 11:47:53 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:35:30 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-double vector_length(t_vec3 v) {
-    return sqrt(vector_dot_product(v, v));
-}
 
 int shadow_plane(t_scene *scene, t_vec3 hit_point)
 {

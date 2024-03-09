@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 13:27:54 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:45:05 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ void	init_scene(t_scene *scene)
 		.fov = 90 // Campo de vision de 90 grados.
 	};
 
-	double angle = 20.0 * (M_PI / 180.0); // Convertir grados a radianes
+//	double angle = 90.0 * (M_PI / 180.0); // Convertir grados a radianes
 
     t_vec3 dir = {
-        .x = sin(angle),  // Componente x del vector de dirección basado en el ángulo
-        .y = 0,        // Componente z para mantenerlo en el plano xy
-        .z = -cos(angle) // Componente y negativa para que apunte hacia la cámara
+        .x = 0.5,  // Componente x del vector de dirección basado en el ángulo
+        .y = 0,
+        .z = -0.5 // Componente y negativa para que apunte hacia la cámara
     };
 
 	scene->cyl = (t_cyl)
 	{
 		.center = {0, 0, 0},
-		.dir = dir,
+		.dir = normalize(dir),
 		.radius = 2,
-		.h = 8,
+		.h = 4,
 		.color = CIAN
 	};
 /*	scene->sphere = (t_sphere){
@@ -50,7 +50,7 @@ void	init_scene(t_scene *scene)
 	};*/
 
 	scene->light = (t_light){
-		.pos = {5, 10, 5},	//Posicion
+		.pos = {0, 10, 0},	//Posicion
 		.brigthness = 0.7	//brillo
 	};
 }

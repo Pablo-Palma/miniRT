@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 13:10:09 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:36:10 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define PINK    	0xFFC0CB
 # define VIOLET 	0x8A2BE2
 # define LIME    	0x00FF00
+
+# define EPSILON 1e-6
+
 
 typedef struct s_graph
 {
@@ -108,6 +111,7 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 t_vec3	normalize(t_vec3 v);
+double vector_length(t_vec3 v);
 t_vec3	vector_add(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_sub(t_vec3 v1, t_vec3 v2);
 double	vector_dot_product(t_vec3 v1, t_vec3 v2);

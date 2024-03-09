@@ -6,11 +6,17 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:42:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 13:09:32 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:35:49 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+
+double vector_length(t_vec3 v)
+{
+    return sqrt(vector_dot_product(v, v));
+}
 
 t_vec3	vector_scale(t_vec3 v, double s)
 {
