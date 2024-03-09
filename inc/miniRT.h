@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/06 13:34:37 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:36:10 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,22 @@
 //EVENTS
 # define KEY_ESC 53
 // COLORS
-# define BLANCO		0xFFFFFF
-# define NEGRO		0x000000
-# define ROJO		0xFF0000
-# define VERDE   	0x00FF00
-# define AZUL    	0x0000FF
-# define AMARILLO	0xFFFF00
+# define WHITE		0xFFFFFF
+# define BLACK		0x000000
+# define GREEN   	0x00FF00
+# define BLUE    	0x0000FF
+# define YELLOW	0xFFFF00
 # define CIAN    	0x00FFFF
 # define MAGENTA 	0xFF00FF
-# define GRIS    	0x808080
-# define NARANJA 	0xFFA500
-# define MARRON  	0xA52A2A
-# define ROSA    	0xFFC0CB
-# define VIOLETA 	0x8A2BE2
-# define LIMA    	0x00FF00
+# define GREY    	0x808080
+# define ORANGE 	0xFFA500
+# define BROWN  	0xA52A2A
+# define PINK    	0xFFC0CB
+# define VIOLET 	0x8A2BE2
+# define LIME    	0x00FF00
+
+# define EPSILON 1e-6
+
 
 typedef struct s_graph
 {
@@ -57,6 +59,8 @@ typedef struct s_scene
 {
 	t_cam		cam;
 	t_sphere	sphere;
+	t_plane		plane;
+	t_cyl		cyl;
 	t_light		light;
 }				t_scene;
 
@@ -78,7 +82,28 @@ void	setup_hooks(t_graph *graph);
 ///////////////////////////////////////////////////////////////////////////////
 void	render_scene(t_graph *graph, t_scene *scene);
 void	init_scene(t_scene *scene);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  SPHERE                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, double *t);
+int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  CYL                                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  PLANE                                    //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -86,18 +111,21 @@ int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, doubl
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 t_vec3	normalize(t_vec3 v);
+double vector_length(t_vec3 v);
 t_vec3	vector_add(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_sub(t_vec3 v1, t_vec3 v2);
 double	vector_dot_product(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_negate(t_vec3 v);
 t_vec3	vector_scale(t_vec3 v, double s);
+t_vec3	vector_cross(t_vec3 v1, t_vec3	v2);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //                                  BRIGHT                                   //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int	shadow(t_scene *scene, t_vec3 hit_point, t_light light);
+int	shadow(t_scene *scene, t_vec3 hit_point, t_light light, t_vec3 normal);
+int shadow_plane(t_scene *scene, t_vec3 hit_point);
 double	calculate_specular(t_vec3 view_dir, t_vec3 ligh_dir, t_vec3 normal, double intensity, double shine);
 double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightness);
 
