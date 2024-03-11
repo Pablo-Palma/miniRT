@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/11 14:17:33 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:25:51 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	init_scene(t_scene *scene)
 	scene->cyl = (t_cyl)
 	{
 		.dir = normalize(dir),
+		.center = {0, 0, 0},
 		.radius = 2,
 		.h = 4,
 		.color = CIAN

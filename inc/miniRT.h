@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/11 11:22:53 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:05:46 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <math.h>
 # include "libft.h"
 # include "struct.h"
+# include "object.h"
 
 # define	WIN_WIDTH 800
 # define WIN_HEIGHT 800
@@ -97,6 +98,7 @@ int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
