@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 19:11:53 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:52:12 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,34 +63,36 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t)
 {
 	t_vec3 diff = vector_sub(origin, cyl.center);
-	t_vec3 dir_cross_cyl_dir = vector_cross(dir, cyl.dir);
-	t_vec3 diff_cross_cyl_dir = vector_cross(diff, cyl.dir);
+	t_vec3 dir_cross_cyl_dir = vector_cross(dir, cyl.dir); //Cruz entre el rayo y el cilindro
+	t_vec3 diff_cross_cyl_dir = vector_cross(diff, cyl.dir); // Cruz entre diff y el cilindro
 	
-	double a = vector_dot_product(dir_cross_cyl_dir, dir_cross_cyl_dir);
-	double b = 2 * vector_dot_product(dir_cross_cyl_dir, diff_cross_cyl_dir);
-	double c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir) - (cyl.radius * cyl.radius);
+	double a = vector_dot_product(dir_cross_cyl_dir, dir_cross_cyl_dir); // Cuadrado del cruz de direcciones (rayo x cilindro)
+	double b = 2 * vector_dot_product(dir_cross_cyl_dir, diff_cross_cyl_dir); // 2 producto punto  ((cruz de rayo-cilindor) * (cruz de diff-cilindro))
+	double c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir) - (cyl.radius * cyl.radius); //cuadrado de (cruz de diff-cilindro) - (radio^2)
 	
 	double discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 	    return 0; // No intersection
 	
 	double sqrt_discriminant = sqrt(discriminant);
-	double t0 = (-b - sqrt_discriminant) / (2 * a);
-	double t1 = (-b + sqrt_discriminant) / (2 * a);
+	double t0 = (-b - sqrt_discriminant) / (2 * a);		//Distancia desde el rayo al primer punto de interseccion
+	double t1 = (-b + sqrt_discriminant) / (2 * a);		//Distancia desde el rayo al segundo punto de interseccion
 	
 	double t_body = INFINITY;
 	int body_hit = 0;
-	if (t0 >= EPSILON)
+	//////******	t0	******///////
+	if (t0 >= EPSILON) //Evitar errores.
 	{
-	    double h0 = vector_dot_product(vector_add(diff, vector_scale(dir, t0)), cyl.dir);
-	    if (h0 >= 0 && h0 <= cyl.h)
+	    double h0 = vector_dot_product(vector_add(diff, vector_scale(dir, t0)), cyl.dir); // medida desde la base sobre el eje hasta el hitpoint
+	    if (h0 >= 0 && h0 <= cyl.h) //Si está entre 0 y la altura máxima
 		{
-	        t_body = t0;
-	        body_hit = 1;
+	        t_body = t0;	//SI Pertenece, almacenamos ese punto en t_body
+	        body_hit = 1;	//Pertenece
 	    }
 	}
 	
-	if (t1 >= EPSILON && t1 < t_body)
+	//////******	t1	******///////		t1 es un punto más lejano que t0
+	if (t1 >= EPSILON && t1 < t_body)	// si t1 es mayor que t_body, ya tenemos un punto más cercano, por tanto el lejano ya no nos interesa
 	{
 	    double h1 = vector_dot_product(vector_add(diff, vector_scale(dir, t1)), cyl.dir);
 	    if (h1 >= 0 && h1 <= cyl.h)

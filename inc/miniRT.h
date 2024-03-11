@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 16:36:10 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/11 11:22:53 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define VIOLET 	0x8A2BE2
 # define LIME    	0x00FF00
 
-# define EPSILON 1e-6
+# define EPSILON 1e-6 //As a convetion for RT, eviting calculation error from floats.
 
 
 typedef struct s_graph
