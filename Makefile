@@ -1,14 +1,20 @@
 NAME = miniRT
 CC = gcc
-CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc
 MLX_DIR = mlx
+CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc -I$(MLX_DIR)
 SRCS_DIR = src
 OBJS_DIR = obj
 LIBFT_DIR = inc/libft
 LIBFT = $(LIBFT_DIR)/libft.a
-SRCS_FILES = main.c setup.c events.c render.c init.c geometry.c colors.c lighting.c vector.c sphere.c plane.c shadow.c cylinder.c
+##SRCS_FILES = main.c setup.c events.c render.c init.c geometry.c colors.c lighting.c vector.c sphere.c plane.c shadow.c cylinder.c
+SRCS_FILES =	main/main.c									\
+				init/init.c								\
+				window/setup.c window/events.c			\
+				render/render.c render/colors.c			\
+				geometry/vector.c geometry/sphere.c	geometry/plane.c geometry/cylinder.c	\
+				light/lighting.c light/shadow.c
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
-OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
+OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 MLX_LIB = $(MLX_DIR)/libmlx.dylib
 
@@ -17,8 +23,8 @@ MLX_LIB = $(MLX_DIR)/libmlx.dylib
 all: $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+	@mkdir -p $(@D)
 	@cp mlx/libmlx.dylib . ## Copiar la librería mlx en el directorio actual para la compilación.
-	@mkdir -p $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -I$(MLX_DIR) -c $< -o $@
 
 $(LIBFT):
