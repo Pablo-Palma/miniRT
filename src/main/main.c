@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 19:05:11 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:53:14 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@ int	main(int argc, char **argv)
 	t_graph	graph;
 	t_scene	scene;
 
-	(void)argv;
 	(void)argc;
 	if (setup_gui(&graph) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	if (!parse_file(argv[1], &scene))
+	{
+		ft_putstr_fd("Failed to parse the scene file.\n", 2);
+		return (EXIT_FAILURE);
+	}
 	init_scene(&scene);
 	render_scene(&graph, &scene);
 	mlx_put_image_to_window(graph.mlx, graph.win, graph.img, 0, 0);

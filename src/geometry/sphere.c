@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:55:48 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 19:13:30 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:50:35 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph
 	double	diffuse;
 	double	specular;
 	double	t = 10000000;
-	double	ambient = 0.1;
+	//double	ambient = 0.1;
 	if (intersect_ray_sphere(scene->cam.view_point, ray_dir, scene->sphere, &t)) // Verificar si el rayo intersecta con la esfera
 	{
 		hit_point = vector_add(scene->cam.view_point, vector_scale(ray_dir, t));
@@ -66,7 +66,7 @@ int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph
 			diffuse = 0.0;
 			specular = 0.0;
 		}
-		color = mix_colors(CIAN, diffuse, specular, ambient);
+		color = mix_colors(CIAN, diffuse, specular, *scene);
 		put_pixel_to_image(graph, x, y, color);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 18:48:37 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:48:07 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ t_vec3	compute_ray_dir(int x, int y, t_cam cam)
 
 void	render_scene(t_graph *graph, t_scene *scene)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	t_vec3	ray_dir;
+	int		ambient_color;
 	//double	t;	//Variable para almacenar la distancia al objeto interceptado.
 	//double	ambient = 0.1;
 
+	printf("%f\n", scene->ambient_light.intensity);
+	printf("%d\n", scene->ambient_light.color);
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
@@ -48,7 +51,10 @@ void	render_scene(t_graph *graph, t_scene *scene)
 				if (!handle_cyl_intersec(ray_dir, scene, x, y, graph))
 				{
 					if (!handle_plane_intersec(ray_dir, scene, x, y, graph))
-						put_pixel_to_image(graph, x, y, BLACK);	//Si no hay intersección, fondo.
+					{
+						ambient_color = mix_colors(scene->ambient_light.color, scene->ambient_light.intensity, 0.0, *scene);
+						put_pixel_to_image(graph, x, y, ambient_color);	//Si no hay intersección, fondo.
+					}
 				}
 			}
 			x++;

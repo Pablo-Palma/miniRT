@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:03:29 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/09 11:47:59 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:51:06 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 	double	diffuse;
 	double	specular;
 	double	t = 10000000;
-	double	ambient = 0.1;
+	//double	ambient = 0.1;
 	if (intersect_ray_plane(scene->cam.view_point, ray_dir, scene->plane, &t)) //**Dieferencia1
 	{
 		hit_point = vector_add(scene->cam.view_point, vector_scale(ray_dir, t));
@@ -55,7 +55,7 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 			diffuse = 0.0;
 			specular = 0.0;
 		}
-		color = mix_colors(WHITE, diffuse, specular, ambient);
+		color = mix_colors(WHITE, diffuse, specular, *scene);
 		put_pixel_to_image(graph, x, y, color);
 		return (1);
 	}

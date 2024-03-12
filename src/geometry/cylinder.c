@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/11 13:52:12 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:51:31 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 		t_vec3 view_dir = normalize(vector_sub(scene->cam.view_point, hit_point));
     	double specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
 
-    	int color = mix_colors(cyl.color, diffuse, specular, 0.1); // Ambient light contribution set to 0.1 arbitrarily
+    	int color = mix_colors(cyl.color, diffuse, specular, *scene); // Ambient light contribution set to 0.1 arbitrarily
 
     	put_pixel_to_image(graph, x, y, color);
     	return 1; // Intersección encontrada

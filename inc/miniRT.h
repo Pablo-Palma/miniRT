@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 15:11:17 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:45:37 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ typedef struct s_graph
 
 typedef struct s_scene
 {
-	t_cam		cam;
-	t_sphere	sphere;
-	t_plane		plane;
-	t_cyl		cyl;
-	t_light		light;
+	t_cam			cam;
+	t_sphere		sphere;
+	t_plane			plane;
+	t_cyl			cyl;
+	t_light			light;
+	t_ambient_light	ambient_light;
 }				t_scene;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -138,6 +139,26 @@ double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightnes
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 void	put_pixel_to_image(t_graph *graph, int x, int y, int color);
-int	mix_colors(int	base_color, double diffuse, double specular, double ambient);
+int		mix_colors(int	base_color, double diffuse, double specular, t_scene scene);
+int		convert_rgb_to_int(char *rgb_str);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  UTILS                                    //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+int	cleanup_and_exit(char **parts, char *error_msg, int r_value);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  PARSE                                    //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+int	parse_file(char *file, t_scene	*scene);
+int	convert_to_int(char *str, int min, int max);
+int	parse_ambient(char *line, t_scene *scene);
+char **split_and_validate(char *line, int expected, char delim);
+int	convert_to_int(char *str, int min, int max);
+double	convert_to_double(char *str, double min, double max);
 
 #endif

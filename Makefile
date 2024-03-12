@@ -7,12 +7,14 @@ OBJS_DIR = obj
 LIBFT_DIR = inc/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 ##SRCS_FILES = main.c setup.c events.c render.c init.c geometry.c colors.c lighting.c vector.c sphere.c plane.c shadow.c cylinder.c
-SRCS_FILES =	main/main.c									\
+SRCS_FILES =	main/main.c								\
 				init/init.c								\
 				window/setup.c window/events.c			\
 				render/render.c render/colors.c			\
 				geometry/vector.c geometry/sphere.c	geometry/plane.c geometry/cylinder.c	\
-				light/lighting.c light/shadow.c
+				light/lighting.c light/shadow.c			\
+				utils/clean.c							\
+				parser/parser.c parser/parser_utils.c parser/parser_elem.c
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
