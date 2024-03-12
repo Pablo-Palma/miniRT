@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/11 18:05:46 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:11:17 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # include <stdio.h>
 # include <math.h>
 # include "libft.h"
-# include "struct.h"
+# include "scene.h"
 # include "object.h"
+# include "light.h"
 
 # define	WIN_WIDTH 800
 # define WIN_HEIGHT 800
