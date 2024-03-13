@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:55:48 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 17:50:35 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:37:04 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, doubl
 	double t1 = (-b + sqrt(discriminant)) / (2.0 * a);
 	
 	// Usamos el valor de t más pequeño positivo como la distnacia al punto de intersección
+	//si el discriminante es mayor que 0 hay inerseccion,y elegimosel menor. 
 	if (t0 > 0 && (t0 < *t || *t < 0))
 	    *t = t0;
 	else if (t1 > 0 && (t1 < *t || *t < 0))

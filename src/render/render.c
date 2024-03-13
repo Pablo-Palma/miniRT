@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 17:48:07 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:26:01 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ t_vec3	compute_ray_dir(int x, int y, t_cam cam)
 	double	aspect_ratio = (double)WIN_WIDTH / (double)WIN_HEIGHT; //relacción aspecto, (ancho venta / alto ventana), MANTENER ESCALA.
 	double	scale = tan(fov_rad / 2.0);	//tamaño de imagen a escala
 	//CALCULAR LAS CORDENADAS EN EL ESPACIO DE LA IMAGEN-----
-	double	image_x = (2 * (x + 0.5) / (double)WIN_WIDTH - 1) * aspect_ratio * scale; //
-	double	image_y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;
+	double	image_x = (2 * (x + 0.5) / (double)WIN_WIDTH - 1) * aspect_ratio * scale; //multiplicarlo mantiene la proporcion.
+	double	image_y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;	//	La altura del plano se deremina por la escala(vinculada al fov)
 	//-----------
+	//**	Construcción dirección del rayo, z en -1 por la dirección.
 	t_vec3	ray_dir = {image_x, image_y, -1};
 	ray_dir = normalize(ray_dir);
 	return (ray_dir);
