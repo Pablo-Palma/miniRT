@@ -15,13 +15,12 @@ SRCS_FILES =	main/main.c								\
 				geometry/vector.c geometry/sphere.c	geometry/plane.c geometry/cylinder.c	\
 				light/lighting.c light/shadow.c			\
 				utils/clean.c							\
-				parser/parser.c parser/parser_utils.c parser/parser_elem.c
-SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
+				parser/parser.c parser/parser_utils.c parser/parser_elem.c \
+				object.c object_constructors.c object_print.c
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-SRCS_FILES = main.c setup.c events.c render.c init.c geometry.c colors.c lighting.c vector.c sphere.c plane.c shadow.c cylinder.c object.c object_constructors.c object_print.c
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
-OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
+# OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
 
 MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx.dylib

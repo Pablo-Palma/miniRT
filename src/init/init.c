@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/13 17:48:32 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/13 19:09:57 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static void	old_scene_two(t_scene *scene)
 
     t_vec3 dir =
 	{
-        .x = -1,  // Componente x del vector de dirección basado en el ángulo
+        .x = 1,  // Componente x del vector de dirección basado en el ángulo
         .y = 0,
-        .z = -2 // Componente y negativa para que apunte hacia la cámara
+        .z = -0.6 // Componente y negativa para que apunte hacia la cámara
     };
 
 	scene->cyl = (t_cyl)
@@ -62,18 +62,12 @@ static void	old_scene_two(t_scene *scene)
 		{
 			.x = 0,
 			.y = 0,
-			.z = 7 
+			.z = 0 
 		},
 		.dir = normalize(dir),
-		.center = {0, 0, 0},
 		.radius = 2,
 		.h = 4,
 		.color = CIAN
-	};
-	scene->sphere = (t_sphere){
-		.center = {0, -1, 0},
-		.radius = 2 
-		//.color = 0xFF5733
 	};
 	scene->plane = (t_plane)
 	{
@@ -84,14 +78,14 @@ static void	old_scene_two(t_scene *scene)
 	};
 
 	scene->light = (t_light){
-		.pos = {-5, 5, 0},	//Posicion
+		.pos = {0, 5, 0},	//Posicion
 		.brigthness = 0.9	//brillo
 	};
 }
 
 void	init_scene(t_scene *scene, t_list *obj)
 {
-	old_scene_one(scene);
+	old_scene_two(scene);
 	return ;
 	old_scene_one(scene);
 	old_scene_two(scene);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 15:14:12 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:35:51 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct	s_cam
 	char	identifier[2];	//	'C'
 	t_vec3	view_point;
 	t_vec3	orientation;
-	double	fov; //Field of view(campo de vision).
+	int		fov; //Field of view(campo de vision).
 }	t_cam;
 
 #endif

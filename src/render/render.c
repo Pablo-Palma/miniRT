@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/13 17:48:59 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/13 18:34:12 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	render_scene(t_graph *graph, t_scene *scene)
 		while (x < WIN_WIDTH)
 		{
 			ray_dir = compute_ray_dir(x, y , scene->cam);	//Calcular dirección del rayo desde la camara hasta el pixel actual.
-			if (!handle_sphere_intersec(ray_dir, scene, z, graph)) // Verificar si el rayo intersecta con la esfera
+			if (!handle_sphere_intersec(ray_dir, scene, x, y, graph)) // Verificar si el rayo intersecta con la esfera
 			{
 				if (!handle_cyl_intersec(ray_dir, scene, x, y, graph))
 				{
