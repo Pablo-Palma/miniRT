@@ -29,7 +29,7 @@ SRC = $(LIBFT_SRC) $(PRINTF_SRC) $(GNL_SRC)
 BONUS_OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(BONUS_SRC))
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
-FLAGS =	-Wall -Werror -Wextra -I$(INC_DIR)
+FLAGS =	-Wall -Werror -Wextra -g3 -I$(INC_DIR)
 
 .PHONY: all	clean	fclean	re	bonus
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 17:45:37 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:45:39 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	setup_hooks(t_graph *graph);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 void	render_scene(t_graph *graph, t_scene *scene);
-void	init_scene(t_scene *scene);
+void	init_scene(t_scene *scene, t_list *obj);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -160,5 +160,28 @@ int	parse_ambient(char *line, t_scene *scene);
 char **split_and_validate(char *line, int expected, char delim);
 int	convert_to_int(char *str, int min, int max);
 double	convert_to_double(char *str, double min, double max);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  OBJECT		                             //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+
+t_list	*get_objects(int fd);
+t_list	*objchr(t_list *obj, char *str);
+void	print_obj(void *self);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  CONSTRUCTORS                             //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+
+void	a_light(void *parent);
+void	camera(void *parent);
+void	light(void *parent);
+void	sphere(void *parent);
+void	plane(void *parent);
+void	cylinder(void *parent);
 
 #endif

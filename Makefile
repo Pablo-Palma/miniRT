@@ -2,6 +2,7 @@ NAME = miniRT
 CC = gcc
 MLX_DIR = mlx
 CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc -I$(MLX_DIR)
+CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc
 SRCS_DIR = src
 OBJS_DIR = obj
 LIBFT_DIR = inc/libft
@@ -18,7 +19,15 @@ SRCS_FILES =	main/main.c								\
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+SRCS_FILES = main.c setup.c events.c render.c init.c geometry.c colors.c lighting.c vector.c sphere.c plane.c shadow.c cylinder.c object.c object_constructors.c object_print.c
+SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
+OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
+
+MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx.dylib
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+
+MLX_FLAGS_MAC = -L./inc/libft -lft -lmlx -framework OpenGL -framework AppKit
 
 ##RULES
 
@@ -37,8 +46,12 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) -o $(NAME) $(OBJS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
 	@echo "miniRT compiled successfully!"
 
+mac: $(LIBFT) $(OBJS)
+	@$(CC) -o $(NAME) $(SRCS) $(CFLAGS) $(MLX_FLAGS_MAC)
+	@echo "miniRT compiled successfully on macOS!"
+
 clean :
-	@rm -f libmlx.dylib ## Borrar dicha librería.
+	@rm -f libmlx.dylib ## Borrar dicha librería.
 	@rm -f $(OBJS)
 	@make clean -C $(LIBFT_DIR)
 	@echo "Object files removed!"
@@ -51,4 +64,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re mac
