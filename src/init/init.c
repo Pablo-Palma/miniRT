@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/13 19:09:57 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/14 10:12:14 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ static void	old_scene_one(t_scene *scene)
 		.pos = {-5, 5, 0},	//Posicion
 		.brigthness = 0.9	//brillo
 	};
+
+	scene->ambient_light = (t_ambient_light)
+	{
+		.id = "A",
+        .intensity = 0.1,  // Intensidad de luz ambiental
+        .color = 0xFFFFFF  // Color de luz ambiental, blanco en este caso
+    };
 }
 
 static void	old_scene_two(t_scene *scene)
@@ -78,8 +85,15 @@ static void	old_scene_two(t_scene *scene)
 	};
 
 	scene->light = (t_light){
-		.pos = {0, 5, 0},	//Posicion
+		.pos = {2, 5, 0},	//Posicion
 		.brigthness = 0.9	//brillo
+	};
+
+	scene->ambient_light = (t_ambient_light)
+	{
+		.id = "A",
+        .intensity = 0.1,  // Intensidad de luz ambiental
+        .color = 0xFFFFFF  // Color de luz ambiental, blanco en este caso
 	};
 }
 

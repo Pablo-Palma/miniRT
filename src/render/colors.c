@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:21:44 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 17:49:38 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:10:21 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,21 @@ void	put_pixel_to_image(t_graph *graph, int x, int y, int color)
 	}
 }
 
-int	mix_colors(int	base_color, double diffuse, double specular, t_scene scene)
+int mix_colors(int  base_color, double diffuse, double specular, t_scene scene)
 {
-	int	ambient = scene.ambient_light.intensity;
-	//int	ambient_color  = scene.ambient_light.color;
-	int	r = (base_color >> 16) & 0xFF;
-	int	g = (base_color >> 8) & 0xFF;
-	int	b = base_color & 0xFF;
 
-	double	ambient_r = ambient * ((scene.ambient_light.color >> 16) & 0xFF);
-	double	ambient_g = ambient * ((scene.ambient_light.color >> 8) & 0xFF);
-	double	ambient_b = ambient * (scene.ambient_light.color  & 0xFF);
+	float	ambient = scene.ambient_light.intensity;
+    int r = (base_color >> 16) & 0xFF;
+    int g = (base_color >> 8) & 0xFF;
+    int b = base_color & 0xFF;
 
-	r = fmin(255, r * diffuse + 255 * specular + ambient_r);
-	g = fmin(255, g * diffuse + 255 * specular + ambient_g);
-	b = fmin(255, b * diffuse + 255 * specular + ambient_b);
+//  r = fmin(255, (r * diffuse + 255 * specular) * (1 - ambient) + 255 * ambient);
+//  g = fmin(255, (g * diffuse + 255 * specular) * (1 - ambient) + 255 * ambient);
+//  b = fmin(255, (b * diffuse + 255 * specular) * (1 - ambient) + 255 * ambient);
 
-	return (r << 16) | (g << 8) | b;
+    r = fmin(255, r * (diffuse + ambient) + 255 * specular);
+    g = fmin(255, g * (diffuse + ambient) + 255 * specular);
+    b = fmin(255, b * (diffuse + ambient) + 255 * specular);
+
+    return (r << 16) | (g << 8) | b;
 }
