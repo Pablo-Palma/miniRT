@@ -1,68 +1,26 @@
+# Plan de Desarrollo del Proyecto miniRT
 
-# Desarrollo de Proyecto miniRT
+## FASE 1: Parseo
+- **Iniciación de Estructuras**: Crear y definir las estructuras de datos necesarias para la escena, incluyendo cámaras, luces y objetos geométricos.
+- **Integración**: Desarrollar un sistema que integre las diferentes partes del proyecto, permitiendo que trabajen juntas de manera eficiente.
+- **Manejo de Errores**: Implementar un sistema robusto de manejo de errores para el proceso de parseo, asegurando estabilidad y facilidad de depuración.
 
-## Fase 1: Planificación y Diseño
+## FASE 2: Cámara y Objetos
+- **Movimientos Dinámicos de Cámara**: Permitir a los usuarios manipular la cámara en tiempo real para explorar la escena desde diferentes ángulos.
+- **Interacción con Objetos**: Desarrollar la lógica para mover y alterar objetos en la escena, proporcionando una experiencia interactiva.
 
-### Investigación Preliminar
-- Aprender sobre el trazado de rayos y sus principios fundamentales.
-- Revisar la documentación de miniLibX.
+## FASE 3: Pantalla
+- **Responsive Size Change**: Garantizar que la aplicación se ajuste dinámicamente a los cambios de tamaño de la ventana, manteniendo la calidad y proporciones de la imagen.
 
-### Diseño del Sistema
-- Esquematizar la arquitectura general del programa.
-- Definir las estructuras de datos para representar escenas, cámaras, luces, y objetos geométricos (esfera, plano, cilindro).
+## FASE 4: Bonus List
+1. **Specular Reflection**: Implementar la reflexión especular para añadir realismo a las superficies y mejorar la calidad visual de la escena.
+2. **Color Disruption (Checker Board)**: Crear un efecto de tablero de ajedrez para texturas, añadiendo complejidad visual y detalle a los objetos.
+3. **Colored and Multispot Lights**: Integrar luces de diferentes colores y múltiples fuentes de luz para enriquecer la iluminación de la escena y crear efectos más dinámicos.
+4. **One Other 2nd Degree Object**: Incorporar objetos geométricos adicionales como conos, hiperboloides y paraboloides para diversificar las formas presentes en la escena.
+5. **Handle Bump Map Textures**: Implementar texturas de bump mapping para simular relieve y textura en las superficies, aumentando el realismo de los objetos.
 
-## Fase 2: Configuración del Entorno de Desarrollo
 
-### Configuración de miniLibX
-- Instalar y configurar miniLibX en el entorno de desarrollo.
-
-### Configuración del Proyecto
-- Crear la estructura básica del proyecto y el Makefile.
-- Establecer un repositorio de Git.
-
-## Fase 3: Desarrollo del Core
-
-### Renderizado de la Imagen
-- Implementar la capacidad de crear una ventana y mostrar imágenes básicas.
-
-### Interpretación de la Escena
-- Desarrollar un parser para leer archivos .rt y cargar la configuración de la escena.
-
-### Trazado de Rayos Básico
-- Implementar el algoritmo de trazado de rayos para renderizar escenas simples sin iluminación.
-
-## Fase 4: Implementación de Objetos y Luces
-
-### Objetos Geométricos
-- Implementar el cálculo de intersecciones para esferas, planos y cilindros.
-
-### Sistema de Iluminación
-- Añadir soporte para iluminación ambiental, difusa y especular.
-- Implementar cálculo de sombras.
-
-## Fase 5: Funcionalidades Avanzadas
-
-### Transformaciones
-- Permitir la traslación y rotación de objetos y cámaras.
-
-### Optimización del Rendimiento
-- Implementar técnicas para acelerar el renderizado, como el culling o la indexación espacial.
-
-## Fase 6: Interfaz de Usuario y Experiencia
-
-### Control de la Interfaz
-- Implementar la funcionalidad para cerrar la ventana y salir del programa.
-- Añadir controles básicos para manipular la vista o cambiar escenas.
-
-## Fase 7: Pruebas y Depuración
-
-### Pruebas Unitarias y de Integración
-- Desarrollar pruebas para cada componente clave del sistema.
-
-### Depuración
-- Identificar y corregir errores y problemas de rendimiento.
-
-## Fase 9: Bonificaciones (Opcional)
+## Idea
 
 ### Reflexiones, Refracciones, y Efectos Avanzados
 - Investigar y, si el tiempo lo permite, implementar efectos avanzados como reflexiones, refracciones, o texturas avanzadas.
@@ -82,5 +40,3 @@ La **indexación espacial** involucra estructuras de datos como árboles BVH (Bo
 - **Árboles BVH:** Dividen la escena en volúmenes delimitadores que encapsulan grupos de objetos, permitiendo descartar rápidamente muchos objetos con un mínimo de cálculos.
 - **Rejillas:** Dividen la escena en una cuadrícula regular, y solo se consideran para el cálculo de intersecciones aquellos objetos que residen en las celdas atravesadas por un rayo.
 - **Octrees:** Similar a los árboles BVH pero dividiendo el espacio en octantes, son especialmente útiles para escenas con una distribución espacial uniforme.
-
-Estas técnicas pueden mejorar drásticamente la eficiencia del trazado de rayos, permitiendo la creación de imágenes complejas y detalladas en tiempos de renderizado razonables.
