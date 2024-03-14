@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:26:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 17:11:39 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:55:57 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
+#include "../../inc/miniRT.h"
 
 static	int	parse_line(char *line, t_scene	*scene)
 {
@@ -40,7 +40,7 @@ int	parse_file(char *file, t_scene	*scene)
 		perror ("Error opening file");
 		return (0);
 	}
-	while ((line = get_next_line(fd)) > 0)
+	while ((line = get_next_line(fd)))
 	{
 		if (!parse_line(line, scene))
 		{

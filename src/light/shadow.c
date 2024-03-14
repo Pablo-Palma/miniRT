@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shadow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:26:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/11 18:05:03 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:55:38 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 
 int shadow_plane(t_scene *scene, t_vec3 hit_point)

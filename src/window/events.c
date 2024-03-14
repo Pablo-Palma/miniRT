@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:19:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:38:20 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:55:57 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
+#include "../../inc/miniRT.h"
 
 int	handle_close(void *param)
 {

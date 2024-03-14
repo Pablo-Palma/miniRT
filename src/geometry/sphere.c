@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:55:48 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/13 13:37:04 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:55:38 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, double *t)
 {	//Esta funcion determina si un rayo intersecta con un esfera.

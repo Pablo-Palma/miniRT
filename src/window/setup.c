@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:31:16 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:38:39 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:55:57 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
+#include "../../inc/miniRT.h"
 
 int	setup_gui(t_graph *graph)
 {
