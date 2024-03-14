@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/13 18:34:12 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/14 07:44:27 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	render_scene(t_graph *graph, t_scene *scene)
 	//double	t;	//Variable para almacenar la distancia al objeto interceptado.
 	//double	ambient = 0.1;
 
-	printf("%f\n", scene->ambient_light.intensity);
-	printf("%d\n", scene->ambient_light.color);
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
