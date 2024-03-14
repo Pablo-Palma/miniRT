@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 12:27:31 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:08:46 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 
 int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t)
 {
-	t_vec3 diff = vector_sub(origin, cyl.center);
+	t_vec3 diff = vector_sub(origin, cyl.center);	//	vecot Origen-centro cilindro
 	t_vec3 dir_cross_cyl_dir = vector_cross(dir, cyl.dir); //Cruz entre el rayo y el cilindro
 	t_vec3 diff_cross_cyl_dir = vector_cross(diff, cyl.dir); // Cruz entre diff y el cilindro
 	
@@ -83,7 +83,7 @@ int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t)
 	if (t0 >= EPSILON) //Evitar errores.
 	{
 	    double h0 = vector_dot_product(vector_add(diff, vector_scale(dir, t0)), cyl.dir); // medida desde la base sobre el eje hasta el hitpoint
-	    if (h0 >= 0 && h0 <= cyl.h) //Si está entre 0 y la altura máxima
+	    if (fabs(h0) <= cyl.h / 2) //Si está entre 0 y la altura máxima
 		{
 	        t_body = t0;	//SI Pertenece, almacenamos ese punto en t_body
 	        body_hit = 1;	//Pertenece
@@ -94,7 +94,7 @@ int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t)
 	if (t1 >= EPSILON && t1 < t_body)	// si t1 es mayor que t_body, ya tenemos un punto más cercano, por tanto el lejano ya no nos interesa
 	{
 	    double h1 = vector_dot_product(vector_add(diff, vector_scale(dir, t1)), cyl.dir);
-	    if (h1 >= 0 && h1 <= cyl.h)
+	    if (fabs(h1) <= cyl.h / 2)
 		{
 			t_body = t1;
 			body_hit = 1;
@@ -129,16 +129,16 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 	{
 		t_vec3	hit_point = vector_add(ray_origin, vector_scale(ray_dir, t));
 		t_vec3	normal = cylinder_normal(hit_point, cyl);
-		int	shadowed = shadow(scene, hit_point, scene->light, normal);
+//		int	shadowed = shadow(scene, hit_point, scene->light, normal);
 		double	diffuse = 0;
 		double	specular = 0;
-		if (!shadowed)
-		{
+		//if (!shadowed)
+		//{
 			t_vec3 light_dir = normalize(vector_sub(scene->light.pos, hit_point));
 			diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
 			t_vec3 view_dir = normalize(vector_sub(scene->cam.view_point, hit_point));
     		specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
-		}
+		//}
 
     	int color = mix_colors(cyl.color, diffuse, specular, *scene); // Ambient light contribution set to 0.1 arbitrarily
 

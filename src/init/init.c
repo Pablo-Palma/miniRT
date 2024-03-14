@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 10:12:14 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:16:45 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	old_scene_two(t_scene *scene)
 	{
         .x = 1,  // Componente x del vector de dirección basado en el ángulo
         .y = 0,
-        .z = -0.6 // Componente y negativa para que apunte hacia la cámara
+        .z = 0.6 // Componente y negativa para que apunte hacia la cámara
     };
 
 	scene->cyl = (t_cyl)
@@ -76,6 +76,13 @@ static void	old_scene_two(t_scene *scene)
 		.h = 4,
 		.color = CIAN
 	};
+
+/*	scene->sphere = (t_sphere){
+		.center = {-4, 0, 0},
+		.radius = 2 
+		//.color = 0xFF5733
+	};*/
+
 	scene->plane = (t_plane)
 	{
 		.point = {0, -3, 0},
@@ -85,7 +92,7 @@ static void	old_scene_two(t_scene *scene)
 	};
 
 	scene->light = (t_light){
-		.pos = {2, 5, 0},	//Posicion
+		.pos = {-2, 8, 0},	//Posicion
 		.brigthness = 0.9	//brillo
 	};
 
