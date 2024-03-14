@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 16:42:23 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:05:06 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,29 @@ static void	old_scene_two(t_scene *scene)
 
 //	double angle = 90.0 * (M_PI / 180.0); // Convertir grados a radianes
 
-//    t_vec3 dir =
-//	{
-//        .x = 1,  // Componente x del vector de dirección basado en el ángulo
-//        .y = 0,
-//        .z = 0.6 // Componente y negativa para que apunte hacia la cámara
-//    };
-//
-//	scene->cyl = (t_cyl)
-//	{
-//		.center = (t_vec3)
-//		{
-//			.x = 0,
-//			.y = 0,
-//			.z = 0 
-//		},
-//		.dir = normalize(dir),
-//		.radius = 2,
-//		.h = 4,
-//		.color = CIAN
-//	};
+    t_vec3 dir =
+	{
+        .x = 1,  // Componente x del vector de dirección basado en el ángulo
+        .y = 0,
+        .z = -0.6 // Componente y negativa para que apunte hacia la cámara
+    };
+
+	scene->cyl = (t_cyl)
+	{
+		.center = (t_vec3)
+		{
+			.x = 0,
+			.y = 0,
+			.z = 0 
+		},
+		.dir = normalize(dir),
+		.radius = 2,
+		.h = 4,
+		.color = CIAN
+	};
 
 	scene->sphere = (t_sphere){
-		.center = {0, 0, 0},
+		.center = {-4, 2, 0},
 		.radius = 2 
 		//.color = 0xFF5733
 	};
@@ -92,7 +92,7 @@ static void	old_scene_two(t_scene *scene)
 	};
 
 	scene->light = (t_light){
-		.pos = {-1, 0, 5},	//Posicion
+		.pos = {-8, 6, 5},	//Posicion
 		.brigthness = 0.9	//brillo
 	};
 

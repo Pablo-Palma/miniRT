@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 16:08:46 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:10:13 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,16 +129,16 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 	{
 		t_vec3	hit_point = vector_add(ray_origin, vector_scale(ray_dir, t));
 		t_vec3	normal = cylinder_normal(hit_point, cyl);
-//		int	shadowed = shadow(scene, hit_point, scene->light, normal);
+		int	shadowed = shadow_plane(scene, hit_point);
 		double	diffuse = 0;
 		double	specular = 0;
-		//if (!shadowed)
-		//{
+		if (!shadowed)
+		{
 			t_vec3 light_dir = normalize(vector_sub(scene->light.pos, hit_point));
 			diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
 			t_vec3 view_dir = normalize(vector_sub(scene->cam.view_point, hit_point));
     		specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
-		//}
+		}
 
     	int color = mix_colors(cyl.color, diffuse, specular, *scene); // Ambient light contribution set to 0.1 arbitrarily
 
