@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/13 19:08:32 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/14 12:27:31 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 
 	while(i < 2)
 	{
-		if (i == 1)
-			sign = -1.0;
-		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * cyl.h * 0.00));
+		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
 		double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / vector_dot_product(dir, cap_normal);
 		if (d >= 0 && d < *t_cap)
 		{
@@ -46,6 +44,7 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 			}
 		}
 		i++;
+		sign = -sign;
 	}
 
 	if (hit)
@@ -130,10 +129,16 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 	{
 		t_vec3	hit_point = vector_add(ray_origin, vector_scale(ray_dir, t));
 		t_vec3	normal = cylinder_normal(hit_point, cyl);
-		t_vec3 light_dir = normalize(vector_sub(scene->light.pos, hit_point));
-		double diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
-		t_vec3 view_dir = normalize(vector_sub(scene->cam.view_point, hit_point));
-    	double specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
+		int	shadowed = shadow(scene, hit_point, scene->light, normal);
+		double	diffuse = 0;
+		double	specular = 0;
+		if (!shadowed)
+		{
+			t_vec3 light_dir = normalize(vector_sub(scene->light.pos, hit_point));
+			diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
+			t_vec3 view_dir = normalize(vector_sub(scene->cam.view_point, hit_point));
+    		specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
+		}
 
     	int color = mix_colors(cyl.color, diffuse, specular, *scene); // Ambient light contribution set to 0.1 arbitrarily
 

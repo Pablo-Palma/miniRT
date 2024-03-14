@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:26:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/11 18:05:03 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:11:55 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	shadow(t_scene *scene, t_vec3 hit_point, t_light light, t_vec3 normal)
 	t_vec3 to_light = vector_sub(light.pos, hit_point); // Vector del punto de intersección hacia la fuente de luz.
 	double	distance = sqrt(vector_dot_product(to_light, to_light)); // Distancia a la fuente de luz.
 	t_vec3	light_dir = normalize(to_light); //Dirección normalizada.
-	t_vec3	origin_offset = vector_add(hit_point, vector_scale(normal, 0.0001)); //Ajustar punto de origen y evitar auto-intersección.
+	t_vec3	origin_offset = vector_add(hit_point, vector_scale(normal, 0.001)); //Ajustar punto de origen y evitar auto-intersección.
 	double	t = INFINITY;
 
 	if (intersect_ray_sphere(origin_offset, light_dir, scene->sphere, &t) && t < distance)
