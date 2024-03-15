@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 12:30:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/15 05:34:44 by mamagalh@st      ###   ########.fr       */
+/*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
+/*   Updated: 2024/03/15 11:11:18 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "../inc/miniRT.h"
 
-int	main(int argc, char **argv)
+t_ray	*new_ray(t_vec3 origin, t_vec3 direction)
 {
-	t_graph	graph;
-	t_list	*obj;
-	int		fd;
+	t_ray *self;
 
-	(void)argc;
-	fd = open(argv[1], O_RDONLY);
-	obj = get_objects(fd);
-	if (setup_gui(&graph) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	render_scene(&graph, obj);
-	mlx_put_image_to_window(graph.mlx, graph.win, graph.img, 0, 0);
-	setup_hooks(&graph);
-	mlx_loop(graph.mlx);
-	return (EXIT_SUCCESS);
+	self = malloc(sizeof(t_ray));
+	self->origin = origin;
+	self->direction = (normalize(direction));
+	self->obj = NULL;
+	self->t = 10000000;
+	return (self);
 }

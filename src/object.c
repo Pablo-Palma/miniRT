@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:21:29 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/13 05:10:38 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/15 01:54:27 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ t_list *get_objects(int fd)
 	line = get_next_line(fd);
 	while (line)
 	{
-		ft_lstadd_back(&obj, ft_lstnew(new_obj((t_obj){line, NULL})));
+		if (*line >= 'A' && *line <= 'Z')
+			ft_lstadd_back(&obj, ft_lstnew(new_obj((t_obj){line, NULL})));
+		else
+			ft_lstadd_front(&obj, ft_lstnew(new_obj((t_obj){line, NULL})));
 		line = get_next_line(fd);
 	}
 	close(fd);

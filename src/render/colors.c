@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:21:44 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 12:55:38 by math             ###   ########.fr       */
+/*   Updated: 2024/03/15 05:32:14 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,16 @@ void	put_pixel_to_image(t_graph *graph, int x, int y, int color)
 	}
 }
 
-int	mix_colors(int	base_color, double diffuse, double specular, t_scene scene)
+int	mix_colors(t_ambient_light ambient_light, int	base_color, double diffuse, double specular)
 {
-	int	ambient = scene.ambient_light.intensity;
-	//int	ambient_color  = scene.ambient_light.color;
+	int	ambient = ambient_light.intensity;
 	int	r = (base_color >> 16) & 0xFF;
 	int	g = (base_color >> 8) & 0xFF;
 	int	b = base_color & 0xFF;
 
-	double	ambient_r = ambient * ((scene.ambient_light.color >> 16) & 0xFF);
-	double	ambient_g = ambient * ((scene.ambient_light.color >> 8) & 0xFF);
-	double	ambient_b = ambient * (scene.ambient_light.color  & 0xFF);
+	double	ambient_r = ambient * ((ambient_light.color >> 16) & 0xFF);
+	double	ambient_g = ambient * ((ambient_light.color >> 8) & 0xFF);
+	double	ambient_b = ambient * (ambient_light.color  & 0xFF);
 
 	r = fmin(255, r * diffuse + 255 * specular + ambient_r);
 	g = fmin(255, g * diffuse + 255 * specular + ambient_g);

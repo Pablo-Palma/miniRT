@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 12:55:38 by math             ###   ########.fr       */
+/*   Updated: 2024/03/15 11:14:21 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,42 +24,50 @@ t_vec3	compute_ray_dir(int x, int y, t_cam cam)
 	//-----------
 	//**	Construcción dirección del rayo, z en -1 por la dirección.
 	t_vec3	ray_dir = {image_x, image_y, -1};
-	ray_dir = normalize(ray_dir);
 	return (ray_dir);
 }
 
 
-void	render_scene(t_graph *graph, t_scene *scene)
+void	render_scene(t_graph *graph, t_list *obj)
 {
-	int		x;
-	int		y;
-	t_vec3	ray_dir;
-	int		ambient_color;
+	t_ambient_light	ambient_light;
+	t_cam			cam;
+	t_list			*cur;
+	t_list			*ray = NULL;
+	int				x;
+	int				y;
+	int				ambient_color;
+
+	if (objchr(obj, "A"))
+		ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj, "A")->content)->child;
+	cam = *(t_cam *)((t_obj *)objchr(obj, "C")->content)->child;
+
+	// t_light	light = *(t_light *)((t_obj *)objchr(obj, "L")->content)->child;
 	//double	t;	//Variable para almacenar la distancia al objeto interceptado.
 	//double	ambient = 0.1;
 
-	printf("%f\n", scene->ambient_light.intensity);
-	printf("%d\n", scene->ambient_light.color);
-	y = 0;
-	while (y < WIN_HEIGHT)
+	printf("%f\n", ambient_light.intensity);
+	printf("%d\n", ambient_light.color);
+	y = -1;
+	while (++y < WIN_HEIGHT)
 	{
-		x = 0;
-		while (x < WIN_WIDTH)
+		x = -1;
+		while (++x < WIN_WIDTH)
 		{
-			ray_dir = compute_ray_dir(x, y , scene->cam);	//Calcular dirección del rayo desde la camara hasta el pixel actual.
-			if (!handle_sphere_intersec(ray_dir, scene, x, y, graph)) // Verificar si el rayo intersecta con la esfera
+			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(cam.orientation, compute_ray_dir(x, y , cam))));
+			cur = obj;
+			while (cur)
 			{
-				if (!handle_cyl_intersec(ray_dir, scene, x, y, graph))
-				{
-					if (!handle_plane_intersec(ray_dir, scene, x, y, graph))
-					{
-						ambient_color = mix_colors(scene->ambient_light.color, scene->ambient_light.intensity, 0.0, *scene);
-						put_pixel_to_image(graph, x, y, ambient_color);	//Si no hay intersección, fondo.
-					}
-				}
+				intersect(cur, (t_ray *)ray->content); //saves first intersection
+				cur = cur->next;
 			}
-			x++;
+			if (((t_ray *)ray->content)->obj)
+				put_pixel_to_image(graph, x, y, CIAN);
+			else
+			{
+				ambient_color = mix_colors(ambient_light, ambient_light.color, ambient_light.intensity, 0.0);
+				put_pixel_to_image(graph, x, y, ambient_color);
+			}
 		}
-		y++;
 	}
 }
