@@ -16,7 +16,8 @@ SRCS_FILES =	main/main.c								\
 				light/lighting.c light/shadow.c			\
 				utils/clean.c							\
 				parser/parser.c parser/parser_utils.c parser/parser_elem.c \
-				object/object.c object/object_constructors.c object/object_print.c
+				object/object.c object/object_constructors.c object/object_print.c \
+				bonus/checkerboard_bonus.c
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))

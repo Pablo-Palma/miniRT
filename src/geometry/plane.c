@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:03:29 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 17:51:06 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:29:07 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 			diffuse = 0.0;
 			specular = 0.0;
 		}
-		color = mix_colors(WHITE, diffuse, specular, *scene);
+		int base_color = apply_checkerboard_texture(hit_point);
+		color = mix_colors(base_color, diffuse, specular, *scene);
 		put_pixel_to_image(graph, x, y, color);
 		return (1);
 	}

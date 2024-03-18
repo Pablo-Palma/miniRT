@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 11:27:19 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:30:07 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,5 +185,13 @@ void	light(void *parent);
 void	sphere(void *parent);
 void	plane(void *parent);
 void	cylinder(void *parent);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  BONUS                                    //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+
+int	apply_checkerboard_texture(t_vec3 point);
 
 #endif
