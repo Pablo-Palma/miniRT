@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:36:23 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/18 15:44:03 by math             ###   ########.fr       */
+/*   Updated: 2024/03/18 20:04:25 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,26 @@
 static int	trace_light_sp(t_list *obj, t_ray *ray)
 {
 	t_ambient_light ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj, "A")->content)->child;
-	t_sphere	sphere = *(t_sphere *)((t_obj *)(obj->content))->child;
-	t_cam		cam = *((t_cam *)((t_obj *)objchr(obj, "C")->content)->child);
-	t_light		light = *((t_light *)((t_obj *)objchr(obj, "L")->content)->child);
+	t_light			light = *((t_light *)((t_obj *)objchr(obj, "L")->content)->child);
 
-	t_vec3	hit_point;
-	t_vec3	normal;
+	t_vec3	point;
+	t_vec3	norm;
 	t_vec3	view_dir;
 	t_vec3	light_dir;
 	double	diffuse;
 	double	specular;
 
-	hit_point = vector_add(cam.view_point, vector_scale(ray->direction, ray->t));
-	normal = normalize(vector_sub(hit_point, sphere.center));
-	light_dir = normalize(vector_sub(light.pos, hit_point));
-	view_dir = vector_negate(ray->direction);
-	diffuse = calculate_diffuse(light_dir, normal, light.brigthness);
-	specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0);
-	// int	shadowed = shadow(scene, hit_point, light, normal);
+	point = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
+	norm = get_normal(obj, point);
+	light_dir = normalize(vector_sub(light.pos, point));
+	view_dir = normalize(vector_negate(ray->direction));
+	diffuse = calculate_diffuse(light_dir, norm, light.brigthness);
+	specular = calculate_specular(view_dir, light_dir, norm, 0.01, 100000.0);
+	// int	shadowed = shadow(scene, point, light, norm);
 	// if (!shadowed)
 	// {
-	// 	diffuse = calculate_diffuse(light_dir, normal, light.brigthness);
-	// 	specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0);
+	// 	diffuse = calculate_diffuse(light_dir, norm, light.brigthness);
+	// 	specular = calculate_specular(view_dir, light_dir, norm, 1.0, 10.0);
 	// }
 	// else
 	// {

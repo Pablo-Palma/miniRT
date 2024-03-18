@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 16:42:01 by math             ###   ########.fr       */
+/*   Updated: 2024/03/18 21:26:33 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	render_scene(t_graph *graph, t_list *obj)
 	t_cam			cam;
 	t_list			*cur;
 	t_list			*ray = NULL;
-	int				x;
-	int				y;
+	t_pixel			pixel = (t_pixel){-1,-1,0,0,0};
 	int				ambient_color;
 
 	if (objchr(obj, "A"))
@@ -44,33 +43,30 @@ void	render_scene(t_graph *graph, t_list *obj)
 	// t_light	light = *(t_light *)((t_obj *)objchr(obj, "L")->content)->child;
 	//double	t;	//Variable para almacenar la distancia al objeto interceptado.
 	//double	ambient = 0.1;
-
-	printf("%f\n", ambient_light.intensity);
-	printf("%d\n", ambient_light.color);
-	y = -1;
-	while (++y < WIN_HEIGHT)
+	pixel.y = -1;
+	while (++pixel.y < WIN_HEIGHT)
 	{
-		x = -1;
-		while (++x < WIN_WIDTH)
+		pixel.x = -1;
+		while (++pixel.x < WIN_WIDTH)
 		{
-			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(cam.orientation, compute_ray_dir(x, y , cam))));
+			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(cam.orientation, compute_ray_dir(pixel.x, pixel.y , cam))));
 			cur = obj;
 			while (cur)
 			{
-				intersect(cur, (t_ray *)ray->content); //saves first intersection with and obj and set ray.t
+				intersect(cur, (t_ray *)ray->content); //trace ray to obj && set ray.obj and ray.t
 				cur = cur->next;
 			}
-			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(((t_ray *)ray->content)->origin, ((t_ray *)ray->content)->direction)));
-			//int	color = trace_light(obj, (t_ray *)ft_lstlast(ray)->content);
 			if (*((t_ray *)ray->content)->obj)
 			{
-				ray_trace_light((t_ray *)ray->content);
-				put_pixel_to_image(graph, x, y, CIAN);
+				//ray_trace_light((t_ray *)ray->content);
+				//ray_draw((t_ray *)ray->content, &pixel, ambient_light);
+				pixel.color = trace_light(obj, (t_ray *)ft_lstlast(ray)->content);
+				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
 			}
 			else
 			{
 				ambient_color = mix_colors(ambient_light, ambient_light.color, ambient_light.intensity, 0.0);
-				put_pixel_to_image(graph, x, y, ambient_color);
+				put_pixel_to_image(graph, pixel.x, pixel.y, ambient_color);
 			}
 			ft_lstclear(&ray, delete_ray);
 		}

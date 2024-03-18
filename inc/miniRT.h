@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 16:23:50 by math             ###   ########.fr       */
+/*   Updated: 2024/03/18 20:28:46 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ typedef struct s_graph
 	int			endian;
 	int			color_mode;
 }				t_graph;
+
+typedef struct	s_pixel
+{
+	int			x;
+	int			y;
+	int			color;
+	double		diffuse;
+	double		specular;
+}				t_pixel;
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -138,6 +147,7 @@ int		obj_next(t_list **obj_ptr, char *str);
 void	print_obj(void *self);
 void 	intersect(t_list *obj, t_ray *ray);
 int 	trace_light(t_list *obj, t_ray *ray);
+t_vec3	get_normal(t_list *obj, t_vec3 point);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -155,5 +165,6 @@ void	cylinder(void *parent);
 t_ray	*new_ray(t_vec3 origin, t_vec3 direction);
 void	delete_ray(void *param);
 void	ray_trace_light(t_ray *ray);
+void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
 
 #endif

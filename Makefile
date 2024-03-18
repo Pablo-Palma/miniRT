@@ -14,6 +14,7 @@ SRCS_FILES =	vector/vector.c	\
 				object_intersect.c	\
 				object_print.c	\
 				object_trace.c	\
+				object_normal.c	\
 				ray.c			\
 				render/colors.c	\
 				render/render.c	\
