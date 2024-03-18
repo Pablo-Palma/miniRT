@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkerboard.c                                     :+:      :+:    :+:   */
+/*   checkerboard_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 13:16:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 13:37:16 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:51:58 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,18 @@ int	apply_checkerboard_texture(t_vec3 point)
 		return(WHITE);
 	else
 		return(BLACK);
+}
+
+int	apply_checkerboard_texture_uv(double u, double v)
+{
+	const double scale = 10.0;
+	int x = (int)(floor(u * scale)) % 2;
+	int y = (int)(floor(v * scale)) % 2;
+	int	color;
+
+	if (x == y)
+		color = WHITE;
+	else
+		color = BLACK;
+	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 14:01:54 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:06:17 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ static void	old_scene_two(t_scene *scene)
 		.color = CIAN
 	};
 
-	scene->sphere = (t_sphere){
-		.center = {-4, 2, 0},
-		.radius = 2 
-		//.color = 0xFF5733
-	};
+//	scene->sphere = (t_sphere){
+//		.center = {-4, 2, 0},
+//		.radius = 2 
+//		//.color = 0xFF5733
+//	};
 
 	scene->plane = (t_plane)
 	{

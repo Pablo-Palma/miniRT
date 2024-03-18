@@ -20,11 +20,13 @@ SRCS_FILES =	main/main.c								\
 
 
 BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
+				bonus/sphere_bonus.c bonus/cylinder_bonus.c		\
+				bonus/cylinder_utils_bonus.c					\
 				main/main.c								\
 				init/init.c								\
 				window/setup.c window/events.c			\
 				render/render.c render/colors.c			\
-				geometry/vector.c geometry/sphere.c	geometry/cylinder.c	\
+				geometry/vector.c						\
 				light/lighting.c light/shadow.c			\
 				utils/clean.c							\
 				parser/parser.c parser/parser_utils.c parser/parser_elem.c \
