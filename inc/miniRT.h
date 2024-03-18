@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 20:28:46 by math             ###   ########.fr       */
+/*   Updated: 2024/03/18 23:02:47 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,6 @@ t_ray	*new_ray(t_vec3 origin, t_vec3 direction);
 void	delete_ray(void *param);
 void	ray_trace_light(t_ray *ray);
 void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
+void	print_ray(t_ray *ray);
 
 #endif

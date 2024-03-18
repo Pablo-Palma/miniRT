@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 21:26:33 by math             ###   ########.fr       */
+/*   Updated: 2024/03/18 23:37:30 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ void	render_scene(t_graph *graph, t_list *obj)
 	if (objchr(obj, "A"))
 		ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj, "A")->content)->child;
 	cam = *(t_cam *)((t_obj *)objchr(obj, "C")->content)->child;
-
-	// t_light	light = *(t_light *)((t_obj *)objchr(obj, "L")->content)->child;
-	//double	t;	//Variable para almacenar la distancia al objeto interceptado.
-	//double	ambient = 0.1;
 	pixel.y = -1;
 	while (++pixel.y < WIN_HEIGHT)
 	{
@@ -58,8 +54,9 @@ void	render_scene(t_graph *graph, t_list *obj)
 			}
 			if (*((t_ray *)ray->content)->obj)
 			{
-				//ray_trace_light((t_ray *)ray->content);
-				//ray_draw((t_ray *)ray->content, &pixel, ambient_light);
+				print_ray(ray->content);
+				ray_trace_light((t_ray *)ray->content);
+				ray_draw((t_ray *)ray->content, &pixel, ambient_light);
 				pixel.color = trace_light(obj, (t_ray *)ft_lstlast(ray)->content);
 				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
 			}

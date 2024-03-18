@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/18 21:03:28 by math             ###   ########.fr       */
+/*   Updated: 2024/03/18 23:38:28 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,33 @@ void	delete_ray(void *param)
 	free(self);
 }
 
+void	print_ray(t_ray *ray)
+{
+	printf("Ray:\n");
+	printf("\tOrigin: (%.2f, %.2f, %.2f)\n",
+			ray->origin.x,
+			ray->origin.y,
+			ray->origin.z);
+	if (*ray->obj)
+	{
+		printf("\tDirection: (%.2f, %.2f, %.2f)\n",
+			ray->origin.x *ray->t,
+			ray->origin.y  *ray->t,
+			ray->origin.z * ray->t);
+		print_obj(((t_obj *)(*ray->obj)->content));
+	}
+	else
+	{
+		printf("\tDirection: (%.2f, %.2f, %.2f)\n",
+			ray->origin.x,
+			ray->origin.y,
+			ray->origin.z);
+		printf("\tObject: (null))\n");
+	}
+	if (ray->next)
+		print_ray((t_ray *)ray->next->content);
+}
+
 void	ray_trace_light(t_ray *ray)
 {
 	t_vec3	origin;
@@ -49,7 +76,7 @@ void	ray_trace_light(t_ray *ray)
 
 	if (!(ray && *ray->obj))
 		return ;
-	light = objchr(*ray->obj, "A");
+	light = objchr(*ray->obj, "L");
 	while (light)
 	{
 		origin = vector_scale(ray->direction, ray->t);
@@ -58,7 +85,7 @@ void	ray_trace_light(t_ray *ray)
 		*((t_ray *)ft_lstlast(ray->next)->content)->obj = light;
 		((t_ray *)ft_lstlast(ray->next)->content)->t = vector_length(direction);
 		light = light->next;
-		light = objchr(light, "A");
+		light = objchr(light, "L");
 	}
 }
 
@@ -84,3 +111,4 @@ void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light)
 
 	pix->color = mix_colors(ambient_light, CIAN, pix->diffuse, pix->specular);
 }
+
