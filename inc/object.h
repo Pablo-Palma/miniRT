@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/15 11:04:25 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/18 16:00:07 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ typedef struct	s_ray
 {
     t_vec3			origin;
     t_vec3			direction;
-	t_obj			*obj;
+	t_list			**obj;
     double			t;
+	t_list			*next;
 }					t_ray;
 
 #endif

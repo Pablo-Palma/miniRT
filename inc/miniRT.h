@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/15 11:02:05 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/18 16:23:50 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,10 @@ double	convert_to_double(char *str, double min, double max);
 
 t_list	*get_objects(int fd);
 t_list	*objchr(t_list *obj, char *str);
+int		obj_next(t_list **obj_ptr, char *str);
 void	print_obj(void *self);
 void 	intersect(t_list *obj, t_ray *ray);
+int 	trace_light(t_list *obj, t_ray *ray);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -151,5 +153,7 @@ void	plane(void *parent);
 void	cylinder(void *parent);
 
 t_ray	*new_ray(t_vec3 origin, t_vec3 direction);
+void	delete_ray(void *param);
+void	ray_trace_light(t_ray *ray);
 
 #endif

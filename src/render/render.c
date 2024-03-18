@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/15 11:14:21 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/18 16:42:01 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_vec3	compute_ray_dir(int x, int y, t_cam cam)
 	t_vec3	ray_dir = {image_x, image_y, -1};
 	return (ray_dir);
 }
-
 
 void	render_scene(t_graph *graph, t_list *obj)
 {
@@ -58,16 +57,22 @@ void	render_scene(t_graph *graph, t_list *obj)
 			cur = obj;
 			while (cur)
 			{
-				intersect(cur, (t_ray *)ray->content); //saves first intersection
+				intersect(cur, (t_ray *)ray->content); //saves first intersection with and obj and set ray.t
 				cur = cur->next;
 			}
-			if (((t_ray *)ray->content)->obj)
+			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(((t_ray *)ray->content)->origin, ((t_ray *)ray->content)->direction)));
+			//int	color = trace_light(obj, (t_ray *)ft_lstlast(ray)->content);
+			if (*((t_ray *)ray->content)->obj)
+			{
+				ray_trace_light((t_ray *)ray->content);
 				put_pixel_to_image(graph, x, y, CIAN);
+			}
 			else
 			{
 				ambient_color = mix_colors(ambient_light, ambient_light.color, ambient_light.intensity, 0.0);
 				put_pixel_to_image(graph, x, y, ambient_color);
 			}
+			ft_lstclear(&ray, delete_ray);
 		}
 	}
 }

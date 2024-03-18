@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:21:29 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/15 01:54:27 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/18 16:23:11 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,34 @@ static t_obj	*new_obj(t_obj obj)
 
 t_list	*objchr(t_list *obj, char *str)
 {
-	while (obj)
+	t_list	*cur;
+
+	if (!obj)
+		return (NULL);
+	cur = obj;
+	while (cur)
 	{
-		if (!ft_strncmp(((t_obj *)(obj->content))->line, str, ft_strlen(str)))
-			return (obj);
-		obj = obj->next;
+		if (!ft_strncmp(((t_obj *)(cur->content))->line, str, ft_strlen(str)))
+			return (cur);
+		cur = cur->next;
 	}
 	return (NULL);
 }
+
+int	obj_next(t_list **obj_ptr, char *str)
+{
+	if (!(*obj_ptr && (*obj_ptr)->next))
+		return (0);
+	*obj_ptr = (*obj_ptr)->next;
+	while (*obj_ptr)
+	{
+		if (!ft_strncmp(((t_obj *)((*obj_ptr)->content))->line, str, ft_strlen(str)))
+			return (1);
+		*obj_ptr = (*obj_ptr)->next;
+	}
+	return (0);
+}
+
 
 t_list *get_objects(int fd)
 {
