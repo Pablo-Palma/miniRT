@@ -16,8 +16,20 @@ SRCS_FILES =	main/main.c								\
 				light/lighting.c light/shadow.c			\
 				utils/clean.c							\
 				parser/parser.c parser/parser_utils.c parser/parser_elem.c \
-				object/object.c object/object_constructors.c object/object_print.c \
-				bonus/checkerboard_bonus.c
+				object/object.c object/object_constructors.c object/object_print.c 
+
+
+BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
+				main/main.c								\
+				init/init.c								\
+				window/setup.c window/events.c			\
+				render/render.c render/colors.c			\
+				geometry/vector.c geometry/sphere.c	geometry/cylinder.c	\
+				light/lighting.c light/shadow.c			\
+				utils/clean.c							\
+				parser/parser.c parser/parser_utils.c parser/parser_elem.c \
+				object/object.c object/object_constructors.c object/object_print.c 
+BONUS_OBJS = $(BONUS_FILES:%.c=$(OBJS_DIR)/%.o)
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
@@ -49,6 +61,11 @@ $(NAME): $(LIBFT) $(OBJS)
 mac: $(LIBFT) $(OBJS)
 	@$(CC) -o $(NAME) $(SRCS) $(CFLAGS) $(MLX_FLAGS_MAC)
 	@echo "miniRT compiled successfully on macOS!"
+
+bonus: CFLAGS += -D BONUS -Iinc/bonus
+bonus: $(LIBFT) $(BONUS_OBJS)
+	@$(CC) -o $(NAME) $(BONUS_OBJS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
+	@echo "miniRT with bonus compiled successfully!"
 
 clean :
 	@rm -f libmlx.dylib ## Borrar dicha librería.

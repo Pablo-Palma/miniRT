@@ -6,11 +6,12 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:03:29 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 14:41:45 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:36:12 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
+#include "checkerboard.h"
 
 int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double *t)
 {
@@ -56,6 +57,8 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 			diffuse = 0.0;
 			specular = 0.0;
 		}
+		if(scene->checkerboard)
+			base_color = apply_checkerboard_texture(hit_point);
 		color = mix_colors(base_color, diffuse, specular, *scene);
 		put_pixel_to_image(graph, x, y, color);
 		return (1);

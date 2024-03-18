@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 12:02:12 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:01:54 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	old_scene_one(t_scene *scene)
 
 static void	old_scene_two(t_scene *scene)
 {
+	scene->checkerboard = 1;
 	scene->cam = (t_cam)
 	{
 		.view_point = {0, 0, 10}, // 5 unidades detrás del origen de z.

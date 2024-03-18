@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 13:30:07 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:28:02 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_scene
 	t_cyl			cyl;
 	t_light			light;
 	t_ambient_light	ambient_light;
+	int				checkerboard;
 }				t_scene;
 
 typedef struct s_graph
