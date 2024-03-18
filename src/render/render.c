@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 07:44:27 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:19:47 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_vec3	compute_ray_dir(int x, int y, t_cam cam)
 	double	image_y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;	//	La altura del plano se deremina por la escala(vinculada al fov)
 	//-----------
 	//**	Construcción dirección del rayo, z en -1 por la dirección.
-	t_vec3	ray_dir = {image_x, image_y, -1};
+	t_vec3	ray_dir = {image_x, image_y, cam.orientation.z};
 	ray_dir = normalize(ray_dir);
 	return (ray_dir);
 }

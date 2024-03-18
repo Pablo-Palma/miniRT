@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 15:33:38 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:27:19 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "scene.h"
 # include "object.h"
 # include "light.h"
+# include "events.h"
 
 # define	WIN_WIDTH 800
 # define WIN_HEIGHT 800
@@ -44,19 +45,6 @@
 # define EPSILON 1e-6 //As a convetion for RT, eviting calculation error from floats.
 
 
-typedef struct s_graph
-{
-	void		*mlx;
-	void		*win;
-	void		*img;
-	char		*addr;
-	int			bpp;
-	int			line_lenght;
-	int			endian;
-	int			color_mode;
-	//t_mini_RT	*miniRT;
-}				t_graph;
-
 typedef struct s_scene
 {
 	t_cam			cam;
@@ -67,12 +55,26 @@ typedef struct s_scene
 	t_ambient_light	ambient_light;
 }				t_scene;
 
+typedef struct s_graph
+{
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			line_lenght;
+	int			endian;
+	int			color_mode;
+	t_scene		*scene;
+	//t_mini_RT	*miniRT;
+}				t_graph;
+
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //                                  GUI                                      //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int		setup_gui(t_graph *graph);
+int		setup_gui(t_graph *graph, t_scene *scene);
 int		cleanup(t_graph *graph);
 void	init_img(t_graph *graph);
 int 	handle_close(void *param);

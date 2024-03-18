@@ -6,13 +6,13 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:31:16 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/05 16:38:39 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/18 10:57:18 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-int	setup_gui(t_graph *graph)
+int	setup_gui(t_graph *graph, t_scene *scene)
 {
 	graph->mlx = mlx_init();
 	if (!graph->mlx)
@@ -21,6 +21,7 @@ int	setup_gui(t_graph *graph)
 	if (!graph->win)
 		return (EXIT_FAILURE);
 	init_img(graph);
+	graph->scene = scene;
 	return (EXIT_SUCCESS);
 }
 
