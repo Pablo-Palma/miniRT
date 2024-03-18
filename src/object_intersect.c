@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_intersect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:08:02 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/15 11:05:59 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/18 13:56:13 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,23 @@ static int	intersect_pl(t_plane plane, t_ray *ray)
 }
 
 static int intersect_sp(t_sphere sphere, t_ray *ray)
-{	//Esta funcion determina si un rayo intersecta con un esfera.
-	t_vec3 oc = {ray->origin.x - sphere.center.x, ray->origin.y - sphere.center.y, ray->origin.z - sphere.center.z};	//calcula vector desde origen del rayo a centro
-	//de la esfera
-	double a = ray->direction.x * ray->direction.x + ray->direction.y * ray->direction.y + ray->direction.z * ray->direction.z;
-	double b = 2.0 * (oc.x * ray->direction.x + oc.y * ray->direction.y + oc.z * ray->direction.z);
-	double c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - sphere.radius * sphere.radius;
-	double discriminant = b * b - 4 * a * c; //Discriminant para determinar si hay intersección.
-	
+{
+	t_vec3 oc = {ray->origin.x - sphere.center.x, ray->origin.y - sphere.center.y, ray->origin.z - sphere.center.z};
+	double a = vector_dot_product(ray->direction, ray->direction);
+	double b = 2.0 * vector_dot_product(oc, ray->direction);
+	double c = vector_dot_product(oc, oc) - sphere.radius * sphere.radius;
+	double discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
-	    return 0; // No intersection
-	
-	double t0 = (-b - sqrt(discriminant)) / (2.0 * a);	//Dos posibles solucciones de la ecuación cudarática.
+	    return 0;
+	double t0 = (-b - sqrt(discriminant)) / (2.0 * a);
 	double t1 = (-b + sqrt(discriminant)) / (2.0 * a);
-	
-	// Usamos el valor de t más pequeño positivo como la distnacia al punto de intersección
-	//si el discriminante es mayor que 0 hay inerseccion,y elegimosel menor. 
 	if (t0 > 0 && (t0 < ray->t || ray->t < 0))
 	    ray->t = t0;
 	else if (t1 > 0 && (t1 < ray->t || ray->t < 0))
 	    ray->t = t1;
 	else 
-	    return 0; // No intersection in the positive t direction
-	return 1; // Intersection occurred
+	    return 0;
+	return 1;
 }
 
 static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
@@ -151,6 +145,8 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 	return 0;
 }
 
+
+//change values on ray.obj and ray.t seting the obj intercaction and value of t on parametrized line/vector
 void intersect(t_list *obj, t_ray *ray)
 {
 	int	ret;

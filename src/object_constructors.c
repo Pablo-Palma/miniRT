@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_constructors.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/13 18:30:33 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/18 14:05:33 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	camera(void *parent)
 	t_cam	*self;
 	char	**str;
 	char	**str_cordinates;
-	char	**str_normalized;
+	char	**str_orientation;
 
 	self = (t_cam *)malloc(sizeof(t_cam));
 	((t_obj *)parent)->child = self;
@@ -58,14 +58,14 @@ void	camera(void *parent)
 	self->view_point = (t_vec3){ft_atof(str_cordinates[0]),
 								ft_atof(str_cordinates[1]),
 								ft_atof(str_cordinates[2])};
-	str_normalized = ft_split(str[2], ',');
-	self->orientation = (t_vec3){ft_atof(str_normalized[0]),
-								ft_atof(str_normalized[1]),
-								ft_atof(str_normalized[2])};
+	str_orientation = ft_split(str[2], ',');
+	self->orientation = (t_vec3){ft_atof(str_orientation[0]),
+								ft_atof(str_orientation[1]),
+								ft_atof(str_orientation[2])};
 	self->fov = ft_atoi(str[3]);
 	dbfree(str);
 	dbfree(str_cordinates);
-	dbfree(str_normalized);
+	dbfree(str_orientation);
 }
 
 void	light(void *parent)
