@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 03:58:45 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 16:56:21 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,47 @@
 
 t_vec3	compute_ray_dir(int x, int y, t_cam cam)
 {
-	double	fov_rad = cam.fov * M_PI / 180.0;	//Lo convertimo a Radianes para poder utilizar funciones trigonométricas.
-	// (para converir a radian = alguno del campo de vision * pi / 180)
-	double	aspect_ratio = (double)WIN_WIDTH / (double)WIN_HEIGHT; //relacción aspecto, (ancho venta / alto ventana), MANTENER ESCALA.
-	double	scale = tan(fov_rad / 2.0);	//tamaño de imagen a escala
-	//CALCULAR LAS CORDENADAS EN EL ESPACIO DE LA IMAGEN-----
-	double	image_x = (2 * (x + 0.5) / (double)WIN_WIDTH - 1) * aspect_ratio * scale; //multiplicarlo mantiene la proporcion.
-	double	image_y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;	//	La altura del plano se deremina por la escala(vinculada al fov)
-	//-----------
-	//**	Construcción dirección del rayo, z en -1 por la dirección.
-	t_vec3	ray_dir = {image_x, image_y, -1};
-	return (ray_dir);
+    // Convert the field of view (fov) from degrees to radians
+    double fov_rad = cam.fov * M_PI / 180.0;
+
+    // Calculate the aspect ratio of the image (width / height)
+    double aspect_ratio = (double)WIN_WIDTH / (double)WIN_HEIGHT;
+
+    // Compute the scale factor based on the tangent of half the field of view
+    double scale = tan(fov_rad / 2.0);
+
+    // Calculate the coordinates on the image plane
+    // Normalize pixel coordinates to range [-1, 1]
+    double image_x = (2 * (x + 0.5) / (double)WIN_WIDTH - 1) * aspect_ratio * scale;
+    double image_y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;
+
+    // Compute the direction vector from the camera position to the pixel on the image plane
+    // Start with the camera direction vector
+    t_vec3 ray_dir = cam.orientation;
+
+    // Adjust the direction based on the coordinates on the image plane
+    ray_dir.x += image_x;
+    ray_dir.y += image_y;
+
+    // Normalize the direction vector
+    ray_dir = normalize(ray_dir);
+
+    return ray_dir;
 }
+
+// {
+// 	double	fov_rad = cam.fov * M_PI / 180.0;	//Lo convertimo a Radianes para poder utilizar funciones trigonométricas.
+// 	// (para converir a radian = alguno del campo de vision * pi / 180)
+// 	double	aspect_ratio = (double)WIN_WIDTH / (double)WIN_HEIGHT; //relacción aspecto, (ancho venta / alto ventana), MANTENER ESCALA.
+// 	double	scale = tan(fov_rad / 2.0);	//tamaño de imagen a escala
+// 	//CALCULAR LAS CORDENADAS EN EL ESPACIO DE LA IMAGEN-----
+// 	double	image_x = (2 * (x + 0.5) / (double)WIN_WIDTH - 1) * aspect_ratio * scale; //multiplicarlo mantiene la proporcion.
+// 	double	image_y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;	//	La altura del plano se deremina por la escala(vinculada al fov)
+// 	//-----------
+// 	//**	Construcción dirección del rayo, z en -1 por la dirección.
+// 	t_vec3	ray_dir = {image_x, image_y, -1};
+// 	return (ray_dir);
+// }
 
 void	render_scene(t_graph *graph, t_list *obj)
 {
