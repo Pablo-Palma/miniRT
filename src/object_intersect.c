@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:08:02 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/19 01:32:27 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 20:01:30 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,23 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 	return 0;
 }
 
+int intersect_light(t_light light, t_ray *ray)
+{
+    t_vec3 ray_to_light = vector_sub(light.pos, ray->origin);
+    double distance_to_light = vector_length(ray_to_light);
+    t_vec3 normalized_ray_direction = normalize(ray->direction);
+    double dot_product = vector_dot_product(normalized_ray_direction, ray_to_light);
+    t_vec3 projection = vector_scale(normalized_ray_direction, dot_product);
+    double distance_to_projection = vector_length(projection);
+    if (distance_to_projection <= distance_to_light)
+	{
+        ray->t = distance_to_projection;
+        return (1);
+    }
+    return (0);
+}
+
+
 
 //change values on ray.obj and ray.t seting the obj intercaction and value of t on parametrized line/vector
 void intersect(t_list *obj, t_ray *ray)
@@ -158,6 +175,8 @@ void intersect(t_list *obj, t_ray *ray)
         ret = intersect_sp(*(t_sphere *)(((t_obj *)(obj->content))->child), ray);
 	else if (!ft_strncmp(((t_obj *)(obj->content))->line, "cy", 2))
         ret = intersect_cyl(*(t_cyl *)(((t_obj *)(obj->content))->child), ray);
+	else if (!ft_strncmp(((t_obj *)(obj->content))->line, "L", 2))
+        ret = intersect_light(*(t_light *)(((t_obj *)(obj->content))->child), ray);
 	if (ret)
 		*ray->obj = obj;
 }

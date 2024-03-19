@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/18 14:05:33 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 21:45:28 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	a_light(void *parent)
 	char			**str;
 	char			**str_color;
 
-	self = malloc(sizeof(t_ambient_light));
+	self = (t_ambient_light *)malloc(sizeof(t_ambient_light));
 	((t_obj *)parent)->child = self;
 	str = ft_split(((t_obj *)parent)->line, ' ');
 	self->intensity = ft_atof(str[1]);

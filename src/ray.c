@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/19 03:47:48 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 21:42:03 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,31 @@ void	print_ray(t_ray *ray)
 		print_ray((t_ray *)ray->next->content);
 }
 
-void	ray_trace_light(t_ray *ray)
+void	ray_trace_light(t_list *obj_list, t_ray *ray)
 {
 	t_vec3	origin;
 	t_vec3	direction;
-	t_list	*light;
+	t_light	*light;
 
 	if (!(ray && *ray->obj))
 		return ;
-	light = objchr(*ray->obj, "L");
+	obj_list = objchr(obj_list, "L");
+	if (!ft_strncmp(((t_obj *)(obj_list->content))->line, "L", 1))
+		light = (t_light *)((t_obj *)(obj_list->content))->child;
+	else
+		light = NULL;
+	origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
 	while (light)
 	{
-		origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
-		direction = vector_sub(origin, ((t_light *)((t_obj *)light->content)->child)->pos);
+		direction = vector_sub(origin, light->pos);
 		ft_lstadd_back(&(ray->next), ft_lstnew(new_ray(origin, direction)));
-		*((t_ray *)ft_lstlast(ray->next)->content)->obj = light;
-		((t_ray *)ft_lstlast(ray->next)->content)->t = vector_length(direction);
-		light = light->next;
-		light = objchr(light, "L");
+		//*((t_ray *)ft_lstlast(ray->next)->content)->obj = light;
+		//*((t_ray *)ft_lstlast(ray->next)->content)->t = vector_length(direction);
+		obj_list = obj_list->next;
+		if (!ft_strncmp(((t_obj *)(obj_list->content))->line, "L", 1))
+			light = (t_light *)((t_obj *)(obj_list->content))->child;
+		else
+			light = NULL;
 	}
 }
 

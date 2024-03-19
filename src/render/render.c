@@ -6,39 +6,23 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 16:56:21 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 21:42:34 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-t_vec3	compute_ray_dir(int x, int y, t_cam cam)
+t_vec3 compute_ray_dir(int x, int y, t_cam cam)
 {
-    // Convert the field of view (fov) from degrees to radians
     double fov_rad = cam.fov * M_PI / 180.0;
-
-    // Calculate the aspect ratio of the image (width / height)
     double aspect_ratio = (double)WIN_WIDTH / (double)WIN_HEIGHT;
-
-    // Compute the scale factor based on the tangent of half the field of view
     double scale = tan(fov_rad / 2.0);
-
-    // Calculate the coordinates on the image plane
-    // Normalize pixel coordinates to range [-1, 1]
     double image_x = (2 * (x + 0.5) / (double)WIN_WIDTH - 1) * aspect_ratio * scale;
     double image_y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;
-
-    // Compute the direction vector from the camera position to the pixel on the image plane
-    // Start with the camera direction vector
     t_vec3 ray_dir = cam.orientation;
-
-    // Adjust the direction based on the coordinates on the image plane
     ray_dir.x += image_x;
     ray_dir.y += image_y;
-
-    // Normalize the direction vector
     ray_dir = normalize(ray_dir);
-
     return ray_dir;
 }
 
@@ -62,6 +46,7 @@ void	render_scene(t_graph *graph, t_list *obj)
 	t_cam			cam;
 	t_list			*cur;
 	t_list			*ray = NULL;
+	t_list			*cur_ray = NULL;
 	t_pixel			pixel;
 	int				ambient_color;
 
@@ -77,14 +62,32 @@ void	render_scene(t_graph *graph, t_list *obj)
 			cur = obj;
 			while (cur)
 			{
-				intersect(cur, (t_ray *)ray->content); //trace ray to obj && set ray.obj and ray.t
+				intersect(cur, (t_ray *)ray->content); //trace ray (t_list *) to obj && set ray.obj and ray.t
 				cur = cur->next;
 			}
 			if (*((t_ray *)ray->content)->obj)
 			{
-				ray_trace_light(ray->content);
+				ray_trace_light(obj, ray->content); //initializate one ray.content.next (which is also a t_list *) for each L with its direction
+				cur_ray = ((t_ray *)(ray->content))->next;
+				while (cur_ray)
+				{
+					cur = obj;
+					while (cur)
+					{
+						intersect(cur, (t_ray *)cur_ray->content); //trace each cur_ray to obj or light && set cur_ray.obj and cur_ray.t
+						cur = cur->next;
+					}
+
+					cur_ray = cur_ray->next;
+				}
 				ray_draw(ray->content, &pixel, ambient_light);
 				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+				// cur_ray = ((t_ray *)(ray->content))->next;
+				// if (!strncmp(((t_obj *)((*((t_list **)(((t_ray *)(cur_ray->content))->obj)))->content))->line, "L", 1))
+				// {
+				// 	ray_draw(ray->content, &pixel, ambient_light);
+				// 	put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+				// }
 			}
 			else
 			{
