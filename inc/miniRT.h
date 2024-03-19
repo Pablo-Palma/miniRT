@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 20:36:01 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/19 06:49:09 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,9 @@ void	cylinder(void *parent);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
-int	apply_checkerboard_texture(t_vec3 point);
-int	apply_checkerboard_texture_uv(double u, double v);
+int		apply_checkerboard_texture(t_vec3 point);
+int		apply_checkerboard_texture_uv(double u, double v);
 void	cap_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v);
+int		apply_checkerboard_texture_uv_cyl(double u, double v, t_cyl cyl);
 
 #endif

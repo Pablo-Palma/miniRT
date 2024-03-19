@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 13:16:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 19:51:58 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/19 07:09:23 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,20 @@ int	apply_checkerboard_texture_uv(double u, double v)
 	else
 		color = BLACK;
 	return (color);
+}
+
+int	apply_checkerboard_texture_uv_cyl(double u, double v, t_cyl cyl)
+{
+    double cuadroSize = cyl.radius / 2.0; // Esto determina el tamaño de los cuadros basado en el radio del cilindro
+
+    // Calcular la repetición del patrón basado en el tamaño del cuadro
+    double u_repeats = (2 * M_PI * cyl.radius) / cuadroSize; // Cuántos cuadros caben alrededor del cilindro
+    double v_repeats = cyl.h / cuadroSize; // Cuántos cuadros caben a lo largo de la altura del cilindro
+
+    // Aplicar la textura de tablero de ajedrez
+    int x = (int)(floor(u * u_repeats)) % 2;
+    int y = (int)(floor(v * v_repeats)) % 2;
+    int color = (x == y) ? WHITE : BLACK;
+
+    return color;
 }

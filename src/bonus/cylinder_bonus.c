@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 20:48:06 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/19 07:23:13 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,23 @@
 
 static void	cyl_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v)
 {
-	t_vec3	point_vector;
-
-	point_vector = vector_sub(hit_point, cyl.center);	//	Vector base cilindro a hit_point.
-	double	angle = atan2(point_vector.z, point_vector.x);	//	Angulo alrrededor del cilindro;
-	*u = fmod((angle / (2 * M_PI)) + 0.5, 1.0);	//	Nrmalizar U(0, 1).
-	double	height = vector_dot_product(point_vector, cyl.dir);	//	Altura del cilindro.
-	*v = fmod(height / cyl.h + 0.5, 1.0);	//normalizar v(0, 1).
+	t_vec3 cyl_dir_normalized = normalize(cyl.dir);
+	
+	t_vec3 point_vector = vector_sub(hit_point, cyl.center);
+	double proj_length = vector_dot_product(point_vector, cyl_dir_normalized);
+	t_vec3 proj_on_cyl_axis = vector_scale(cyl_dir_normalized, proj_length);
+	t_vec3 point_on_cyl_surface = vector_sub(point_vector, proj_on_cyl_axis);
+	
+	// Calcula el ángulo usando atan2 y asegúrate de que se use el plano correcto
+	double angle = atan2(point_on_cyl_surface.y, point_on_cyl_surface.x);  // Ajusta esto según la orientación del cilindro
+	
+	*u = (angle + M_PI) / (2 * M_PI);
+	*u = fmod(*u, 1.0);
+	
+	// Calcula la coordenada V basada en la proyección a lo largo del eje del cilindro
+	double height = proj_length + (cyl.h / 2.0);  // Ajusta para que 0 esté en la base del cilindro
+	*v = height / cyl.h;
+	*v = fmod(*v, 1.0);
 }
 
 t_vec3	cylinder_normal(t_vec3 hit_point, t_cyl cyl)
@@ -144,6 +154,20 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 	if (intersect_ray_cyl(ray_origin, ray_dir, cyl, &t))
 	{
 		t_vec3	hit_point = vector_add(ray_origin, vector_scale(ray_dir, t));
+		int cap_hit = intersect_cyl_caps(ray_origin, ray_dir, cyl, &t_cap);
+		if (scene->checkerboard)
+		{
+			if (cap_hit && t_cap < t)
+			{
+				cap_uv(hit_point, cyl, &u, &v);
+				checker_color = apply_checkerboard_texture_uv(u, v);
+			}
+			else
+			{
+				cyl_uv(hit_point, cyl, &u,&v);
+				checker_color = apply_checkerboard_texture_uv_cyl(u, v, cyl);
+			}
+		}
 		t_vec3	normal = cylinder_normal(hit_point, cyl);
 		int	shadowed = shadow_plane(scene, hit_point);
 		double	diffuse = 0;
@@ -154,15 +178,6 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 			diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
 			t_vec3 view_dir = normalize(vector_sub(scene->cam.view_point, hit_point));
     		specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
-		}
-		cyl_uv(hit_point, cyl, &u, &v);
-		if (scene->checkerboard)
-		{
-			if (intersect_cyl_caps(ray_origin, ray_dir, cyl, &t_cap) && t_cap < t)
-				apply_checkerboard_texture(hit_point);
-			else
-				cyl_uv(hit_point, cyl, &u, &v);
-			checker_color = apply_checkerboard_texture_uv(u, v);
 		}
     	int color = mix_colors(checker_color, diffuse, specular, *scene); // Ambient light contribution set to 0.1 arbitrarily
 
