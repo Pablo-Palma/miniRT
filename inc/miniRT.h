@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 23:02:47 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 03:50:02 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct s_graph
 
 typedef struct	s_pixel
 {
-	int			x;
 	int			y;
+	int			x;
 	int			color;
 	double		diffuse;
 	double		specular;

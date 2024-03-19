@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 03:04:27 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 03:49:57 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	render_scene(t_graph *graph, t_list *obj)
 	t_cam			cam;
 	t_list			*cur;
 	t_list			*ray = NULL;
-	t_pixel			pixel = (t_pixel){-1,-1,0,0,0};
+	t_pixel			pixel;
 	int				ambient_color;
 
 	if (objchr(obj, "A"))
 		ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj, "A")->content)->child;
 	cam = *(t_cam *)((t_obj *)objchr(obj, "C")->content)->child;
-	pixel.y = -1;
+	pixel = (t_pixel){-1,-1,0,0,0};
 	while (++pixel.y < WIN_HEIGHT)
 	{
-		pixel.x = -1;
+		pixel= (t_pixel){pixel.y,-1,0,0,0};
 		while (++pixel.x < WIN_WIDTH)
 		{
 			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(cam.view_point, compute_ray_dir(pixel.x, pixel.y , cam))));

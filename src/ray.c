@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/19 03:01:50 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 03:47:48 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ray_trace_light(t_ray *ray)
 // 	pix->color = mix_colors(ambient_light, CIAN, pix->diffuse, pix->specular);
 // }
 
-void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light)
+void	ray_draw(t_ray *ray, t_pixel *pxl, t_ambient_light ambient_light)
 {
 	t_light	*light = ((t_light *)((t_obj *)objchr(*ray->obj, "L")->content)->child);
 	
@@ -123,9 +123,8 @@ void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light)
 	t_vec3	norm = get_normal((t_list *)(*(ray->obj)), point);
 	light_dir = normalize(vector_negate(((t_ray *)ray->next->content)->direction));
 	view_dir = normalize(vector_negate(ray->direction));
-	pix->diffuse = calculate_diffuse(light_dir, norm, light->brigthness);
-	pix->specular = calculate_specular(view_dir, light_dir, norm, 0.1, 100000.0);
-
-	pix->color = mix_colors(ambient_light, CIAN, pix->diffuse, pix->specular);
+	pxl->diffuse = calculate_diffuse(light_dir, norm, light->brigthness);
+	pxl->specular = calculate_specular(view_dir, light_dir, norm, 0.1, 100000.0);
+	pxl->color = mix_colors(ambient_light, CIAN, pxl->diffuse, pxl->specular);
 }
 

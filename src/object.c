@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:21:29 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/19 03:44:58 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 03:53:26 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ t_list *get_objects(int fd)
 	{
 		if (*line == 'A')
 			line_ambient_light = line;
-		if (*line == 'C')
+		else if (*line == 'C')
 			line_cam = line;
-		if (*line == 'L')
+		else if (*line == 'L')
 			ft_lstadd_back(&obj, ft_lstnew(new_obj((t_obj){line, NULL})));
 		else
 			ft_lstadd_front(&obj, ft_lstnew(new_obj((t_obj){line, NULL})));
