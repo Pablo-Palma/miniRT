@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/18 23:38:28 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 03:01:50 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ray_trace_light(t_ray *ray)
 	light = objchr(*ray->obj, "L");
 	while (light)
 	{
-		origin = vector_scale(ray->direction, ray->t);
+		origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
 		direction = vector_sub(origin, ((t_light *)((t_obj *)light->content)->child)->pos);
 		ft_lstadd_back(&(ray->next), ft_lstnew(new_ray(origin, direction)));
 		*((t_ray *)ft_lstlast(ray->next)->content)->obj = light;
@@ -89,25 +89,42 @@ void	ray_trace_light(t_ray *ray)
 	}
 }
 
+// void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light)
+// {
+// 	t_list	*obj;
+// 	t_light	*light;
+// 	t_vec3	view_dir;
+// 	t_vec3	light_dir;
+
+
+// 	obj = (t_list *)(*(ray->obj));
+// 	if (!obj)
+// 		return;
+// 	light = ((t_light *)((t_list *)*(((t_ray *)(ray->next->content))->obj)));
+
+// 	t_vec3	point = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
+// 	t_vec3	norm = get_normal(obj, point);
+// 	light_dir = normalize(vector_sub(light->pos, point));
+// 	view_dir = normalize(vector_negate(ray->direction));
+// 	pix->diffuse += calculate_diffuse(light_dir, norm, light->brigthness);
+// 	pix->specular += calculate_specular(view_dir, light_dir, norm, 0.1, 100000.0);
+
+// 	pix->color = mix_colors(ambient_light, CIAN, pix->diffuse, pix->specular);
+// }
+
 void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light)
 {
-	t_list	*obj;
-	t_light	*light;
+	t_light	*light = ((t_light *)((t_obj *)objchr(*ray->obj, "L")->content)->child);
+	
 	t_vec3	view_dir;
 	t_vec3	light_dir;
 
-
-	obj = (t_list *)(*(ray->obj));
-	if (!obj)
-		return;
-	light = ((t_light *)((t_list *)*(((t_ray *)(ray->next->content))->obj)));
-
-	t_vec3	point = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
-	t_vec3	norm = get_normal(obj, point);
-	light_dir = normalize(vector_sub(light->pos, point));
+	t_vec3	point = ((t_ray *)ray->next->content)->origin;
+	t_vec3	norm = get_normal((t_list *)(*(ray->obj)), point);
+	light_dir = normalize(vector_negate(((t_ray *)ray->next->content)->direction));
 	view_dir = normalize(vector_negate(ray->direction));
-	pix->diffuse += calculate_diffuse(light_dir, norm, light->brigthness);
-	pix->specular += calculate_specular(view_dir, light_dir, norm, 0.1, 100000.0);
+	pix->diffuse = calculate_diffuse(light_dir, norm, light->brigthness);
+	pix->specular = calculate_specular(view_dir, light_dir, norm, 0.1, 100000.0);
 
 	pix->color = mix_colors(ambient_light, CIAN, pix->diffuse, pix->specular);
 }

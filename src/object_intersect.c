@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:08:02 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/18 16:11:16 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 01:32:27 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	intersect_pl(t_plane plane, t_ray *ray)
 
 static int intersect_sp(t_sphere sphere, t_ray *ray)
 {
-	t_vec3 oc = {ray->origin.x - sphere.center.x, ray->origin.y - sphere.center.y, ray->origin.z - sphere.center.z};
+	t_vec3 oc = vector_sub(ray->origin, sphere.center);
 	double a = vector_dot_product(ray->direction, ray->direction);
 	double b = 2.0 * vector_dot_product(oc, ray->direction);
 	double c = vector_dot_product(oc, oc) - sphere.radius * sphere.radius;
@@ -41,7 +41,7 @@ static int intersect_sp(t_sphere sphere, t_ray *ray)
 	    ray->t = t0;
 	else if (t1 > 0 && (t1 < ray->t || ray->t < 0))
 	    ray->t = t1;
-	else 
+	else
 	    return 0;
 	return 1;
 }

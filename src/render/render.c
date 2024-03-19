@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 23:37:30 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 03:04:27 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	render_scene(t_graph *graph, t_list *obj)
 		pixel.x = -1;
 		while (++pixel.x < WIN_WIDTH)
 		{
-			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(cam.orientation, compute_ray_dir(pixel.x, pixel.y , cam))));
+			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(cam.view_point, compute_ray_dir(pixel.x, pixel.y , cam))));
 			cur = obj;
 			while (cur)
 			{
@@ -54,10 +54,8 @@ void	render_scene(t_graph *graph, t_list *obj)
 			}
 			if (*((t_ray *)ray->content)->obj)
 			{
-				print_ray(ray->content);
-				ray_trace_light((t_ray *)ray->content);
-				ray_draw((t_ray *)ray->content, &pixel, ambient_light);
-				pixel.color = trace_light(obj, (t_ray *)ft_lstlast(ray)->content);
+				ray_trace_light(ray->content);
+				ray_draw(ray->content, &pixel, ambient_light);
 				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
 			}
 			else

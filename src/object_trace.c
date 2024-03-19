@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:36:23 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/18 23:37:39 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 02:25:37 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@ static int	trace_light_sp(t_list *obj, t_ray *ray)
 	t_ambient_light ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj, "A")->content)->child;
 	t_light			light = *((t_light *)((t_obj *)objchr(obj, "L")->content)->child);
 
-	t_vec3	point;
-	t_vec3	norm;
 	t_vec3	view_dir;
 	t_vec3	light_dir;
-	double	diffuse;
-	double	specular;
+	double	diffuse = 0.0;
+	double	specular = 0.0;
 
-	point = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
-	norm = get_normal(obj, point);
-	light_dir = normalize(vector_sub(light.pos, point));
+	t_vec3	point = ((t_ray *)ray->next->content)->origin;
+	t_vec3	norm = get_normal((t_list *)*(ray->obj), point);
+	light_dir = normalize(vector_negate(((t_ray *)ray->next->content)->direction));
 	view_dir = normalize(vector_negate(ray->direction));
 	diffuse = calculate_diffuse(light_dir, norm, light.brigthness);
 	specular = calculate_specular(view_dir, light_dir, norm, 0.01, 100000.0);
