@@ -45,7 +45,7 @@ LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 ifeq ($(UNAME), Darwin)
     MLX_FLAGS := -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 else
-    MLX_FLAGS := -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+    MLX_FLAGS := -L$(MLX_DIR) -lmlx -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 endif
 LIBS = $(LIBFT_FLAGS) $(MLX_FLAGS)
 
@@ -55,7 +55,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 ifeq ($(UNAME), Darwin)
     MLX := $(MLX_DIR)/libmlx.dylib
 else
-    MLX := $(MLX_DIR)/libmlx_Linux.a
+    MLX := $(MLX_DIR)/libmlx.a
 endif
 LIBS = $(LIBFT_FLAGS) $(MLX_FLAGS)
 
@@ -86,7 +86,7 @@ $(MLX): $(MLX_DIR)
 	@$(MAKE) -C $(MLX_DIR)
 	@echo "MLX compiled successfully!"
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@$(CC) -o $(NAME) $(OBJS) $(INCLUDE) $(LIBS)
 	@echo "miniRT compiled successfully!"
 
@@ -106,5 +106,8 @@ re: fclean all
 
 unzip:
 	@tar -xvf $(MLX_FILE)
+
+up:
+	@$(MAKE) -C $(MLX_DIR)
 
 .PHONY: all clean fclean re mac
