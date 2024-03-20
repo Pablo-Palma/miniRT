@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 04:01:22 by math             ###   ########.fr       */
+/*   Updated: 2024/03/20 18:32:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_ray
 {
     t_vec3			origin;
     t_vec3			direction;
-	t_list			**obj;
+	t_list			*obj;
     double			t;
 	t_list			*next;
 }					t_ray;

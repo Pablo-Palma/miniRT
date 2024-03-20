@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:36:23 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/19 21:42:22 by math             ###   ########.fr       */
+/*   Updated: 2024/03/20 18:33:11 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	trace_light_sp(t_list *obj, t_ray *ray)
 	double	specular = 0.0;
 
 	t_vec3	point = ((t_ray *)ray->next->content)->origin;
-	t_vec3	norm = get_normal((t_list *)*(ray->obj), point);
+	t_vec3	norm = get_normal((t_list *)(ray->obj), point);
 	light_dir = normalize(vector_negate(((t_ray *)ray->next->content)->direction));
 	view_dir = normalize(vector_negate(ray->direction));
 	diffuse = calculate_diffuse(light_dir, norm, light.brigthness);
