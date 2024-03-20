@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:08:02 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/20 18:32:55 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 20:01:30 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,5 @@ void intersect(t_list *obj, t_ray *ray)
 	else if (!ft_strncmp(((t_obj *)(obj->content))->line, "L", 2))
         ret = intersect_light(*(t_light *)(((t_obj *)(obj->content))->child), ray);
 	if (ret)
-		ray->obj = obj;
+		*ray->obj = obj;
 }

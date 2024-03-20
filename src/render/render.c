@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/20 18:35:13 by math             ###   ########.fr       */
+/*   Updated: 2024/03/19 21:42:34 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	render_scene(t_graph *graph, t_list *obj)
 				intersect(cur, (t_ray *)ray->content); //trace ray (t_list *) to obj && set ray.obj and ray.t
 				cur = cur->next;
 			}
-			if (((t_ray *)ray->content)->obj)
+			if (*((t_ray *)ray->content)->obj)
 			{
 				ray_trace_light(obj, ray->content); //initializate one ray.content.next (which is also a t_list *) for each L with its direction
 				cur_ray = ((t_ray *)(ray->content))->next;
