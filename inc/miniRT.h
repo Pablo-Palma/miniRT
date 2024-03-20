@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 06:49:09 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:27:18 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double *t);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -135,6 +136,7 @@ int	shadow(t_scene *scene, t_vec3 hit_point, t_light light, t_vec3 normal);
 int shadow_plane(t_scene *scene, t_vec3 hit_point);
 double	calculate_specular(t_vec3 view_dir, t_vec3 ligh_dir, t_vec3 normal, double intensity, double shine);
 double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightness);
+t_vec3	reflect(t_vec3 v, t_vec3 n);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -197,5 +199,9 @@ int		apply_checkerboard_texture(t_vec3 point);
 int		apply_checkerboard_texture_uv(double u, double v);
 void	cap_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v);
 int		apply_checkerboard_texture_uv_cyl(double u, double v, t_cyl cyl);
+int	calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,
+	t_vec3 incident_ray);
+int	trace_ray(t_vec3 origin, t_vec3 dir, t_scene *scene);
+int	mix_colors_reflect(int	reflected_color, int base_color, double reflectivity);
 
 #endif

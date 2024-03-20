@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 07:23:13 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:25:12 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,24 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 	int		hit = 0;
 	int		i = 0;
 	double	sign = 1.0;
+	*t_cap = INFINITY;
 
 	while(i < 2)
 	{
 		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
-		double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / vector_dot_product(dir, cap_normal);
-		if (d >= 0 && d < *t_cap)
+		double denominator = vector_dot_product(dir, cap_normal);
+		if (fabs(denominator) > EPSILON)
 		{
-			t_vec3	p = vector_add(origin, vector_scale(dir, d));
-			double	distance = vector_length(vector_sub(p, cap_center));
-			if (distance <= cyl.radius)
+			double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / denominator;
+			if (d >= 0 && d < *t_cap)
 			{
-				cap_t[i] = d;
-				hit = 1;
+				t_vec3	p = vector_add(origin, vector_scale(dir, d));
+				double	distance = vector_length(vector_sub(p, cap_center));
+				if (distance <= cyl.radius + EPSILON)
+				{
+					cap_t[i] = d;
+					hit = 1;
+				}
 			}
 		}
 		i++;
@@ -144,31 +149,42 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 {
 	t_cyl	cyl = scene->cyl;
 	t_vec3	ray_origin = scene->cam.view_point;
-	double	t;
+	double	t = 0;
 	double	u;
 	double	v;
 	int		checker_color;
 	double	t_cap;
+	double	t_body;
 	
 	checker_color = cyl.color;
-	if (intersect_ray_cyl(ray_origin, ray_dir, cyl, &t))
+	int body_hit = intersect_ray_cyl(ray_origin, ray_dir, cyl, &t_body);
+	int cap_hit = intersect_cyl_caps(ray_origin, ray_dir, cyl, &t_cap);
+	if (body_hit || cap_hit)
 	{
+		if (body_hit && (!cap_hit || t_body < t_cap))
+            t = t_body;  // El cuerpo del cilindro es lo más cercano
+		else if (cap_hit)
+            t = t_cap;  // La tapa del cilindro es lo más cercano
 		t_vec3	hit_point = vector_add(ray_origin, vector_scale(ray_dir, t));
-		int cap_hit = intersect_cyl_caps(ray_origin, ray_dir, cyl, &t_cap);
-		if (scene->checkerboard)
+		t_vec3	normal;
+		if (t == t_cap)
 		{
-			if (cap_hit && t_cap < t)
+			normal = vector_dot_product(vector_sub(hit_point, cyl.center), cyl.dir) > 0 ? cyl.dir : vector_negate(cyl.dir);
+			if (scene->checkerboard)
 			{
 				cap_uv(hit_point, cyl, &u, &v);
 				checker_color = apply_checkerboard_texture_uv(u, v);
 			}
-			else
+		}
+		else
+		{
+			normal = cylinder_normal(hit_point, cyl);
+			if (scene->checkerboard)
 			{
 				cyl_uv(hit_point, cyl, &u,&v);
 				checker_color = apply_checkerboard_texture_uv_cyl(u, v, cyl);
 			}
 		}
-		t_vec3	normal = cylinder_normal(hit_point, cyl);
 		int	shadowed = shadow_plane(scene, hit_point);
 		double	diffuse = 0;
 		double	specular = 0;

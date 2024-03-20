@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane.c                                            :+:      :+:    :+:   */
+/*   plane_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:03:29 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 14:36:12 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/19 19:35:49 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,15 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 			diffuse = 0.0;
 			specular = 0.0;
 		}
-		if(scene->checkerboard)
+		if (scene->checkerboard)
 			base_color = apply_checkerboard_texture(hit_point);
-		color = mix_colors(base_color, diffuse, specular, *scene);
+		if (scene->plane.reflective)
+		{
+			int	reflected_color = calculate_reflection(hit_point, normal, scene, ray_dir);
+			color = mix_colors_reflect(reflected_color, base_color, 0.9);
+		}
+		else
+			color = mix_colors(base_color, diffuse, specular, *scene);
 		put_pixel_to_image(graph, x, y, color);
 		return (1);
 	}

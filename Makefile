@@ -22,6 +22,7 @@ SRCS_FILES =	main/main.c								\
 BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
 				bonus/sphere_bonus.c bonus/cylinder_bonus.c		\
 				bonus/cylinder_utils_bonus.c					\
+				bonus/reflection_bonus.c	\
 				main/main.c								\
 				init/init.c								\
 				window/setup.c window/events.c			\
