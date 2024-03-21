@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:01:35 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/13 18:35:02 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/21 19:33:39 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,16 @@ static void	print_cylinder(void *obj)
 
 void	print_obj(void *self)
 {
-	if (!ft_strncmp(((t_obj *)self)->line, "A", 1)) //ambient light
+	if (is_child((t_obj *)self, "A")) //ambient light
 		print_a_light(((t_obj *)self)->child);
-	else if (!ft_strncmp(((t_obj *)self)->line, "C", 1)) //camera
+	else if (is_child((t_obj *)self, "C")) //camera
 		print_camera(((t_obj *)self)->child);
-	else if (!ft_strncmp(((t_obj *)self)->line, "L", 1)) //light
+	else if (is_child((t_obj *)self, "L")) //light
 		print_light(((t_obj *)self)->child);
-	else if (!ft_strncmp(((t_obj *)self)->line, "sp", 2)) //sphere
+	else if (is_child((t_obj *)self, "sp")) //sphere
 		print_sphere(((t_obj *)self)->child);
-	else if (!ft_strncmp(((t_obj *)self)->line, "pl", 2)) //plane
+	else if (is_child((t_obj *)self, "pl")) //plane
 		print_plane(((t_obj *)self)->child);
-	else if (!ft_strncmp(((t_obj *)self)->line, "cy", 2)) //cylinder
+	else if (is_child((t_obj *)self, "cy")) //cylinder
 		print_cylinder(((t_obj *)self)->child);
 }

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 04:01:22 by math             ###   ########.fr       */
+/*   Updated: 2024/03/21 23:45:39 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,17 @@ typedef struct s_obj
 {
 	char	*line;
 	void	*child;
+	t_vec3	**origin;
+	int		*color;
 }			t_obj;
 
 typedef struct	s_ray
 {
     t_vec3			origin;
     t_vec3			direction;
-	t_list			**obj;
     double			t;
-	t_list			*next;
+	t_obj			**obj;
+	t_list			**next;
 }					t_ray;
-
-// typedef struct	s_ray
-// {
-//     t_vec3			origin;
-//     t_vec3			direction;
-// 	t_list			**obj;
-//     double			t;
-// 	t_list			*light_list;
-// 	t_vec3			*reflect;
-// 	t_vec3			*refract;
-// }					t_ray;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 21:42:34 by math             ###   ########.fr       */
+/*   Updated: 2024/03/21 23:12:07 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_vec3 compute_ray_dir(int x, int y, t_cam cam)
     t_vec3 ray_dir = cam.orientation;
     ray_dir.x += image_x;
     ray_dir.y += image_y;
-    ray_dir = normalize(ray_dir);
     return ray_dir;
 }
 
@@ -40,61 +39,79 @@ t_vec3 compute_ray_dir(int x, int y, t_cam cam)
 // 	return (ray_dir);
 // }
 
-void	render_scene(t_graph *graph, t_list *obj)
+void	render_scene(t_graph *graph, t_list *obj_list)
 {
 	t_ambient_light	ambient_light;
 	t_cam			cam;
 	t_list			*cur;
-	t_list			*ray = NULL;
+	t_list			**ray_list = (t_list **)malloc(sizeof(t_list *));
 	t_list			*cur_ray = NULL;
 	t_pixel			pixel;
 	int				ambient_color;
 
-	ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj, "A")->content)->child;
-	cam = *(t_cam *)((t_obj *)objchr(obj, "C")->content)->child;
+	*ray_list = NULL;
+	ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj_list, "A")->content)->child;
+	cam = *(t_cam *)((t_obj *)objchr(obj_list, "C")->content)->child;
 	pixel = (t_pixel){-1,-1,0,0,0};
 	while (++pixel.y < WIN_HEIGHT)
 	{
 		pixel = (t_pixel){pixel.y,-1,0,0,0};
 		while (++pixel.x < WIN_WIDTH)
 		{
-			ft_lstadd_back(&ray, ft_lstnew((void *)new_ray(cam.view_point, compute_ray_dir(pixel.x, pixel.y , cam))));
-			cur = obj;
+			//TRACING RAY CAM TO OBJ
+			ft_lstadd_back(ray_list, ft_lstnew((void *)new_ray(cam.view_point, compute_ray_dir(pixel.x, pixel.y , cam))));
+			cur = obj_list;
 			while (cur)
 			{
-				intersect(cur, (t_ray *)ray->content); //trace ray (t_list *) to obj && set ray.obj and ray.t
+				intersect(cur->content, (t_ray *)(*ray_list)->content);
 				cur = cur->next;
 			}
-			if (*((t_ray *)ray->content)->obj)
-			{
-				ray_trace_light(obj, ray->content); //initializate one ray.content.next (which is also a t_list *) for each L with its direction
-				cur_ray = ((t_ray *)(ray->content))->next;
-				while (cur_ray)
-				{
-					cur = obj;
-					while (cur)
-					{
-						intersect(cur, (t_ray *)cur_ray->content); //trace each cur_ray to obj or light && set cur_ray.obj and cur_ray.t
-						cur = cur->next;
-					}
-
-					cur_ray = cur_ray->next;
-				}
-				ray_draw(ray->content, &pixel, ambient_light);
-				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
-				// cur_ray = ((t_ray *)(ray->content))->next;
-				// if (!strncmp(((t_obj *)((*((t_list **)(((t_ray *)(cur_ray->content))->obj)))->content))->line, "L", 1))
-				// {
-				// 	ray_draw(ray->content, &pixel, ambient_light);
-				// 	put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
-				// }
-			}
-			else
+			if (!*((t_ray *)(*ray_list)->content)->obj) // FIRST RAY REACH VOID
 			{
 				ambient_color = mix_colors(ambient_light, ambient_light.color, ambient_light.intensity, 0.0);
 				put_pixel_to_image(graph, pixel.x, pixel.y, ambient_color);
+				ft_lstclear(ray_list, delete_ray);
+				continue ;
 			}
-			ft_lstclear(&ray, delete_ray);
+			//TRACING TO LIGHTS
+			ray_trace_light((*ray_list)->content, obj_list); //initializate one ray.content.next (which is a t_list **), to each L, with its direction
+			cur_ray = *((t_ray *)((*ray_list)->content))->next;
+			while (cur_ray)
+			{
+				cur = obj_list;
+				while (cur) // && to avoid self intersection
+				{
+					if (cur->content != *((t_ray *)(*ray_list)->content)->obj)
+						intersect(cur->content, (t_ray *)cur_ray->content); //trace each cur_ray to obj or light && set cur_ray.obj and cur_ray.t
+					cur = cur->next;
+				}
+				cur_ray = cur_ray->next;
+			}
+			//TRACING IMAGE
+				//empty
+
+			// COMPUTING RAY
+			cur_ray = *((t_ray *)((*ray_list)->content))->next;
+			if (*((t_ray *)cur_ray->content)->obj)
+			{
+				if (is_child(*((t_ray *)(cur_ray->content))->obj, "L"))
+				{
+					ray_draw((*ray_list)->content, &pixel, ambient_light);
+					put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+				}
+				// else //intersect other obj
+				// {
+				// 	ray_draw((*ray_list)->content, &pixel, ambient_light);
+				// 	put_pixel_to_image(graph, pixel.x, pixel.y, GREEN);
+				// }
+			}
+			// else //intersect void
+			// {
+			// 	ray_draw((*ray_list)->content, &pixel, ambient_light);
+			// 	put_pixel_to_image(graph, pixel.x, pixel.y, 0xFF0000);
+			// }
+			// // CLEANING
+			ft_lstclear(ray_list, delete_ray);
 		}
 	}
 }

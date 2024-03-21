@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/19 21:45:28 by math             ###   ########.fr       */
+/*   Updated: 2024/03/21 23:52:35 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	a_light(void *parent)
 				| (ft_atoi(str_color[1]) << 8)
 				| (ft_atoi(str_color[2])));
 	dbfree(str);
-	dbfree(str_color);	
+	dbfree(str_color);
+	*((t_obj *)parent)->color = self->color;
 }
 
 void	camera(void *parent)
@@ -66,6 +67,7 @@ void	camera(void *parent)
 	dbfree(str);
 	dbfree(str_cordinates);
 	dbfree(str_orientation);
+	*((t_obj *)parent)->origin = &self->view_point;
 }
 
 void	light(void *parent)
@@ -90,6 +92,8 @@ void	light(void *parent)
 	dbfree(str);
 	dbfree(str_cordinates);
 	// dbfree(str_color);
+	*((t_obj *)parent)->origin = &self->pos;
+	// *((t_obj *)parent)->color = self->color;
 }
 
 void	sphere(void *parent)
@@ -114,6 +118,8 @@ void	sphere(void *parent)
 	dbfree(str);
 	dbfree(str_cordinates);
 	dbfree(str_color);
+	*((t_obj *)parent)->origin = &self->center;
+	*((t_obj *)parent)->color = self->color;
 }
 
 void	plane(void *parent)
@@ -143,6 +149,8 @@ void	plane(void *parent)
 	dbfree(str_point);
 	dbfree(str_normalized);
 	dbfree(str_color);
+	*((t_obj *)parent)->origin = &self->point;
+	*((t_obj *)parent)->color = self->color;
 }
 
 void	cylinder(void *parent)
@@ -174,4 +182,6 @@ void	cylinder(void *parent)
 	dbfree(str_center);
 	dbfree(str_dir);
 	dbfree(str_color);
+	*((t_obj *)parent)->origin = &self->center;
+	*((t_obj *)parent)->color = self->color;
 }

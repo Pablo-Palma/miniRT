@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 20:22:46 by math             ###   ########.fr       */
+/*   Updated: 2024/03/21 21:14:53 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,10 @@ t_list	*get_objects(int fd);
 t_list	*objchr(t_list *obj, char *str);
 int		obj_next(t_list **obj_ptr, char *str);
 void	print_obj(void *self);
-void 	intersect(t_list *obj, t_ray *ray);
+void 	intersect(t_obj *obj, t_ray *ray);
 int 	trace_light(t_list *obj, t_ray *ray);
-t_vec3	get_normal(t_list *obj, t_vec3 point);
+t_vec3	get_normal(t_obj *obj, t_vec3 point);
+bool	is_child(t_obj *self, char *str);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -164,8 +165,9 @@ void	cylinder(void *parent);
 
 t_ray	*new_ray(t_vec3 origin, t_vec3 direction);
 void	delete_ray(void *param);
-void	ray_trace_light(t_list *obj_list, t_ray *ray);
+void	ray_trace_light(t_ray *ray, t_list *obj_list);
 void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
 void	print_ray(t_ray *ray);
+void	print_ray_list(t_list *ray, int level);
 
 #endif
