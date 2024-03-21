@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 13:16:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 07:09:23 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:13:44 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ int	apply_checkerboard_texture_uv_cyl(double u, double v, t_cyl cyl)
     // Aplicar la textura de tablero de ajedrez
     int x = (int)(floor(u * u_repeats)) % 2;
     int y = (int)(floor(v * v_repeats)) % 2;
-    int color = (x == y) ? WHITE : BLACK;
+    int color;
+	if  (x == y) 
+		color = WHITE;
+	else
+		color = BLACK;
 
-    return color;
+    return (color);
 }

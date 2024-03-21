@@ -6,12 +6,14 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/20 16:25:12 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:14:03 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h" 
-
+/* en las coordenadas UV, la U representa el eje horizontal en el cuerpo del cilindro
+	y la V el eje vertical en el cuerpo del cilindro
+*/
 static void	cyl_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v)
 {
 	t_vec3 cyl_dir_normalized = normalize(cyl.dir);
@@ -24,11 +26,11 @@ static void	cyl_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v)
 	// Calcula el ángulo usando atan2 y asegúrate de que se use el plano correcto
 	double angle = atan2(point_on_cyl_surface.y, point_on_cyl_surface.x);  // Ajusta esto según la orientación del cilindro
 	
-	*u = (angle + M_PI) / (2 * M_PI);
-	*u = fmod(*u, 1.0);
+	*u = (angle + M_PI) / (2 * M_PI);	//	lo escalamos de (-pi, pi) a (0, 1).
+	*u = fmod(*u, 1.0);	//Aseguramos que es de 0 a 1.
 	
 	// Calcula la coordenada V basada en la proyección a lo largo del eje del cilindro
-	double height = proj_length + (cyl.h / 2.0);  // Ajusta para que 0 esté en la base del cilindro
+	double height = proj_length + (cyl.h / 2.0);  // Ajusta para que 0 esté en la base del cilindro, osea hayar la altura.
 	*v = height / cyl.h;
 	*v = fmod(*v, 1.0);
 }
@@ -173,7 +175,7 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
 			if (scene->checkerboard)
 			{
 				cap_uv(hit_point, cyl, &u, &v);
-				checker_color = apply_checkerboard_texture_uv(u, v);
+				checker_color = apply_checkerboard_texture_uv_cyl(u, v, cyl);
 			}
 		}
 		else
