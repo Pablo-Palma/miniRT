@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:10:38 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/22 11:17:25 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:55:32 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ int trace_ray_for_reflection(t_vec3 origin, t_vec3 dir, t_scene *scene, int dept
     if(handle_sphere_intersec(ray_dir, scene, origin.x, origin.y, NULL))
 	{
 		int color = handle_sphere_intersec(ray_dir, scene, origin.x, origin.y, NULL);
+		return(color);
+    }
+	if (handle_cyl_intersec(ray_dir, scene, origin.x, origin.y, NULL))
+	{
+		int color = handle_cyl_intersec(ray_dir, scene, origin.x, origin.y, NULL);
 		return(color);
     }
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/21 11:14:03 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:49:05 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
     	int color = mix_colors(checker_color, diffuse, specular, *scene); // Ambient light contribution set to 0.1 arbitrarily
 
     	put_pixel_to_image(graph, x, y, color);
-    	return 1; // Intersección encontrada
+    	return (color); // Intersección encontrada
 	}
 	return 0; // No hubo intersección
 }
