@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/20 15:05:52 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:27:03 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	old_scene_one(t_scene *scene)
 
 static void	old_scene_two(t_scene *scene)
 {
-	scene->checkerboard = 1;
+	scene->checkerboard = 0;
 	scene->cam = (t_cam)
 	{
 		.view_point = {0, 0, 10}, // 5 unidades detrás del origen de z.
@@ -80,8 +80,8 @@ static void	old_scene_two(t_scene *scene)
 
 	scene->sphere = (t_sphere){
 		.center = {-4, 2, 0},
-		.radius = 2 
-		//.color = 0xFF5733
+		.radius = 2, 
+		.color = CIAN
 	};
 
 	scene->plane = (t_plane)
@@ -89,7 +89,7 @@ static void	old_scene_two(t_scene *scene)
 		.point = {0, -3, 0},
 		.normal = {0, 1, 0},
 		.color = WHITE,
-		.reflective = 0
+		.reflective = 1
 	};
 
 	scene->light = (t_light){

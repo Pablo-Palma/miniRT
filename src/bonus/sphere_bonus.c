@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:55:48 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 19:31:44 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:02:25 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph
 			checker_color = CIAN;
 		color = mix_colors(checker_color, diffuse, specular, *scene);
 		put_pixel_to_image(graph, x, y, color);
-		return (1);
+		return (color);
 	}
 	return (0);
 }

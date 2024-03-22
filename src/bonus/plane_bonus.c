@@ -6,12 +6,12 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:03:29 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 19:35:49 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:16:19 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
-#include "checkerboard.h"
+#include "miniRT.h"
+//#include "checkerboard.h"
 
 int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double *t)
 {
@@ -30,7 +30,7 @@ int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double
 int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph)
 {
 	int	shadowed;
-	int	color;
+	int	color = WHITE;
 	t_vec3	hit_point;
 	t_vec3	normal;
 	t_vec3	light_dir;
@@ -61,8 +61,14 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 			base_color = apply_checkerboard_texture(hit_point);
 		if (scene->plane.reflective)
 		{
-			int	reflected_color = calculate_reflection(hit_point, normal, scene, ray_dir);
-			color = mix_colors_reflect(reflected_color, base_color, 0.9);
+			t_vec3 reflect_dir = reflect(ray_dir, normal);
+			if (trace_ray_for_reflection(hit_point, reflect_dir, scene, 1))
+			{
+				int reflacted_color = trace_ray_for_reflection(hit_point, reflect_dir, scene, 1);
+				color = mix_colors(reflacted_color, diffuse, specular, *scene);
+			}
+			else
+				color = mix_colors(base_color, diffuse, specular, *scene);
 		}
 		else
 			color = mix_colors(base_color, diffuse, specular, *scene);

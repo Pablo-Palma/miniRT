@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/21 11:13:49 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/22 09:36:19 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,5 +203,6 @@ int	calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,
 	t_vec3 incident_ray);
 int	trace_ray(t_vec3 origin, t_vec3 dir, t_scene *scene);
 int	mix_colors_reflect(int	reflected_color, int base_color, double reflectivity);
+int trace_ray_for_reflection(t_vec3 origin, t_vec3 dir, t_scene *scene, int depth);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:10:38 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 19:36:29 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:17:25 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,35 @@ int	trace_ray(t_vec3 origin, t_vec3 dir, t_scene *scene)
 	{
 		closest_t = t;
 		hit_color = handle_sphere_intersec(ray_dir, scene, 0, 0, NULL);
-		printf("%d\n", hit_color);
+		printf("Into sphere: %d\n", hit_color);
 	}
 	if (intersect_ray_cyl(origin, ray_dir,scene->cyl, &t) && t < closest_t)
 	{
 		closest_t = t;
 		hit_color = handle_cyl_intersec(ray_dir, scene, 0, 0, NULL);
+		printf("Into cyl: %d\n", hit_color);
 	}
 	if (intersect_ray_plane(origin, ray_dir, scene->plane, &t) && t < closest_t)
 	{
 		closest_t = t;
 		hit_color = handle_plane_intersec(ray_dir, scene, 0, 0, NULL);
+		printf("into plane: %d\n", hit_color);
 	}
 	if (closest_t < INFINITY)
 		color = hit_color;
 	return(color);
+}
+
+int trace_ray_for_reflection(t_vec3 origin, t_vec3 dir, t_scene *scene, int depth)
+{
+    if (depth <= 0) return 0;
+
+    t_vec3 ray_dir = normalize(dir);
+
+    if(handle_sphere_intersec(ray_dir, scene, origin.x, origin.y, NULL))
+	{
+		int color = handle_sphere_intersec(ray_dir, scene, origin.x, origin.y, NULL);
+		return(color);
+    }
+	return (0);
 }
