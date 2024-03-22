@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/21 23:54:26 by math             ###   ########.fr       */
+/*   Updated: 2024/03/22 00:35:00 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	ray_trace_light(t_ray *ray, t_list *obj_list)
 // 	}
 // }
 
-void	ray_draw(t_ray *ray, t_pixel *pxl, t_ambient_light ambient_light)
+void	ray_sum(t_ray *ray, t_pixel *pxl, t_ambient_light ambient_light)
 {
 	t_list	*ray_list;
 	t_ray	*next_ray;
@@ -160,12 +160,14 @@ void	ray_draw(t_ray *ray, t_pixel *pxl, t_ambient_light ambient_light)
 			view_dir = normalize((ray->direction)); //obs: this was negated
 			light_dir = normalize((next_ray->direction)); //obs: this was negated
 			pxl->diffuse = calculate_diffuse(light_dir, norm, ((t_light *)((*ray->obj)->child))->brigthness);
-			pxl->specular = calculate_specular(view_dir, light_dir, norm, 0.1, 100000.0);
+			pxl->specular = calculate_specular(view_dir, light_dir, norm, 1.0, 100.0);
 			pxl->color = mix_colors(ambient_light, *(*ray->obj)->color, pxl->diffuse, pxl->specular);
 		}
 		else
 		{
-			printf("handle shadow here\n");
+			// printf("handle shadow here\n");
+			pxl->color = 0;
+
 		}
 		ray_list = ray_list->next;
 	}

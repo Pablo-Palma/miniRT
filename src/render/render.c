@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/21 23:12:07 by math             ###   ########.fr       */
+/*   Updated: 2024/03/22 00:44:22 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,20 +96,20 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			{
 				if (is_child(*((t_ray *)(cur_ray->content))->obj, "L"))
 				{
-					ray_draw((*ray_list)->content, &pixel, ambient_light);
+					ray_sum((*ray_list)->content, &pixel, ambient_light);
 					put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
 				}
-				// else //intersect other obj
-				// {
-				// 	ray_draw((*ray_list)->content, &pixel, ambient_light);
-				// 	put_pixel_to_image(graph, pixel.x, pixel.y, GREEN);
-				// }
+				else //intersect other obj
+				{
+					ray_sum((*ray_list)->content, &pixel, ambient_light);
+					put_pixel_to_image(graph, pixel.x, pixel.y, BLACK);
+				}
 			}
-			// else //intersect void
-			// {
-			// 	ray_draw((*ray_list)->content, &pixel, ambient_light);
-			// 	put_pixel_to_image(graph, pixel.x, pixel.y, 0xFF0000);
-			// }
+			else //intersect void
+			{
+				ray_sum((*ray_list)->content, &pixel, ambient_light);
+				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+			}
 			// // CLEANING
 			ft_lstclear(ray_list, delete_ray);
 		}

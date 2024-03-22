@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/21 21:14:53 by math             ###   ########.fr       */
+/*   Updated: 2024/03/22 01:34:03 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@
 # include "scene.h"
 # include "object.h"
 # include "light.h"
+# include "events.h"
 
 # define	WIN_WIDTH 800
 # define WIN_HEIGHT 800
-//EVENTS
-# define KEY_ESC 53
 // COLORS
 # define WHITE		0xFFFFFF
 # define BLACK		0x000000
@@ -54,6 +53,7 @@ typedef struct s_graph
 	int			line_lenght;
 	int			endian;
 	int			color_mode;
+	t_list		*obj_list;
 }				t_graph;
 
 typedef struct	s_pixel
@@ -74,7 +74,7 @@ int		setup_gui(t_graph *graph);
 int		cleanup(t_graph *graph);
 void	init_img(t_graph *graph);
 int 	handle_close(void *param);
-void	setup_hooks(t_graph *graph);
+void	setup_hooks(t_graph *graph, t_list *obj_list);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -166,7 +166,7 @@ void	cylinder(void *parent);
 t_ray	*new_ray(t_vec3 origin, t_vec3 direction);
 void	delete_ray(void *param);
 void	ray_trace_light(t_ray *ray, t_list *obj_list);
-void	ray_draw(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
+void	ray_sum(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
 void	print_ray(t_ray *ray);
 void	print_ray_list(t_list *ray, int level);
 

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:50:06 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 12:55:38 by math             ###   ########.fr       */
+/*   Updated: 2024/03/22 00:33:03 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ double	calculate_specular(t_vec3 view_dir, t_vec3 light_dir, t_vec3 normal, doub
 	double	spec;
 
 	reflect_dir = reflect(vector_negate(light_dir), normal);	//	Dirección de reflexion de la luz.
-	spec = pow(fmax(vector_dot_product(view_dir, reflect_dir), 0.0), shine);	//Componente especular(view_dir * reflect_dir) ^ shine.
+	spec = pow(fmax(vector_dot_product(vector_negate(view_dir), reflect_dir), 0.0), shine);	//Componente especular(view_dir * reflect_dir) ^ shine.
 	return (intensity * spec);//luz especular por intensidad de la luz.
 }
