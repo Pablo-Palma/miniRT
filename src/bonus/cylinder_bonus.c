@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/23 10:34:04 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:40:10 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,13 @@ int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *g
     		specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
 		}
     	int color = mix_colors(checker_color, diffuse, specular, *scene); // Ambient light contribution set to 0.1 arbitrarily
+		if (cyl.reflective > 0)
+		{
+			t_vec3 reflect_dir = reflect(ray_dir, normal);
+			int reflected_color = trace_ray_for_reflection(hit_point, reflect_dir, scene, 1);
+			if (reflected_color != 0)
+				color = bonus_colors(color, reflected_color, cyl.reflective);
+		}
     	put_pixel_to_image(graph, x, y, color);
 		if (color == 0)
 			return(1);
