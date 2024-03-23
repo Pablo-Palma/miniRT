@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:55:48 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/22 10:02:25 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:22:15 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,17 @@ int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph
 		}
 		sphere_uv(hit_point, scene->sphere, &u, &v);
 		if (scene->checkerboard)
+		{
 			checker_color = apply_checkerboard_texture_uv(u, v);
+		}
 		else
 			checker_color = CIAN;
 		color = mix_colors(checker_color, diffuse, specular, *scene);
 		put_pixel_to_image(graph, x, y, color);
-		return (color);
+		if (color == 0)
+			return (1);
+		else
+			return (color);
 	}
 	return (0);
 }

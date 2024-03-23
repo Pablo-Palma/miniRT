@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:03:29 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/23 08:44:58 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:17:44 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph 
 		if (scene->plane.reflective)
 		{
 			t_vec3 reflect_dir = reflect(ray_dir, normal);
-			if (trace_ray_for_reflection(hit_point, reflect_dir, scene, 1))
-			{
+		//	if (trace_ray_for_reflection(hit_point, reflect_dir, scene, 1))
+		//	{
 				int reflected_color = trace_ray_for_reflection(hit_point, reflect_dir, scene, 1);
 				int	mixed_color = bonus_colors(base_color, reflected_color, scene->plane.reflective);
 				color = mix_colors(mixed_color, diffuse, specular, *scene);
-			}
-			else
-				color = mix_colors(base_color, diffuse, specular, *scene);
+		//	}
+		//	else
+		//		color = mix_colors(base_color, diffuse, specular, *scene);
 		}
 		else
 			color = mix_colors(base_color, diffuse, specular, *scene);
