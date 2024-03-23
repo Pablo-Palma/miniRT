@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/22 11:27:03 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:45:26 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	old_scene_two(t_scene *scene)
 		.point = {0, -3, 0},
 		.normal = {0, 1, 0},
 		.color = WHITE,
-		.reflective = 1
+		.reflective = 0.5
 	};
 
 	scene->light = (t_light){

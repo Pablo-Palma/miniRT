@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/19 18:33:16 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:28:34 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_plane
 	t_vec3	point;
 	t_vec3	normal;
 	int		color;
-	int		reflective;
+	double	reflective;
 }			t_plane;
 
 typedef struct s_obj
