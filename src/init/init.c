@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:41:24 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/23 09:19:14 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:31:46 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,15 @@ static void	old_scene_two(t_scene *scene)
 		.dir = normalize(dir),
 		.radius = 2,
 		.h = 4,
-		.color = CIAN
+		.color = CIAN,
+		.reflective = 1
 	};
 
 	scene->sphere = (t_sphere){
 		.center = {-4, 2, 0},
 		.radius = 2, 
-		.color = CIAN
+		.color = CIAN ,
+		.reflective = 1
 	};
 
 	scene->plane = (t_plane)
