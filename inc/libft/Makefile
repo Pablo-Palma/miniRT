@@ -19,7 +19,7 @@ LIBFT_SRC = $(addprefix $(LIBFT_SRC_DIR)/mand/, ft_atof.c ft_itoa.c \
 BONUS_SRC =	$(addprefix $(LIBFT_SRC_DIR)/bonus/, ft_lstadd_back_bonus.c \
 	ft_lstdelone_bonus.c ft_lstmap_bonus.c ft_lstadd_front_bonus.c \
 	ft_lstiter_bonus.c ft_lstnew_bonus.c ft_lstclear_bonus.c \
-	ft_lstlast_bonus.c	ft_lstsize_bonus.c)
+	ft_lstlast_bonus.c	ft_lstsize_bonus.c	ft_lstpiter_bonus.c)
 
 PRINTF_SRC = $(LIBFT_SRC_DIR)/printf/ft_printf.c
 GNL_SRC = $(addprefix $(LIBFT_SRC_DIR)/get_next_line/, get_next_line.c  \

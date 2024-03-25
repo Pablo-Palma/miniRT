@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/23 10:18:56 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:51:15 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,17 @@ typedef struct s_obj
 {
 	char	*line;
 	void	*child;
+	t_vec3	**origin;
+	int		*color;
 }			t_obj;
+
+typedef struct	s_ray
+{
+    t_vec3			origin;
+    t_vec3			direction;
+    double			t;
+	t_obj			**obj;
+	t_list			**next;
+}					t_ray;
 
 #endif

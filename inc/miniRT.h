@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/23 08:19:15 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:03:55 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include "libft.h"
+# include "libft/inc/libft.h"
 # include "scene.h"
 # include "object.h"
 # include "light.h"
@@ -25,14 +25,12 @@
 
 # define	WIN_WIDTH 800
 # define WIN_HEIGHT 800
-//EVENTS
-# define KEY_ESC 53
 // COLORS
 # define WHITE		0xFFFFFF
 # define BLACK		0x000000
 # define GREEN   	0x00FF00
 # define BLUE    	0x0000FF
-# define YELLOW	0xFFFF00
+# define YELLOW		0xFFFF00
 # define CIAN    	0x00FFFF
 # define MAGENTA 	0xFF00FF
 # define GREY    	0x808080
@@ -70,6 +68,18 @@ typedef struct s_graph
 	//t_mini_RT	*miniRT;
 }				t_graph;
 
+	t_list		*obj_list;
+}				t_graph;
+
+typedef struct	s_pixel
+{
+	int			y;
+	int			x;
+	int			color;
+	double		diffuse;
+	double		specular;
+}				t_pixel;
+
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //                                  GUI                                      //
@@ -79,7 +89,7 @@ int		setup_gui(t_graph *graph, t_scene *scene);
 int		cleanup(t_graph *graph);
 void	init_img(t_graph *graph);
 int 	handle_close(void *param);
-void	setup_hooks(t_graph *graph);
+void	setup_hooks(t_graph *graph, t_list *obj_list);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -112,6 +122,7 @@ int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t);
 ///////////////////////////////////////////////////////////////////////////////
 int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph);
 int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double *t);
+void	render_scene(t_graph *graph, t_list *obj);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -132,8 +143,8 @@ t_vec3	vector_cross(t_vec3 v1, t_vec3	v2);
 //                                  BRIGHT                                   //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int	shadow(t_scene *scene, t_vec3 hit_point, t_light light, t_vec3 normal);
-int shadow_plane(t_scene *scene, t_vec3 hit_point);
+// int	shadow(t_scene *scene, t_vec3 hit_point, t_light light, t_vec3 normal);
+// int shadow_plane(t_scene *scene, t_vec3 hit_point);
 double	calculate_specular(t_vec3 view_dir, t_vec3 ligh_dir, t_vec3 normal, double intensity, double shine);
 double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightness);
 t_vec3	reflect(t_vec3 v, t_vec3 n);
@@ -144,7 +155,7 @@ t_vec3	reflect(t_vec3 v, t_vec3 n);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 void	put_pixel_to_image(t_graph *graph, int x, int y, int color);
-int		mix_colors(int	base_color, double diffuse, double specular, t_scene scene);
+int		mix_colors(t_ambient_light	ambient_light, int	base_color, double diffuse, double specular);
 int		convert_rgb_to_int(char *rgb_str);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -159,11 +170,11 @@ int	cleanup_and_exit(char **parts, char *error_msg, int r_value);
 //                                  PARSE                                    //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int	parse_file(char *file, t_scene	*scene);
+// int	parse_file(char *file, t_scene	*scene);
 int	convert_to_int(char *str, int min, int max);
-int	parse_ambient(char *line, t_scene *scene);
+// int	parse_ambient(char *line, t_scene *scene);
 char **split_and_validate(char *line, int expected, char delim);
-int	convert_to_int(char *str, int min, int max);
+// int	convert_to_int(char *str, int min, int max);
 double	convert_to_double(char *str, double min, double max);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -174,7 +185,12 @@ double	convert_to_double(char *str, double min, double max);
 
 t_list	*get_objects(int fd);
 t_list	*objchr(t_list *obj, char *str);
+int		obj_next(t_list **obj_ptr, char *str);
 void	print_obj(void *self);
+void 	intersect(t_obj *obj, t_ray *ray);
+int 	trace_light(t_list *obj, t_ray *ray);
+t_vec3	get_normal(t_obj *obj, t_vec3 point);
+bool	is_child(t_obj *self, char *str);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -205,5 +221,12 @@ int	calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,
 int	mix_colors_reflect(int	reflected_color, int base_color, double reflectivity);
 int trace_ray_for_reflection(t_vec3 origin, t_vec3 dir, t_scene *scene, int depth);
 int bonus_colors(int material_color, int reflected_color, float reflective);
+
+t_ray	*new_ray(t_vec3 origin, t_vec3 direction);
+void	delete_ray(void *param);
+void	ray_trace_light(t_ray *ray, t_list *obj_list);
+void	ray_sum(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
+void	print_ray(t_ray *ray);
+void	print_ray_list(t_list *ray, int level);
 
 #endif

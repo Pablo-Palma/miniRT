@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lighting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:50:06 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 16:39:20 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:58:51 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 //	VECTORIAL FUNCS
 //**dot es el producto punto entre el vector incidente v y la normal
@@ -49,6 +49,6 @@ double	calculate_specular(t_vec3 view_dir, t_vec3 light_dir, t_vec3 normal, doub
 	double	spec;
 
 	reflect_dir = reflect(vector_negate(light_dir), normal);	//	Dirección de reflexion de la luz.
-	spec = pow(fmax(vector_dot_product(view_dir, reflect_dir), 0.0), shine);	//Componente especular(view_dir * reflect_dir) ^ shine.
+	spec = pow(fmax(vector_dot_product(vector_negate(view_dir), reflect_dir), 0.0), shine);	//Componente especular(view_dir * reflect_dir) ^ shine.
 	return (intensity * spec);//luz especular por intensidad de la luz.
 }

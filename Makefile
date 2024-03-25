@@ -1,8 +1,9 @@
+UNAME := $(shell uname)
 NAME = miniRT
 CC = gcc
 MLX_DIR = mlx
-CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc -I$(MLX_DIR)
-CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc
+CFLAGS = -Wall -Wextra -Werror -g3
+
 SRCS_DIR = src
 OBJS_DIR = obj
 LIBFT_DIR = inc/libft
@@ -36,13 +37,50 @@ BONUS_OBJS = $(BONUS_FILES:%.c=$(OBJS_DIR)/%.o)
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
+OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 # OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
 
-MLX_DIR = mlx
-MLX_LIB = $(MLX_DIR)/libmlx.dylib
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+LIBFT_DIR = inc/libft
+ifeq ($(UNAME), Darwin)
+    MLX_DIR := minilibx_opengl_20191021
+else
+    MLX_DIR := minilibx-linux
+endif
 
-MLX_FLAGS_MAC = -L./inc/libft -lft -lmlx -framework OpenGL -framework AppKit
+## -I
+HEADERS = -Iinc
+LIB_INC = -I$(LIBFT_DIR)/inc
+MLX_INC = -I$(MLX_DIR)
+INCLUDE = $(HEADERS) $(LIB_INC) $(MLX_INC)
+
+## -L
+LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
+ifeq ($(UNAME), Darwin)
+    MLX_FLAGS := -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+else
+    MLX_FLAGS := -L$(MLX_DIR) -lmlx -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+endif
+LIBS = $(LIBFT_FLAGS) $(MLX_FLAGS)
+
+
+
+LIBFT = $(LIBFT_DIR)/libft.a
+ifeq ($(UNAME), Darwin)
+    MLX := $(MLX_DIR)/libmlx.dylib
+else
+    MLX := $(MLX_DIR)/libmlx.a
+endif
+LIBS = $(LIBFT_FLAGS) $(MLX_FLAGS)
+
+
+
+ifeq ($(UNAME), Darwin)
+    MLX_FILE := minilibx_opengl.tgz
+else
+    MLX_FILE := minilibx-linux.tgz
+endif
+
+
 
 ##RULES
 
@@ -50,20 +88,20 @@ all: $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
-	@cp mlx/libmlx.dylib . ## Copiar la librería mlx en el directorio actual para la compilación.
 	@$(CC) $(CFLAGS) -I$(MLX_DIR) -c $< -o $@
 
 $(LIBFT):
 	@$(MAKE) bonus -C $(LIBFT_DIR)
 	@echo "Libft compiled successfully!"
 
-$(NAME): $(LIBFT) $(OBJS)
-	@$(CC) -o $(NAME) $(OBJS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
-	@echo "miniRT compiled successfully!"
 
-mac: $(LIBFT) $(OBJS)
-	@$(CC) -o $(NAME) $(SRCS) $(CFLAGS) $(MLX_FLAGS_MAC)
-	@echo "miniRT compiled successfully on macOS!"
+$(MLX): $(MLX_DIR)
+	@$(MAKE) -C $(MLX_DIR)
+	@echo "MLX compiled successfully!"
+
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
+	@$(CC) -o $(NAME) $(OBJS) $(INCLUDE) $(LIBS)
+	@echo "miniRT compiled successfully!"
 
 bonus: CFLAGS += -D BONUS -Iinc/bonus
 bonus: $(LIBFT) $(BONUS_OBJS)
@@ -71,9 +109,9 @@ bonus: $(LIBFT) $(BONUS_OBJS)
 	@echo "miniRT with bonus compiled successfully!"
 
 clean :
-	@rm -f libmlx.dylib ## Borrar dicha librería.
 	@rm -f $(OBJS)
 	@make clean -C $(LIBFT_DIR)
+	@make clean -C $(MLX_DIR)
 	@echo "Object files removed!"
 
 fclean: clean
@@ -83,5 +121,11 @@ fclean: clean
 	@echo "Executable and object files removed!"
 
 re: fclean all
+
+unzip:
+	@tar -xvf $(MLX_FILE)
+
+up:
+	@$(MAKE) -C $(MLX_DIR)
 
 .PHONY: all clean fclean re mac
