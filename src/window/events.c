@@ -3,35 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:19:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 12:24:12 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:56:42 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-int	handle_keyboard(int keycode, t_graph *graph, t_scene *scene)
+int	handle_keyboard(int keycode, t_graph *graph, t_list *obj_list)
 {
+	t_list	*cur;
+	t_obj	*obj;
+	t_cam	*cam;
 	double	move_step;
+
+	obj = NULL;
+	cam = NULL;
+	cur = obj_list;
+	while (cur)
+	{
+		obj = (t_obj *)cur->content;
+		if (is_child(obj, "C"))
+			break ;
+		cur = cur->next;
+	}
+	cam = (t_cam *)obj->child;
 
 	move_step = 0.5;
 	if (keycode == KEY_UP)
-		scene->cam.view_point.y += move_step;
+		cam->view_point.y += move_step;
 	else if (keycode == KEY_DOWN)
-		scene->cam.view_point.y -= move_step;
+		cam->view_point.y -= move_step;
 	else if (keycode == KEY_LEFT)
-		scene->cam.view_point.x -= move_step;
+		cam->view_point.x -= move_step;
 	else if (keycode == KEY_RIGHT)
-		scene->cam.view_point.x += move_step;
+		cam->view_point.x += move_step;
 	else if (keycode == KEY_W)
-		scene->cam.view_point.z -= move_step;
+		cam->view_point.z -= move_step;
 	else if (keycode == KEY_S)
-		scene->cam.view_point.z += move_step;
+		cam->view_point.z += move_step;
 	else if (keycode == KEY_A)
-		scene->cam.orientation.z *= -1;
-	render_scene(graph, scene);
+		cam->orientation.z *= -1;
+	render_scene(graph, obj_list);
 	mlx_put_image_to_window(graph->mlx, graph->win, graph->img, 0, 0);
 	return (0);
 }
@@ -53,7 +68,7 @@ int	handle_key_press(int keycode, t_graph *graph)
 		exit(EXIT_SUCCESS);
 	}
 	else
-		handle_keyboard(keycode, graph, graph->scene);
+		handle_keyboard(keycode, graph, graph->obj_list);
 	return (0);
 }
 

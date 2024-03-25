@@ -6,11 +6,11 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:50:06 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 17:58:51 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/25 19:22:41 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "miniRT.h"
 
 //	VECTORIAL FUNCS
 //**dot es el producto punto entre el vector incidente v y la normal

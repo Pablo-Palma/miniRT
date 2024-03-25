@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 18:00:52 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/25 19:15:16 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t
 
 static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 {
-	t_vec3 diff = vector_sub(origin, cyl.center);	//	vecot Origen-centro cilindro
-	t_vec3 dir_cross_cyl_dir = vector_cross(dir, cyl.dir); //Cruz entre el rayo y el cilindro
+	t_vec3 diff = vector_sub(ray->origin, cyl.center);	//	vecot Origen-centro cilindro
+	t_vec3 dir_cross_cyl_dir = vector_cross(ray->direction, cyl.dir); //Cruz entre el rayo y el cilindro
 	t_vec3 diff_cross_cyl_dir = vector_cross(diff, cyl.dir); // Cruz entre diff y el cilindro
 	
 	double a = vector_dot_product(dir_cross_cyl_dir, dir_cross_cyl_dir); // Cuadrado del cruz de direcciones (rayo x cilindro)
@@ -107,7 +107,7 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 	//////******	t0	******///////
 	if (t0 >= EPSILON) //Evitar errores.
 	{
-	    double h0 = vector_dot_product(vector_add(diff, vector_scale(dir, t0)), cyl.dir); // medida desde la base sobre el eje hasta el hitpoint
+	    double h0 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t0)), cyl.dir); // medida desde la base sobre el eje hasta el hitpoint
 	    if (fabs(h0) <= cyl.h / 2) //Si está entre 0 y la altura máxima
 		{
 	        t_body = t0;	//SI Pertenece, almacenamos ese punto en t_body
@@ -118,7 +118,7 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 	//////******	t1	******///////		t1 es un punto más lejano que t0
 	if (t1 >= EPSILON && t1 < t_body)	// si t1 es mayor que t_body, ya tenemos un punto más cercano, por tanto el lejano ya no nos interesa
 	{
-	    double h1 = vector_dot_product(vector_add(diff, vector_scale(dir, t1)), cyl.dir);
+	    double h1 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t1)), cyl.dir);
 	    if (fabs(h1) <= cyl.h / 2)
 		{
 			t_body = t1;
@@ -146,24 +146,12 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 
 int intersect_light(t_light light, t_ray *ray)
 {
-	t_cyl	cyl = scene->cyl;
-	t_vec3	ray_origin = scene->cam.view_point;
-	double	t;
-	
-	if (intersect_ray_cyl(ray_origin, ray_dir, cyl, &t))
-	{
-		t_vec3	hit_point = vector_add(ray_origin, vector_scale(ray_dir, t));
-		t_vec3	normal = cylinder_normal(hit_point, cyl);
-		int	shadowed = shadow_plane(scene, hit_point);
-		double	diffuse = 0;
-		double	specular = 0;
-		if (!shadowed)
-		{
-			t_vec3 light_dir = normalize(vector_sub(scene->light.pos, hit_point));
-			diffuse = calculate_diffuse(light_dir, normal, scene->light.brigthness);
-			t_vec3 view_dir = normalize(vector_sub(scene->cam.view_point, hit_point));
-    		specular = calculate_specular(view_dir, light_dir, normal, 1.0, 10.0); // Intensidad y brillo arbitrarios
-		}
+	t_sphere	light_space;
+
+	light_space.center = light.pos;
+	light_space.radius = 1e6;
+	return (intersect_sp(light_space,  ray));
+}
 
 
 

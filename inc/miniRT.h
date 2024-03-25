@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 18:44:32 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/25 19:00:02 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ typedef struct s_graph
 	int			line_lenght;
 	int			endian;
 	int			color_mode;
-	t_scene		*scene;
-	//t_mini_RT	*miniRT;
-}				t_graph;
-
 	t_list		*obj_list;
 }				t_graph;
 
@@ -85,18 +81,18 @@ typedef struct	s_pixel
 //                                  GUI                                      //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int		setup_gui(t_graph *graph, t_scene *scene);
+int		setup_gui(t_graph *graph);
 int		cleanup(t_graph *graph);
 void	init_img(t_graph *graph);
 int 	handle_close(void *param);
-void	setup_hooks(t_graph *graph, t_list *obj_list);
+void	setup_hooks(t_graph *graph);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //                                  SCENE                                    //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-void	render_scene(t_graph *graph, t_scene *scene);
+void	render_scene(t_graph *graph, t_list *obj_list);
 void	init_scene(t_scene *scene, t_list *obj);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -122,7 +118,6 @@ int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t);
 ///////////////////////////////////////////////////////////////////////////////
 int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph);
 int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double *t);
-void	render_scene(t_graph *graph, t_list *obj);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -155,7 +150,7 @@ t_vec3	reflect(t_vec3 v, t_vec3 n);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 void	put_pixel_to_image(t_graph *graph, int x, int y, int color);
-int		mix_colors(t_ambient_light	ambient_light, int	base_color, double diffuse, double specular);
+int		mix_colors(t_ambient_light ambient_light, int  base_color, double diffuse, double specular);
 int		convert_rgb_to_int(char *rgb_str);
 
 ///////////////////////////////////////////////////////////////////////////////

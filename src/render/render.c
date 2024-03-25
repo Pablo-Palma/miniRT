@@ -6,11 +6,11 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 18:04:13 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/25 19:22:41 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "miniRT.h"
 
 t_vec3 compute_ray_dir(int x, int y, t_cam cam)
 {

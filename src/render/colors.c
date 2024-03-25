@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:21:44 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 16:41:45 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:22:10 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	put_pixel_to_image(t_graph *graph, int x, int y, int color)
 	}
 }
 
-int mix_colors(int  base_color, double diffuse, double specular, t_scene scene)
+int mix_colors(t_ambient_light ambient_light, int  base_color, double diffuse, double specular)
 {
 
-	float	ambient = scene.ambient_light.intensity;
+	float	ambient = ambient_light.intensity;
     int r = (base_color >> 16) & 0xFF;
     int g = (base_color >> 8) & 0xFF;
     int b = base_color & 0xFF;

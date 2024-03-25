@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:27:32 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 17:49:37 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/25 18:56:30 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "miniRT.h"
 
+# define KEY_ESC	53
 # define KEY_UP		126
 # define KEY_DOWN	125
 # define KEY_LEFT	123

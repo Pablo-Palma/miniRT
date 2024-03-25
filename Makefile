@@ -2,7 +2,7 @@ UNAME := $(shell uname)
 NAME = miniRT
 CC = gcc
 MLX_DIR = mlx
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -Iinc
 
 SRCS_DIR = src
 OBJS_DIR = obj
@@ -10,14 +10,19 @@ LIBFT_DIR = inc/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 ##SRCS_FILES = main.c setup.c events.c render.c init.c geometry.c colors.c lighting.c vector.c sphere.c plane.c shadow.c cylinder.c
 SRCS_FILES =	main/main.c								\
-				init/init.c								\
 				window/setup.c window/events.c			\
-				render/render.c render/colors.c			\
-				geometry/vector.c geometry/sphere.c	geometry/plane.c geometry/cylinder.c	\
+				render/render.c			\
+				render/colors.c			\
+				vector/vector.c	\
 				light/lighting.c light/shadow.c			\
 				utils/clean.c							\
-				parser/parser.c parser/parser_utils.c parser/parser_elem.c \
-				object/object.c object/object_constructors.c object/object_print.c 
+				object/object.c \
+				object/object_constructors.c \
+				object/object_intersect.c \
+				object/object_normal.c \
+				object/object_print.c \
+				object/object_trace.c \
+				object/ray.c
 
 
 BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
@@ -25,14 +30,20 @@ BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
 				bonus/cylinder_utils_bonus.c					\
 				bonus/reflection_bonus.c bonus/color_bonus.c\
 				main/main.c								\
-				init/init.c								\
 				window/setup.c window/events.c			\
 				render/render.c render/colors.c			\
-				geometry/vector.c						\
+				vector/vector.c							\
 				light/lighting.c light/shadow.c			\
 				utils/clean.c							\
-				parser/parser.c parser/parser_utils.c parser/parser_elem.c \
-				object/object.c object/object_constructors.c object/object_print.c 
+				object/object.c \
+				object/object_constructors.c \
+				object/object_intersect.c \
+				object/object_normal.c \
+				object/object_print.c \
+				object/object_trace.c \
+				object/ray.c
+
+
 BONUS_OBJS = $(BONUS_FILES:%.c=$(OBJS_DIR)/%.o)
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit

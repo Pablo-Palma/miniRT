@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:31:16 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/18 10:57:18 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:51:10 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-int	setup_gui(t_graph *graph, t_scene *scene)
+int	setup_gui(t_graph *graph)
 {
 	graph->mlx = mlx_init();
 	if (!graph->mlx)
@@ -21,7 +21,6 @@ int	setup_gui(t_graph *graph, t_scene *scene)
 	if (!graph->win)
 		return (EXIT_FAILURE);
 	init_img(graph);
-	graph->scene = scene;
 	return (EXIT_SUCCESS);
 }
 
