@@ -14,7 +14,7 @@ SRCS_FILES =	main/main.c								\
 				render/render.c			\
 				render/colors.c			\
 				vector/vector.c	\
-				light/lighting.c light/shadow.c			\
+				light/lighting.c						\
 				utils/clean.c							\
 				object/object.c \
 				object/object_constructors.c \
