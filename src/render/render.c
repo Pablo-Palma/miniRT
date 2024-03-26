@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 19:22:41 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/26 18:25:39 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,18 @@ t_vec3 compute_ray_dir(int x, int y, t_cam cam)
 
 void	render_scene(t_graph *graph, t_list *obj_list)
 {
+	t_list			**ray_list;
+	t_list			**pool;
+	t_list			*cur = NULL;
+	t_list			*cur_ray = NULL;
+	t_ray			temp;
+	t_pixel			pixel;
 	t_ambient_light	ambient_light;
 	t_cam			cam;
-	t_list			*cur;
-	t_list			**ray_list = (t_list **)malloc(sizeof(t_list *));
-	t_list			*cur_ray = NULL;
-	t_pixel			pixel;
 	int				ambient_color;
 
-	*ray_list = NULL;
+	ray_list = lst_create();
+	pool = lst_create();
 	ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj_list, "A")->content)->child;
 	cam = *(t_cam *)((t_obj *)objchr(obj_list, "C")->content)->child;
 	pixel = (t_pixel){-1,-1,0,0,0};
@@ -59,7 +62,10 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 		while (++pixel.x < WIN_WIDTH)
 		{
 			//TRACING RAY CAM TO OBJ
-			ft_lstadd_back(ray_list, ft_lstnew((void *)new_ray(cam.view_point, compute_ray_dir(pixel.x, pixel.y , cam))));
+			//ft_lstadd_back(ray_list, ft_lstnew((void *)ray_new(cam.view_point, compute_ray_dir(pixel.x, pixel.y , cam))));
+			temp.origin = cam.view_point;
+			temp.direction = compute_ray_dir(pixel.x, pixel.y, cam);
+			ft_lstadd_back(ray_list, lst_getpool_node(pool, ray_new, ray_cpy, &temp));
 			cur = obj_list;
 			while (cur)
 			{
@@ -70,11 +76,11 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			{
 				ambient_color = mix_colors(ambient_light, ambient_light.color, ambient_light.intensity, 0.0);
 				put_pixel_to_image(graph, pixel.x, pixel.y, ambient_color);
-				ft_lstclear(ray_list, delete_ray);
+				ray_mv_to_pool(pool, ray_list);
 				continue ;
 			}
 			//TRACING TO LIGHTS
-			ray_trace_light((*ray_list)->content, obj_list); //initializate one ray.content.next (which is a t_list **), to each L, with its direction
+			ray_trace_light((*ray_list)->content, obj_list, pool); //initializate one ray.content.next (which is a t_list **), to each L, with its direction
 			cur_ray = *((t_ray *)((*ray_list)->content))->next;
 			while (cur_ray)
 			{
@@ -111,7 +117,9 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
 			}
 			// // CLEANING
-			ft_lstclear(ray_list, delete_ray);
+			ray_mv_to_pool(pool, ray_list);
+			// lst_mv_all_to_pool(pool, ray_list, ray_clean);
 		}
 	}
+	ft_lstclear(ray_list, ray_delete);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 19:00:02 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/26 17:06:21 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,24 @@ void	init_scene(t_scene *scene, t_list *obj);
 //                                  SPHERE                                   //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, double *t);
-int	handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+int 	intersect_ray_sphere(t_vec3 origin, t_vec3 direction, t_sphere sphere, double *t);
+int		handle_sphere_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //                                  CYL                                      //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int	handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
-int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t);
+int		handle_cyl_intersec(t_vec3	ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+int		intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //                                  PLANE                                    //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-int	handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph);
-int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double *t);
+int		handle_plane_intersec(t_vec3 ray_dir, t_scene *scene, int x, int y, t_graph *graph);
+int		intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double *t);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -125,7 +125,7 @@ int	intersect_ray_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane plane, double
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 t_vec3	normalize(t_vec3 v);
-double vector_length(t_vec3 v);
+double	vector_length(t_vec3 v);
 t_vec3	vector_add(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_sub(t_vec3 v1, t_vec3 v2);
 double	vector_dot_product(t_vec3 v1, t_vec3 v2);
@@ -166,11 +166,25 @@ int	cleanup_and_exit(char **parts, char *error_msg, int r_value);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 // int	parse_file(char *file, t_scene	*scene);
-int	convert_to_int(char *str, int min, int max);
+int		convert_to_int(char *str, int min, int max);
 // int	parse_ambient(char *line, t_scene *scene);
-char **split_and_validate(char *line, int expected, char delim);
+char 	**split_and_validate(char *line, int expected, char delim);
 // int	convert_to_int(char *str, int min, int max);
 double	convert_to_double(char *str, double min, double max);
+
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  EXTRA LIST                               //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+t_list	*lst_strip_back(t_list **list);
+t_list	*lst_strip_front(t_list **list);
+t_list  *lst_strip_node(t_list **list, t_list *node);
+t_list  **lst_create(void);
+t_list  *lst_getpool_node(t_list **pool, void *(*new)(void *), void (*update)(void *, void *), void *content);
+void    lst_mv_one_to_pool(t_list **pool, t_list *node, void (*clean)(void *node));
+void    lst_mv_all_to_pool(t_list **pool, t_list **list, void (*clean)(void *node));
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -186,6 +200,22 @@ void 	intersect(t_obj *obj, t_ray *ray);
 int 	trace_light(t_list *obj, t_ray *ray);
 t_vec3	get_normal(t_obj *obj, t_vec3 point);
 bool	is_child(t_obj *self, char *str);
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                  RAY			                             //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+t_ray	ray_generic(t_vec3 origin, t_vec3 direction);
+void	*ray_new(void *ray);
+void	ray_delete(void *param);
+void	ray_clean(void *self);
+void	ray_cpy(void *self, void *ray);
+void	ray_mv_to_pool(t_list **poll, t_list **ray_list);
+void	ray_print(t_ray *ray);
+void	ray_print_list(t_list *ray, int level);
+void	ray_trace_light(t_ray *ray, t_list *obj_list, t_list **pool);
+void	ray_sum(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -210,18 +240,12 @@ int		apply_checkerboard_texture(t_vec3 point);
 int		apply_checkerboard_texture_uv(double u, double v);
 void	cap_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v);
 int		apply_checkerboard_texture_uv_cyl(double u, double v, t_cyl cyl);
-int	calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,
+int		calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,
 	t_vec3 incident_ray);
 //int	trace_ray(t_vec3 origin, t_vec3 dir, t_scene *scene);
-int	mix_colors_reflect(int	reflected_color, int base_color, double reflectivity);
-int trace_ray_for_reflection(t_vec3 origin, t_vec3 dir, t_scene *scene, int depth);
-int bonus_colors(int material_color, int reflected_color, float reflective);
+int		mix_colors_reflect(int	reflected_color, int base_color, double reflectivity);
+int		trace_ray_for_reflection(t_vec3 origin, t_vec3 dir, t_scene *scene, int depth);
+int		bonus_colors(int material_color, int reflected_color, float reflective);
 
-t_ray	*new_ray(t_vec3 origin, t_vec3 direction);
-void	delete_ray(void *param);
-void	ray_trace_light(t_ray *ray, t_list *obj_list);
-void	ray_sum(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
-void	print_ray(t_ray *ray);
-void	print_ray_list(t_list *ray, int level);
 
 #endif

@@ -3,33 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/25 19:53:50 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/26 18:22:44 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
+#include "miniRT.h"
 
-t_ray	*new_ray(t_vec3 origin, t_vec3 direction)
+t_ray	ray_generic(t_vec3 origin, t_vec3 direction)
+{
+	t_ray ray;
+
+	ray.origin = origin;
+	ray.direction = direction;
+	return (ray);
+}
+
+void	*ray_new(void *ray)
 {
 	t_ray *self;
 
 	self = (t_ray *)malloc(sizeof(t_ray));
 	if (!self)
 		return (NULL);
-	self->origin = origin;
-	self->direction = direction;
-	self->t = 10000000;
 	self->obj = (t_obj **)malloc(sizeof(t_obj *));
-	*self->obj = NULL;
 	self->next = (t_list **)malloc(sizeof(t_list *));
+	self->origin = ((t_ray *)ray)->origin;
+	self->direction = ((t_ray *)ray)->direction;
+	self->t = INFINITY;
+	*self->obj = NULL;
 	*self->next = NULL;
-	return (self);
+	return ((void *)self);
 }
 
-void	delete_ray(void *param)
+void	ray_clean(void *node)
+{
+	t_ray *self;
+
+	self = (t_ray *)((t_list *)node)->content;
+	self->origin = (t_vec3){0,0,0};
+	self->direction = (t_vec3){0,0,0};
+	self->t = INFINITY;
+	*(self->obj) = NULL;
+	*self->next = NULL;
+}
+
+// {
+// 	((t_ray *)self)->origin = (t_vec3){0,0,0};
+// 	((t_ray *)self)->direction = (t_vec3){0,0,0};
+// 	((t_ray *)self)->t = INFINITY;
+// 	*(((t_ray *)self)->obj) = NULL;
+// 	*((t_ray *)self)->next = NULL;
+// }
+
+void	ray_cpy(void *self, void *ray)
+{
+	((t_ray *)self)->origin = ((t_ray *)ray)->origin;
+	((t_ray *)self)->direction = ((t_ray *)ray)->direction;
+}
+
+void	ray_delete(void *param)
 {
 	t_ray	*self;
 
@@ -37,13 +72,23 @@ void	delete_ray(void *param)
 		return;
 	self = (t_ray *)param;
 	if (self->next)
-		ft_lstclear(self->next, delete_ray);
+		ft_lstclear(self->next, ray_delete);
 	free(self->obj);
 	free(self->next);
 	free(self);
 }
 
-void	print_ray(t_ray *ray)
+void	ray_mv_to_pool(t_list **poll, t_list **ray_list)
+{
+	if (*((t_ray *)((*ray_list)->content))->next)
+	{
+		ray_mv_to_pool(poll, ((t_ray *)((*ray_list)->content))->next);
+		*((t_ray *)((*ray_list)->content))->next = NULL;
+	}
+	lst_mv_all_to_pool(poll, ray_list, ray_clean);
+}
+
+void	ray_print(t_ray *ray)
 {
 	printf("Ray:\n");
 	printf("\tOrigin: (%.2f, %.2f, %.2f)\n",
@@ -72,7 +117,7 @@ void	print_ray(t_ray *ray)
 	}
 }
 
-void	print_ray_list(t_list *ray, int level)
+void	ray_print_list(t_list *ray, int level)
 {
 	++level;
 	printf("=====<level%d>=====\n", level);
@@ -85,30 +130,28 @@ void	print_ray_list(t_list *ray, int level)
 			printf("(null)\n");
 			return ;
 		}
-		print_ray((t_ray *)(ray->content));
+		ray_print((t_ray *)(ray->content));
 		if (((t_ray *)(ray->content))->next)
-			print_ray_list(*((t_ray *)(ray->content))->next, level);
+			ray_print_list(*((t_ray *)(ray->content))->next, level);
 		ray = ray->next;
 	}
 }
 
-
-void	ray_trace_light(t_ray *ray, t_list *obj_list)
+void	ray_trace_light(t_ray *ray, t_list *obj_list, t_list **pool)
 {
-	t_vec3	origin;
-	t_vec3	direction;
 	t_light	*light;
+	t_ray	temp;
 
 	if (!(ray && ray->obj))
 		return ;
 	while (!is_child(obj_list->content, "L"))
 		obj_list = obj_list->next;
 	light = ((t_obj *)obj_list->content)->child;
-	origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
+	temp.origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
 	while (light)
 	{
-		direction = vector_sub(light->pos, origin);
-		ft_lstadd_back(ray->next, ft_lstnew(new_ray(origin, direction)));
+		temp.direction = vector_sub(light->pos, temp.origin);
+		ft_lstadd_back(ray->next, lst_getpool_node(pool, ray_new, ray_cpy, &temp));
 		obj_list = obj_list->next;
 		if (is_child(obj_list->content, "L"))
 			light = ((t_obj *)obj_list->content)->child;
@@ -120,7 +163,7 @@ void	ray_trace_light(t_ray *ray, t_list *obj_list)
 // 	t_vec3	origin;
 // 	t_vec3	direction;
 // 	t_light	*light;
-
+//
 // 	if (!(ray && *ray->obj))
 // 		return ;
 // 	obj_list = objchr(obj_list, "L");
@@ -132,7 +175,7 @@ void	ray_trace_light(t_ray *ray, t_list *obj_list)
 // 	while (light)
 // 	{
 // 		direction = vector_sub(light->pos, origin);
-// 		ft_lstadd_back(&(ray->next), ft_lstnew(new_ray(origin, direction)));
+// 		ft_lstadd_back(&(ray->next), ft_lstnew(ray_new(origin, direction)));
 // 		obj_list = obj_list->next;
 // 		if (!ft_strncmp(((t_obj *)(obj_list->content))->line, "L", 1))
 // 			light = (t_light *)((t_obj *)(obj_list->content))->child;

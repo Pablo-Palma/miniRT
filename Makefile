@@ -22,7 +22,8 @@ SRCS_FILES =	main/main.c								\
 				object/object_normal.c \
 				object/object_print.c \
 				object/object_trace.c \
-				object/ray.c
+				object/ray.c \
+				utils/extra_list.c
 
 
 BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
@@ -41,7 +42,8 @@ BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
 				object/object_normal.c \
 				object/object_print.c \
 				object/object_trace.c \
-				object/ray.c
+				object/ray.c \
+				utils/extra_list.c
 
 
 BONUS_OBJS = $(BONUS_FILES:%.c=$(OBJS_DIR)/%.o)

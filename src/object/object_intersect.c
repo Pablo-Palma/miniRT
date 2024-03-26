@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_intersect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 19:15:16 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/26 17:23:13 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int intersect_light(t_light light, t_ray *ray)
 	t_sphere	light_space;
 
 	light_space.center = light.pos;
-	light_space.radius = 1e6;
+	light_space.radius = 0.001;
 	return (intersect_sp(light_space,  ray));
 }
 
