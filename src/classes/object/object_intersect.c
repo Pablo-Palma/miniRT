@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/26 17:23:13 by math             ###   ########.fr       */
+	/*   Updated: 2024/03/30 15:33:54 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,52 +37,52 @@ static int intersect_sp(t_sphere sphere, t_ray *ray)
 	    return 0;
 	double t0 = (-b - sqrt(discriminant)) / (2.0 * a);
 	double t1 = (-b + sqrt(discriminant)) / (2.0 * a);
-	if (t0 > 0 && (t0 < ray->t || ray->t < 0))
+	if (t0 > 0 && t0 < ray->t)
 	    ray->t = t0;
-	else if (t1 > 0 && (t1 < ray->t || ray->t < 0))
+	else if (t1 > 0 && t1 < ray->t)
 	    ray->t = t1;
 	else
 	    return 0;
 	return 1;
 }
 
-static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
-{
-	t_vec3	cap_normal = cyl.dir;
-	double	cap_t[2] = {INFINITY, INFINITY};
-	int		hit = 0;
-	int		i = 0;
-	double	sign = 1.0;
+// static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
+// {
+// 	t_vec3	cap_normal = cyl.dir;
+// 	double	cap_t[2] = {INFINITY, INFINITY};
+// 	int		hit = 0;
+// 	int		i = 0;
+// 	double	sign = 1.0;
 
-	while(i < 2)
-	{
-		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
-		double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / vector_dot_product(dir, cap_normal);
-		if (d >= 0 && d < *t_cap)
-		{
-			t_vec3	p = vector_add(origin, vector_scale(dir, d));
-			double	distance = vector_length(vector_sub(p, cap_center));
-			if (distance <= cyl.radius)
-			{
-				cap_t[i] = d;
-				hit = 1;
-			}
-		}
-		i++;
-		sign = -sign;
-	}
+// 	while(i < 2)
+// 	{
+// 		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
+// 		double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / vector_dot_product(dir, cap_normal);
+// 		if (d >= 0 && d < *t_cap)
+// 		{
+// 			t_vec3	p = vector_add(origin, vector_scale(dir, d));
+// 			double	distance = vector_length(vector_sub(p, cap_center));
+// 			if (distance <= cyl.radius)
+// 			{
+// 				cap_t[i] = d;
+// 				hit = 1;
+// 			}
+// 		}
+// 		i++;
+// 		sign = -sign;
+// 	}
 
-	if (hit)
-	{
-		double	closest_t = cap_t[0];
-		if (cap_t[1] < cap_t[0])
-			closest_t = cap_t[1];
-		*t_cap = closest_t;
-	}
-	return(hit);
+// 	if (hit)
+// 	{
+// 		double	closest_t = cap_t[0];
+// 		if (cap_t[1] < cap_t[0])
+// 			closest_t = cap_t[1];
+// 		*t_cap = closest_t;
+// 	}
+// 	return(hit);
 
 
-}
+// }
 
 static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 {
@@ -126,22 +126,25 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 	    }
 	}
 	
+	if (body_hit)
+		ray->t = t_body;
+
 	// Intersección con las tapas del cilindro
-	double t_cap = INFINITY;
-	int cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, cyl, &t_cap);
+	// double t_cap = INFINITY;
+	// int cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, cyl, &t_cap);
 	
 	// calcular la intersección más cercana
-	if (cap_hit && (t_cap < t_body || !body_hit))
-	{
-		ray->t = t_cap;
-		return 1;
-	}
-	else if (body_hit)
-	{
-		ray->t = t_body;
-		return 1;
-	}
-	return 0;
+	// if (cap_hit && (t_cap < t_body || !body_hit))
+	// {
+	// 	ray->t = t_cap;
+	// 	return 1;
+	// }
+	// else if (body_hit)
+	// {
+	// 	ray->t = t_body;
+	// 	return 1;
+	// }
+	return body_hit;
 }
 
 int intersect_light(t_light light, t_ray *ray)
@@ -151,6 +154,30 @@ int intersect_light(t_light light, t_ray *ray)
 	light_space.center = light.pos;
 	light_space.radius = 0.001;
 	return (intersect_sp(light_space,  ray));
+}
+
+int intersect_circle(t_circle circle, t_ray *ray)
+{
+	t_plane		circle_plane;
+	t_sphere	circle_sphere;
+	double		ray_t;
+	double		plane_t;
+
+	ray_t = ray->t;
+	circle_plane.point = circle.center;
+	circle_plane.normal = circle.normal;
+	if (!intersect_pl(circle_plane, ray))
+		return (0);
+	plane_t = ray->t;
+	circle_sphere.center = circle.center;
+	circle_sphere.radius = circle.radius;
+	if (!intersect_sp(circle_sphere, ray))
+	{
+		ray->t = ray_t;
+		return (0);
+	}
+	ray->t = plane_t;
+	return (1);
 }
 
 
@@ -169,6 +196,8 @@ void intersect(t_obj *obj, t_ray *ray)
         ret = intersect_cyl(*(t_cyl *)(obj->child), ray);
 	else if (is_child(obj, "L"))
         ret = intersect_light(*(t_light *)(obj->child), ray);
+	else if (is_child(obj, "ci"))
+        ret = intersect_circle(*(t_circle *)(obj->child), ray);
 	if (ret)
 	{
 		*ray->obj = obj;

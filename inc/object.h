@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 17:51:15 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/30 15:09:40 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ typedef struct s_plane
 	int		color;
 	double	reflective;
 }			t_plane;
+
+typedef struct s_circle
+{
+	char 	id[2];	//	'ci'
+	t_vec3	center;
+	t_vec3	normal;
+	double	radius;
+	int		color;
+	double	reflective;
+}			t_circle;
 
 typedef struct s_obj
 {
