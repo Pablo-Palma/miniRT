@@ -6,7 +6,7 @@
 /*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:21:44 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/14 16:41:45 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/03/30 08:59:44 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	put_pixel_to_image(t_graph *graph, int x, int y, int color)
 {
 	char	*dst;
 
+	if (!graph || !graph->addr)
+		return ;
 	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
 	{
 		dst = graph->addr + (y * graph->line_lenght + x * (graph->bpp / 8));
