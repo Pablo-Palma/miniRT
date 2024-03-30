@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/26 18:22:44 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 02:17:00 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,8 @@ void	ray_sum(t_ray *ray, t_pixel *pxl, t_ambient_light ambient_light)
 		if (is_child(*next_ray->obj, "L"))
 		{
 			t_vec3	norm = get_normal(*ray->obj, next_ray->origin);
-			view_dir = normalize((ray->direction)); //obs: this was negated
-			light_dir = normalize((next_ray->direction)); //obs: this was negated
+			view_dir = normalize(ray->direction); //obs: this was negated
+			light_dir = normalize(next_ray->direction); //obs: this was negated
 			pxl->diffuse = fmax(pxl->diffuse, calculate_diffuse(light_dir, norm, ((t_light *)((*ray->obj)->child))->brigthness));
 			pxl->specular = fmax(pxl->specular ,calculate_specular(view_dir, light_dir, norm, 1.0, 100.0));
 		}
@@ -210,7 +210,16 @@ void	ray_sum(t_ray *ray, t_pixel *pxl, t_ambient_light ambient_light)
 			pxl->diffuse = 0.0;
 			pxl->specular = 0.0;
 		}
-		pxl->color = mix_colors(ambient_light, *(*ray->obj)->color, pxl->diffuse, pxl->specular);
+		float	ambient = ambient_light.intensity;
+		int		base_color = *(*ray->obj)->color;
+		int r = (base_color >> 16) & 0xFF;
+		int g = (base_color >> 8) & 0xFF;
+		int b = base_color & 0xFF;
+		r = fmax(fmin(255, (((r * ambient) + (r * pxl->diffuse) + (255 * pxl->specular)))), (pxl->color >> 16) & 0xFF);
+		g = fmax(fmin(255, (((g * ambient) + (g * pxl->diffuse) + (255 * pxl->specular)))), (pxl->color >> 8) & 0xFF);
+		b = fmax(fmin(255, (((b * ambient) + (b * pxl->diffuse) + (255 * pxl->specular)))), (pxl->color) & 0xFF);
+		// pxl->color = mix_colors(ambient_light, *(*ray->obj)->color, pxl->diffuse, pxl->specular);
+		pxl->color = (r << 16) | (g << 8) | b;
 		ray_list = ray_list->next;
 	}
 }

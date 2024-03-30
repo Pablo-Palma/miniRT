@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:05 by math              #+#    #+#             */
-/*   Updated: 2024/03/26 18:20:15 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 02:13:15 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_list *lst_strip_front(t_list **list)
         return (NULL);
     strip_node = *list;
     *list = strip_node->next;
+    strip_node->next = NULL;
     return (strip_node);
 }
 

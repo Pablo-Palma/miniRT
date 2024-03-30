@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/26 18:25:39 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 01:59:00 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 	t_pixel			pixel;
 	t_ambient_light	ambient_light;
 	t_cam			cam;
-	int				ambient_color;
 
 	ray_list = lst_create();
 	pool = lst_create();
@@ -74,8 +73,8 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			}
 			if (!*((t_ray *)(*ray_list)->content)->obj) // FIRST RAY REACH VOID
 			{
-				ambient_color = mix_colors(ambient_light, ambient_light.color, ambient_light.intensity, 0.0);
-				put_pixel_to_image(graph, pixel.x, pixel.y, ambient_color);
+				// ambient_color = mix_colors(ambient_light, ambient_light.color, ambient_light.intensity, 0.0);
+				put_pixel_to_image(graph, pixel.x, pixel.y, BLACK);
 				ray_mv_to_pool(pool, ray_list);
 				continue ;
 			}
@@ -100,26 +99,28 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			cur_ray = *((t_ray *)((*ray_list)->content))->next;
 			if (*((t_ray *)cur_ray->content)->obj)
 			{
-				if (is_child(*((t_ray *)(cur_ray->content))->obj, "L"))
-				{
-					ray_sum((*ray_list)->content, &pixel, ambient_light);
-					put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
-				}
-				else //intersect other obj
-				{
-					ray_sum((*ray_list)->content, &pixel, ambient_light);
-					put_pixel_to_image(graph, pixel.x, pixel.y, BLACK);
-				}
-			}
-			else //intersect void
-			{
 				ray_sum((*ray_list)->content, &pixel, ambient_light);
 				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+				// if (is_child(*((t_ray *)(cur_ray->content))->obj, "L"))
+				// {
+				// 	ray_sum((*ray_list)->content, &pixel, ambient_light);
+				// 	put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+				// }
+				// else //intersect other obj
+				// {
+				// 	ray_sum((*ray_list)->content, &pixel, ambient_light);
+				// 	put_pixel_to_image(graph, pixel.x, pixel.y, BLACK);
+				// }
 			}
-			// // CLEANING
+			// else //intersect void
+			// {
+			// 	ray_sum((*ray_list)->content, &pixel, ambient_light);
+			// 	put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+			// }
+			// // MOVING TO POOL
 			ray_mv_to_pool(pool, ray_list);
-			// lst_mv_all_to_pool(pool, ray_list, ray_clean);
 		}
 	}
+	//CLEANING
 	ft_lstclear(ray_list, ray_delete);
 }
