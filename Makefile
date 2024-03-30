@@ -16,13 +16,13 @@ SRCS_FILES =	main/main.c								\
 				vector/vector.c	\
 				light/lighting.c						\
 				utils/clean.c							\
-				object/object.c \
-				object/object_constructors.c \
-				object/object_intersect.c \
-				object/object_normal.c \
-				object/object_print.c \
-				object/object_trace.c \
-				object/ray.c \
+				classes/object/object.c \
+				classes/object/object_constructors.c \
+				classes/object/object_intersect.c \
+				classes/object/object_normal.c \
+				classes/object/object_print.c \
+				classes/object/object_trace.c \
+				classes/ray/ray.c \
 				utils/extra_list.c
 
 
@@ -36,13 +36,13 @@ BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\
 				vector/vector.c							\
 				light/lighting.c light/shadow.c			\
 				utils/clean.c							\
-				object/object.c \
-				object/object_constructors.c \
-				object/object_intersect.c \
-				object/object_normal.c \
-				object/object_print.c \
-				object/object_trace.c \
-				object/ray.c \
+				classes/object/object.c \
+				classes/object/object_constructors.c \
+				classes/object/object_intersect.c \
+				classes/object/object_normal.c \
+				classes/object/object_print.c \
+				classes/object/object_trace.c \
+				classes/ray/ray.c \
 				utils/extra_list.c
 
 

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:36:23 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/21 20:12:25 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 13:53:52 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ static int	trace_light_cyl(t_list *obj, t_ray *ray)
 	return (color);
 }
 
-//trace ray from bj to lightand change values ray.obj and ray.t
+//trace ray from obj to lightand change values ray.obj and ray.t
 int trace_light(t_list *obj, t_ray *ray)
 {
     int (*fptr)(t_list *, t_ray *) = NULL;

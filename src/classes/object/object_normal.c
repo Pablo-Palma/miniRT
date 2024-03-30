@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:27:31 by math              #+#    #+#             */
-/*   Updated: 2024/03/30 02:54:35 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 13:48:03 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,27 @@ static t_vec3	normal_sp(t_sphere *sphere, t_vec3 point)
 
 static t_vec3	normal_cyl(t_cyl *cyl, t_vec3 point)
 {
-	t_vec3	normal;
-	t_vec3	to_surface;
-	t_vec3	closest_point;
-	t_vec3	to_point;
-	double	projection;
-
-	to_surface = vector_sub(point, cyl->center);
-	projection = vector_dot_product(to_surface, cyl->dir);
-	closest_point = vector_add(cyl->center, vector_scale(cyl->dir, projection));
-	to_point = vector_sub(point, closest_point);
-	normal = vector_sub(to_point, vector_scale(cyl->dir,
-				vector_dot_product(to_point, cyl->dir)));
-	return (normalize(normal));
+	t_vec3 center_to_hit = vector_sub(point, cyl->center);
+	double proj_length = vector_dot_product(center_to_hit, cyl->dir);
+	t_vec3 proj_point = vector_add(cyl->center, vector_scale(cyl->dir, proj_length));
+	t_vec3 normal = vector_sub(point, proj_point);
+	return normalize(normal);
 }
+// {
+// 	t_vec3	normal;
+// 	t_vec3	to_surface;
+// 	t_vec3	closest_point;
+// 	t_vec3	to_point;
+// 	double	projection;
+
+// 	to_surface = vector_sub(point, cyl->center);
+// 	projection = vector_dot_product(to_surface, cyl->dir);
+// 	closest_point = vector_add(cyl->center, vector_scale(cyl->dir, projection));
+// 	to_point = vector_sub(point, closest_point);
+// 	normal = vector_sub(to_point, vector_scale(cyl->dir,
+// 				vector_dot_product(to_point, cyl->dir)));
+// 	return (normalize(normal));
+// }
 
 t_vec3	get_normal(t_obj *obj, t_vec3 point)
 {
