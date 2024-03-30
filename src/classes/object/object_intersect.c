@@ -15,13 +15,18 @@
 static int	intersect_pl(t_plane plane, t_ray *ray)
 {
 	double	denom;
+	double	temp_t;
 
 	denom = vector_dot_product(ray->direction, plane.normal);
 	if (fabs(denom) > 1e-6)
 	{
 		t_vec3	origin_plane = vector_sub(plane.point, ray->origin);
-		ray->t = vector_dot_product(origin_plane, plane.normal) / denom;
-		return(ray->t >= 0);
+		temp_t = vector_dot_product(origin_plane, plane.normal) / denom;
+		if (temp_t >= 0)
+		{
+			ray->t = temp_t;
+			return (1);
+		}
 	}
 	return (0);
 }
@@ -37,9 +42,9 @@ static int intersect_sp(t_sphere sphere, t_ray *ray)
 	    return 0;
 	double t0 = (-b - sqrt(discriminant)) / (2.0 * a);
 	double t1 = (-b + sqrt(discriminant)) / (2.0 * a);
-	if (t0 > 0 && t0 < ray->t)
+	if (t0 > 0.0f && t0 < ray->t)
 	    ray->t = t0;
-	else if (t1 > 0 && t1 < ray->t)
+	else if (t1 > 0.0f && t1 < ray->t)
 	    ray->t = t1;
 	else
 	    return 0;
