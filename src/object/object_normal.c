@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:27:31 by math              #+#    #+#             */
-/*   Updated: 2024/03/30 02:41:59 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 02:54:35 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_vec3	normal_cyl(t_cyl *cyl, t_vec3 point)
 	to_point = vector_sub(point, closest_point);
 	normal = vector_sub(to_point, vector_scale(cyl->dir,
 				vector_dot_product(to_point, cyl->dir)));
-	return (normal);
+	return (normalize(normal));
 }
 
 t_vec3	get_normal(t_obj *obj, t_vec3 point)

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/30 02:17:00 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 03:32:31 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,8 @@ void	ray_sum(t_ray *ray, t_pixel *pxl, t_ambient_light ambient_light)
 			t_vec3	norm = get_normal(*ray->obj, next_ray->origin);
 			view_dir = normalize(ray->direction); //obs: this was negated
 			light_dir = normalize(next_ray->direction); //obs: this was negated
-			pxl->diffuse = fmax(pxl->diffuse, calculate_diffuse(light_dir, norm, ((t_light *)((*ray->obj)->child))->brigthness));
-			pxl->specular = fmax(pxl->specular ,calculate_specular(view_dir, light_dir, norm, 1.0, 100.0));
+			pxl->diffuse = calculate_diffuse(light_dir, norm, ((t_light *)((*ray->obj)->child))->brigthness);
+			pxl->specular = calculate_specular(view_dir, light_dir, norm, 1.0, 100.0);
 		}
 		else
 		{

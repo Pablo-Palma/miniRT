@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:19:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 18:56:42 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/30 03:27:10 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	handle_keyboard(int keycode, t_graph *graph, t_list *obj_list)
 	else if (keycode == KEY_S)
 		cam->view_point.z += move_step;
 	else if (keycode == KEY_A)
-		cam->orientation.z *= -1;
+		cam->orientation.x -= 0.1;
+	else if (keycode == KEY_D)
+		cam->orientation.x += 0.1;
+	cam->orientation = normalize(cam->orientation);
 	render_scene(graph, obj_list);
 	mlx_put_image_to_window(graph->mlx, graph->win, graph->img, 0, 0);
 	return (0);
