@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/30 01:59:00 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 19:01:32 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			cur_ray = *((t_ray *)((*ray_list)->content))->next;
 			if (*((t_ray *)cur_ray->content)->obj)
 			{
-				ray_sum((*ray_list)->content, &pixel, ambient_light);
+				pixel.color = vec_to_color(vector_add(ray_sum((*ray_list)->content, &pixel), vector_scale(color_to_vec(ambient_light.color), ambient_light.intensity)));
 				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
 				// if (is_child(*((t_ray *)(cur_ray->content))->obj, "L"))
 				// {

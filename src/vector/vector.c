@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:42:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/25 19:22:41 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/30 20:09:34 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ t_vec3	vector_sub(t_vec3 v1, t_vec3 v2)
 	return (t_vec3){v1.x - v2.x, v1.y - v2.y, v1.z - v2.z};
 }
 
+t_vec3	vector_multiply(t_vec3 v1, t_vec3 v2)
+{
+	return ((t_vec3){v1.x * v2.x, v1.y * v2.y, v1.z * v2.z});
+}
+
 double	vector_dot_product(t_vec3 v1, t_vec3 v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
@@ -50,6 +55,40 @@ t_vec3	vector_cross(t_vec3 v1, t_vec3	v2)
 	.y = v1.z * v2.x - v1.x * v2.z,
 	.z = v1.x * v2.y - v1.y * v2.x,
 	});
+}
+
+t_vec3 vector_projection(t_vec3 v, t_vec3 u)
+{
+    double dot_product;
+    double u_magnitude_squared;
+    t_vec3 projection;
+
+	dot_product = vector_dot_product(v, u);
+	u_magnitude_squared = vector_dot_product(u, u);
+	projection = vector_scale(u, dot_product / u_magnitude_squared);
+    return (projection);
+}
+
+t_vec3 color_to_vec(int color)
+{
+    t_vec3 vec;
+    
+    vec.x = (double)((color >> 16) & 0xFF);
+    vec.y = (double)((color >> 8) & 0xFF);
+    vec.z = (double)(color & 0xFF);
+    return vec;
+}
+
+int vec_to_color(t_vec3 vec)
+{
+    int	r;
+    int	g;
+    int	b;
+
+	r = (int)fmin(255.0, fmax(0.0, vec.x));
+    g = (int)fmin(255.0, fmax(0.0, vec.y));
+    b = (int)fmin(255.0, fmax(0.0, vec.z));
+    return ((r << 16) | (g << 8) | b);
 }
 
 t_vec3	normalize(t_vec3 v)

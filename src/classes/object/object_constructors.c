@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/21 23:52:35 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 19:13:51 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	light(void *parent)
 	t_light		*self;
 	char		**str;
 	char		**str_cordinates;
-	// char		**str_color;  ONLY FOR BONUS PART
+	char		**str_color;
 
 	self = (t_light *)malloc(sizeof(t_light));
 	((t_obj *)parent)->child = self;
@@ -85,15 +85,15 @@ void	light(void *parent)
 						ft_atof(str_cordinates[1]),
 						ft_atof(str_cordinates[2])};
 	self->brigthness = ft_atof(str[2]);
-	// str_color = ft_split(str[3], ',');
-	// self->color = ((ft_atoi(str_color[0]) << 16)
-	// 			| (ft_atoi(str_color[1]) << 8)
-	// 			| (ft_atoi(str_color[2])));
+	str_color = ft_split(str[3], ',');
+	self->color = ((ft_atoi(str_color[0]) << 16)
+				| (ft_atoi(str_color[1]) << 8)
+				| (ft_atoi(str_color[2])));
 	dbfree(str);
 	dbfree(str_cordinates);
-	// dbfree(str_color);
+	dbfree(str_color);
 	*((t_obj *)parent)->origin = &self->pos;
-	// *((t_obj *)parent)->color = self->color;
+	*((t_obj *)parent)->color = self->color;
 }
 
 void	sphere(void *parent)

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:01:35 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/21 19:33:39 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 20:11:46 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ static void	print_light(void *obj)
 			light->pos.y,
 			light->pos.z);
 	printf("\tBrightness: %.2f\n", light->brigthness);
+	printf("\tColor: (%d, %d, %d)\n",
+			(light->color >> 16) & 0xFF,
+			(light->color >> 8) & 0xFF,
+			light->color & 0xFF);
 }
 
 static void	print_sphere(void *obj)

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/26 17:06:21 by math             ###   ########.fr       */
+/*   Updated: 2024/03/30 20:09:34 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,14 @@ t_vec3	normalize(t_vec3 v);
 double	vector_length(t_vec3 v);
 t_vec3	vector_add(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_sub(t_vec3 v1, t_vec3 v2);
+t_vec3	vector_multiply(t_vec3 v1, t_vec3 v2);
 double	vector_dot_product(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_negate(t_vec3 v);
 t_vec3	vector_scale(t_vec3 v, double s);
 t_vec3	vector_cross(t_vec3 v1, t_vec3	v2);
+t_vec3	vector_projection(t_vec3 v, t_vec3 u);
+t_vec3	color_to_vec(int color);
+int		vec_to_color(t_vec3 vec);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -215,7 +219,7 @@ void	ray_mv_to_pool(t_list **poll, t_list **ray_list);
 void	ray_print(t_ray *ray);
 void	ray_print_list(t_list *ray, int level);
 void	ray_trace_light(t_ray *ray, t_list *obj_list, t_list **pool);
-void	ray_sum(t_ray *ray, t_pixel *pix, t_ambient_light ambient_light);
+t_vec3	ray_sum(t_ray *ray, t_pixel *pix);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
