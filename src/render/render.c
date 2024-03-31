@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/30 19:01:32 by math             ###   ########.fr       */
+/*   Updated: 2024/03/31 00:44:19 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			}
 			//TRACING TO LIGHTS
 			ray_trace_light((*ray_list)->content, obj_list, pool); //initializate one ray.content.next (which is a t_list **), to each L, with its direction
+			//TRACING IMAGE
+				//empty
 			cur_ray = *((t_ray *)((*ray_list)->content))->next;
 			while (cur_ray)
 			{
@@ -92,8 +94,6 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 				}
 				cur_ray = cur_ray->next;
 			}
-			//TRACING IMAGE
-				//empty
 
 			// COMPUTING RAY
 			cur_ray = *((t_ray *)((*ray_list)->content))->next;

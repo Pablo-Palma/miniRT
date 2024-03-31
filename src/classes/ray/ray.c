@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/30 20:52:14 by math             ###   ########.fr       */
+/*   Updated: 2024/03/31 01:48:09 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,30 +159,17 @@ void	ray_trace_light(t_ray *ray, t_list *obj_list, t_list **pool)
 			light = NULL;
 	}
 }
-// {
-// 	t_vec3	origin;
-// 	t_vec3	direction;
-// 	t_light	*light;
-//
-// 	if (!(ray && *ray->obj))
-// 		return ;
-// 	obj_list = objchr(obj_list, "L");
-// 	if (!ft_strncmp(((t_obj *)(obj_list->content))->line, "L", 1))
-// 		light = (t_light *)((t_obj *)(obj_list->content))->child;
-// 	else
-// 		light = NULL;
-// 	origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
-// 	while (light)
-// 	{
-// 		direction = vector_sub(light->pos, origin);
-// 		ft_lstadd_back(&(ray->next), ft_lstnew(ray_new(origin, direction)));
-// 		obj_list = obj_list->next;
-// 		if (!ft_strncmp(((t_obj *)(obj_list->content))->line, "L", 1))
-// 			light = (t_light *)((t_obj *)(obj_list->content))->child;
-// 		else
-// 			light = NULL;
-// 	}
-// }
+
+void	ray_trace_img(t_ray *ray, t_list *obj_list, t_list **pool)
+{
+	t_ray	temp;
+
+	if (!(ray && ray->obj))
+		return ;
+	temp.origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
+	temp.direction = vector_reflect(ray->direction , get_normal(obj_list->content, temp.origin));
+	ft_lstadd_back(ray->next, lst_getpool_node(pool, ray_new, ray_cpy, &temp));
+}
 
 t_vec3	ray_sum(t_ray *ray, t_pixel *pxl)
 {

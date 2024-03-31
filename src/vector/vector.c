@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:42:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/30 20:09:34 by math             ###   ########.fr       */
+/*   Updated: 2024/03/31 01:10:09 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,19 @@ t_vec3 vector_projection(t_vec3 v, t_vec3 u)
 	u_magnitude_squared = vector_dot_product(u, u);
 	projection = vector_scale(u, dot_product / u_magnitude_squared);
     return (projection);
+}
+
+t_vec3	vector_reflect(t_vec3 v, t_vec3 n)
+{
+	double	dot;
+
+	dot = vector_dot_product(v, n);
+	return (t_vec3)
+	{
+		v.x - 2 * dot * n.x,
+		v.y - 2 * dot * n.y,
+		v.z - 2 * dot * n.z,
+	};
 }
 
 t_vec3 color_to_vec(int color)
