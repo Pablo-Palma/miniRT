@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/30 15:09:40 by math             ###   ########.fr       */
+/*   Updated: 2024/03/31 17:33:47 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct	s_ray
     double			t;
 	t_obj			**obj;
 	t_list			**next;
+	ssize_t			reflect_level;
+	bool			img_trace;
 }					t_ray;
 
 #endif
