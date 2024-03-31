@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/31 15:42:49 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 01:03:15 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 	pool = lst_create();
 	ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj_list, "A")->content)->child;
 	cam = *(t_cam *)((t_obj *)objchr(obj_list, "C")->content)->child;
-	pixel = (t_pixel){-1,-1,0,0,0};
+	pixel = (t_pixel){-1,-1};
 	while (++pixel.y < WIN_HEIGHT)
 	{
-		pixel = (t_pixel){pixel.y,-1,0,0,0};
+		pixel = (t_pixel){pixel.y,-1};
 		while (++pixel.x < WIN_WIDTH)
 		{
 			//TRACING RAY CAM TO OBJ
@@ -121,8 +121,8 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			cur_ray = *((t_ray *)((*ray_list)->content))->next;
 			if (*((t_ray *)cur_ray->content)->obj)
 			{
-				pixel.color = vec_to_color(vector_add(ray_sum((*ray_list)->content, &pixel), vector_scale(color_to_vec(ambient_light.color), ambient_light.intensity)));
-				put_pixel_to_image(graph, pixel.x, pixel.y, pixel.color);
+				int color = vec_to_color(vector_add(ray_sum((*ray_list)->content, &pixel), vector_scale(color_to_vec(ambient_light.color), ambient_light.intensity)));
+				put_pixel_to_image(graph, pixel.x, pixel.y, color);
 			}
 			// // MOVING TO POOL
 			ray_mv_to_pool(pool, ray_list);

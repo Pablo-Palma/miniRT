@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/01 01:00:40 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 01:03:54 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,8 @@ t_vec3	ray_sum(t_ray *ray, t_pixel *pxl)
 	t_vec3	view_dir;
 	t_vec3	light_dir;
 	t_vec3	norm;
+	double	diffuse;
+	double	specular;
 	
 	pxl_light = (t_vec3){0,0,0};
 	ray_list = *ray->next;
@@ -210,11 +212,11 @@ t_vec3	ray_sum(t_ray *ray, t_pixel *pxl)
 			norm = normalize(get_normal(*ray->obj, next_ray->origin));
 			view_dir = normalize(ray->direction);
 			light_dir = normalize(next_ray->direction);
-			pxl->diffuse = calculate_diffuse(light_dir, norm, ((t_light *)(*next_ray->obj)->child)->brigthness);
-			temp = vector_scale(temp, pxl->diffuse);
+			diffuse = calculate_diffuse(light_dir, norm, ((t_light *)(*next_ray->obj)->child)->brigthness);
+			temp = vector_scale(temp, diffuse);
 			temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
-			pxl->specular = calculate_specular(view_dir, light_dir, norm, 1.0, 100.0);
-			temp = vector_add(temp, vector_scale(color_to_vec(*(*next_ray->obj)->color), pxl->specular));
+			specular = calculate_specular(view_dir, light_dir, norm, 1.0, 100.0);
+			temp = vector_add(temp, vector_scale(color_to_vec(*(*next_ray->obj)->color), specular));
 			pxl_light = vector_add(pxl_light, temp);
 		}
 		else if (next_ray->img_trace)
