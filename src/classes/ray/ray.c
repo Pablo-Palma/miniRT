@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/01 01:03:54 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 01:08:17 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void	ray_trace_img(t_ray *ray, t_list *obj_list, t_list **pool)
 	((t_ray *)ft_lstlast(*ray->next)->content)->img_trace = 1;
 }
 
-t_vec3	ray_sum(t_ray *ray, t_pixel *pxl)
+t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 {
 	t_list	*ray_list;
 	t_ray	*next_ray;
@@ -222,7 +222,7 @@ t_vec3	ray_sum(t_ray *ray, t_pixel *pxl)
 		else if (next_ray->img_trace)
 		{
 			/*handle reflection*/
-			pxl_light = ray_sum(next_ray, pxl);
+			pxl_light = ray_sum(next_ray, alight);
 			//pxl_light = vector_add(pxl_light, temp);
 		}
 		ray_list = ray_list->next;
