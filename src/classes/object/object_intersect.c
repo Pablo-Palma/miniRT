@@ -22,7 +22,7 @@ static int	intersect_pl(t_plane plane, t_ray *ray)
 	{
 		t_vec3	origin_plane = vector_sub(plane.point, ray->origin);
 		temp_t = vector_dot_product(origin_plane, plane.normal) / denom;
-		if (temp_t >= 0)
+		if (temp_t >= 0 && temp_t < ray->t)
 		{
 			ray->t = temp_t;
 			return (1);
