@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/31 17:38:18 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 01:00:40 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,22 @@ void	ray_delete(void *param)
 	free(self);
 }
 
-void	ray_mv_to_pool(t_list **poll, t_list **ray_list)
+void	ray_mv_to_pool(t_list **pool, t_list **ray_list)
 {
-	if (*((t_ray *)((*ray_list)->content))->next)
+	t_list	*cur;
+
+	cur = *ray_list;
+	while (cur)
 	{
-		ray_mv_to_pool(poll, ((t_ray *)((*ray_list)->content))->next);
-		*((t_ray *)((*ray_list)->content))->next = NULL;
+		if (*((t_ray *)(cur->content))->next)
+		{
+			ray_mv_to_pool(pool, ((t_ray *)(cur->content))->next);
+			*((t_ray *)(cur->content))->next = NULL;
+		}
+		cur = cur->next;
 	}
-	lst_mv_all_to_pool(poll, ray_list, ray_clean);
+	 
+	lst_mv_all_to_pool(pool, ray_list, ray_clean);
 }
 
 void	ray_print(t_ray *ray)
