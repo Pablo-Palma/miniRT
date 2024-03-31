@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:42:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/31 01:10:09 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 00:58:28 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,26 @@ t_vec3	vector_reflect(t_vec3 v, t_vec3 n)
 		v.x - 2 * dot * n.x,
 		v.y - 2 * dot * n.y,
 		v.z - 2 * dot * n.z,
+	};
+}
+
+t_vec3	vector_fmax(t_vec3 v1, t_vec3 v2)
+{
+	return (t_vec3)
+	{
+		.x = fmax(v1.x, v2.x),
+		.y = fmax(v1.y, v2.y),
+		.z = fmax(v1.z, v2.z)
+	};
+}
+
+t_vec3	vector_fmin(t_vec3 v1, t_vec3 v2)
+{
+	return (t_vec3)
+	{
+		.x = fmin(v1.x, v2.x),
+		.y = fmin(v1.y, v2.y),
+		.z = fmin(v1.z, v2.z)
 	};
 }
 
