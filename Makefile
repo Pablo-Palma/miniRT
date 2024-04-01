@@ -2,7 +2,6 @@ NAME = miniRT
 CC = gcc
 MLX_DIR = mlx
 CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc -I$(MLX_DIR)
-CFLAGS =  -g3 -Wall -Wextra -Werror -Iinc -Iinc/libft/inc
 SRCS_DIR = src
 OBJS_DIR = obj
 LIBFT_DIR = inc/libft
@@ -41,8 +40,6 @@ SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
 MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx.dylib
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-
-MLX_FLAGS_MAC = -L./inc/libft -lft -lmlx -framework OpenGL -framework AppKit
 
 ##RULES
 
