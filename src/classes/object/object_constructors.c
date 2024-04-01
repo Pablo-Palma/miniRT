@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/30 19:13:51 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 17:20:08 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	sphere(void *parent)
 	self->center = (t_vec3){ft_atof(str_cordinates[0]),
 							ft_atof(str_cordinates[1]),
 							ft_atof(str_cordinates[2])};
-	self->radius = ft_atof(str[2]);
+	self->radius = ft_atof(str[2]) / 2;
 	str_color = ft_split(str[3], ',');
 	self->color = ((ft_atoi(str_color[0]) << 16)
 				| (ft_atoi(str_color[1]) << 8)
@@ -172,7 +172,7 @@ void	cylinder(void *parent)
 	self->dir = (t_vec3){ft_atof(str_dir[0]),
 						ft_atof(str_dir[1]),
 						ft_atof(str_dir[2])};
-	self->radius = ft_atof(str[3]);
+	self->radius = ft_atof(str[3]) / 2;
 	self->h = ft_atof(str[4]);
 	str_color = ft_split(str[5], ',');
 	self->color = ((ft_atoi(str_color[0]) << 16)

@@ -8,3 +8,4 @@ miniRT
 inc/libft/*
 *.a
 obj/*
+libft.a
