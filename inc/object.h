@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/31 17:33:47 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 04:13:47 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef struct s_sphere
 	double	radius;
 	int		color;
 	double	diameter;
-	double	reflective;
 }				t_sphere;
 
 typedef struct s_cyl
@@ -31,8 +30,6 @@ typedef struct s_cyl
 	double	radius;
 	double	h;
 	int		color;
-	double	reflective;
-
 }			t_cyl;
 
 typedef struct s_plane
@@ -41,7 +38,6 @@ typedef struct s_plane
 	t_vec3	point;
 	t_vec3	normal;
 	int		color;
-	double	reflective;
 }			t_plane;
 
 typedef struct s_circle
@@ -51,7 +47,6 @@ typedef struct s_circle
 	t_vec3	normal;
 	double	radius;
 	int		color;
-	double	reflective;
 }			t_circle;
 
 typedef struct s_obj
@@ -60,6 +55,7 @@ typedef struct s_obj
 	void	*child;
 	t_vec3	**origin;
 	int		*color;
+	double	reflective;
 }			t_obj;
 
 typedef struct	s_ray

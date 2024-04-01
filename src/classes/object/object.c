@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:21:29 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/21 23:56:49 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 04:18:44 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static t_obj	*new_obj(char *line)
 	*self->origin = NULL;
 	self->color = malloc(sizeof(int));
 	*(self->color) = 0;
+	self->reflective = 0;
 	return (self);
 }
 
