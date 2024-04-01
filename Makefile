@@ -2,7 +2,7 @@ UNAME := $(shell uname)
 NAME = miniRT
 CC = gcc
 MLX_DIR = mlx
-CFLAGS = -Wall -Wextra -Werror -g3 -Iinc
+CFLAGS = -Wall -Wextra -Werror -Iinc -o3
 
 SRCS_DIR = src
 OBJS_DIR = obj
