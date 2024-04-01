@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/01 01:08:17 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 01:54:12 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 			light_dir = normalize(next_ray->direction);
 			diffuse = calculate_diffuse(light_dir, norm, ((t_light *)(*next_ray->obj)->child)->brigthness);
 			temp = vector_scale(temp, diffuse);
+			temp = vector_fmax(temp, alight);
 			temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
 			specular = calculate_specular(view_dir, light_dir, norm, 1.0, 100.0);
 			temp = vector_add(temp, vector_scale(color_to_vec(*(*next_ray->obj)->color), specular));
@@ -222,8 +223,18 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 		else if (next_ray->img_trace)
 		{
 			/*handle reflection*/
-			pxl_light = ray_sum(next_ray, alight);
+			temp = ray_sum(next_ray, alight);
+			temp = vector_fmax(temp, alight);
+			temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+			pxl_light = temp;
 			//pxl_light = vector_add(pxl_light, temp);
+		}
+		else
+		{
+			//temp = color_to_vec(BLACK);
+			//temp = vector_fmax(temp, alight);
+			//temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+			//pxl_light = temp;
 		}
 		ray_list = ray_list->next;
 	}
