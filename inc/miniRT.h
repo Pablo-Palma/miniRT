@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 17:37:07 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 18:05:35 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ t_vec3	vector_proportion(t_vec3 v1, t_vec3 v2, double percent);
 t_vec3	vector_fmax(t_vec3 v1, t_vec3 v2);
 t_vec3	vector_fmin(t_vec3 v1, t_vec3 v2);
 t_vec3	color_to_vec(int color);
+bool	vector_cmp(t_vec3 v1, t_vec3 v2);
 int		vec_to_color(t_vec3 vec);
 
 ///////////////////////////////////////////////////////////////////////////////

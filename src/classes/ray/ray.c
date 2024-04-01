@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/01 04:36:40 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 18:21:49 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,14 +229,20 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 			pxl_light = temp;
 			//pxl_light = vector_add(pxl_light, temp);
 		}
-		else
-		{
-			//temp = color_to_vec(BLACK);
-			//temp = vector_fmax(temp, alight);
-			//temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
-			//pxl_light = temp;
-		}
+		// else
+		// {
+		// 	//temp = color_to_vec(BLACK);
+		// 	//temp = vector_fmax(temp, alight);
+		// 	//temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+		// 	//pxl_light = temp;
+		// }
 		ray_list = ray_list->next;
+	}
+	if (vector_cmp(pxl_light, color_to_vec(BLACK)))
+	{
+		pxl_light = vector_multiply(alight, normalize(color_to_vec(*(*ray->obj)->color)));
+		// pxl_light = vector_fmax(pxl_light, alight);
+		// pxl_light = alight;
 	}
 	return (pxl_light);
 }
