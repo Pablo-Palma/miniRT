@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 01:09:26 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 03:35:04 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,43 @@ void	ray_start(t_list *obj_list, t_list **pool, t_ray *ray)
 	}
 }
 
-void	render_scene(t_graph *graph, t_list *obj_list)
+static int	raytracing(t_list *obj_list, t_list **pool, t_ray ray_dir)
 {
 	t_list			**ray_list;
-	t_list			**pool;
 	t_list			*cur = NULL;
 	t_list			*cur_ray = NULL;
-	t_ray			temp;
-	t_pixel			pixel;
 	t_ambient_light	ambient_light;
-	t_cam			cam;
+	int 			color;
 
 	ray_list = lst_create();
-	pool = lst_create();
 	ambient_light = *(t_ambient_light *)((t_obj *)objchr(obj_list, "A")->content)->child;
+	ft_lstadd_back(ray_list, lst_getpool_node(pool, ray_new, ray_cpy, &ray_dir));
+	cur = obj_list;
+	while (cur) //TRACING RAY CAM TO OBJ
+	{
+		intersect(cur->content, (t_ray *)(*ray_list)->content);
+		cur = cur->next;
+	}
+	color = BLACK;
+	if (*((t_ray *)(*ray_list)->content)->obj) // FIRST RAY REACH ANYTHING
+	{
+		ray_start(obj_list, pool, (*ray_list)->content); // TRACING
+		cur_ray = *((t_ray *)((*ray_list)->content))->next; // COMPUTING RAY
+		if (*((t_ray *)cur_ray->content)->obj)
+			color = vec_to_color(ray_sum((*ray_list)->content, vector_scale(color_to_vec(ambient_light.color), ambient_light.intensity)));
+	}
+	ray_mv_to_pool(pool, ray_list);
+	return (color);
+}
+
+void	render_scene(t_graph *graph, t_list *obj_list)
+{
+	t_list			**pool;
+	t_pixel			pixel;
+	t_cam			cam;
+	t_ray			temp;
+
+	pool = lst_create();
 	cam = *(t_cam *)((t_obj *)objchr(obj_list, "C")->content)->child;
 	pixel = (t_pixel){-1,-1};
 	while (++pixel.y < WIN_HEIGHT)
@@ -99,35 +122,11 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 		pixel = (t_pixel){pixel.y,-1};
 		while (++pixel.x < WIN_WIDTH)
 		{
-			//TRACING RAY CAM TO OBJ
 			temp.origin = cam.view_point;
 			temp.direction = compute_ray_dir(pixel.x, pixel.y, cam);
-			ft_lstadd_back(ray_list, lst_getpool_node(pool, ray_new, ray_cpy, &temp));
-			cur = obj_list;
-			while (cur)
-			{
-				intersect(cur->content, (t_ray *)(*ray_list)->content);
-				cur = cur->next;
-			}
-			if (!*((t_ray *)(*ray_list)->content)->obj) // FIRST RAY REACH VOID
-			{
-				put_pixel_to_image(graph, pixel.x, pixel.y, BLACK);
-				ray_mv_to_pool(pool, ray_list);
-				continue ;
-			}
-			// TRACING
-			ray_start(obj_list, pool, (*ray_list)->content);
-			// COMPUTING RAY
-			cur_ray = *((t_ray *)((*ray_list)->content))->next;
-			if (*((t_ray *)cur_ray->content)->obj)
-			{
-				int color = vec_to_color(ray_sum((*ray_list)->content, vector_scale(color_to_vec(ambient_light.color), ambient_light.intensity)));
-				put_pixel_to_image(graph, pixel.x, pixel.y, color);
-			}
-			// // MOVING TO POOL
-			ray_mv_to_pool(pool, ray_list);
+			put_pixel_to_image(graph, pixel.x, pixel.y, raytracing(graph->obj_list, pool, temp));
 		}
 	}
 	//CLEANING
-	ft_lstclear(ray_list, ray_delete);
+	ft_lstclear(pool, ray_delete);
 }
