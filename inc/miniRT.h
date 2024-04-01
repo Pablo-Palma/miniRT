@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 04:34:56 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 17:37:07 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define	WIN_WIDTH 800
 # define	WIN_HEIGHT 800
-# define	MAX_REFLECT_LEVEL 1
+# define	MAX_REFLECT_LEVEL 0
 // COLORS
 # define WHITE		0xFFFFFF
 # define BLACK		0x000000
