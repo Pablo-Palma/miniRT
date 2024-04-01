@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 03:35:04 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 03:47:25 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ static int	raytracing(t_list *obj_list, t_list **pool, t_ray ray_dir)
 		cur = cur->next;
 	}
 	color = BLACK;
+	if (*((t_ray *)(*ray_list)->content)->obj && is_child(*((t_ray *)(*ray_list)->content)->obj, "L")) // LOOK DIRECT TO LIGHT
+		color = *(((t_obj *)(*((t_ray *)(*ray_list)->content)->obj))->color);
 	if (*((t_ray *)(*ray_list)->content)->obj) // FIRST RAY REACH ANYTHING
 	{
 		ray_start(obj_list, pool, (*ray_list)->content); // TRACING
