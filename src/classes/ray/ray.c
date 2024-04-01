@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/01 01:54:12 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 04:36:40 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void	ray_trace_light(t_ray *ray, t_list *obj_list, t_list **pool)
 	}
 }
 
-void	ray_trace_img(t_ray *ray, t_list *obj_list, t_list **pool)
+void	ray_trace_img(t_ray *ray, t_list **pool)
 {
 	t_ray	temp;
 
@@ -181,7 +181,7 @@ void	ray_trace_img(t_ray *ray, t_list *obj_list, t_list **pool)
 	if (ray->reflect_level >= MAX_REFLECT_LEVEL)
 		return ;
 	temp.origin = vector_add(ray->origin, vector_scale(ray->direction, ray->t));
-	temp.direction = vector_reflect(ray->direction , get_normal(obj_list->content, temp.origin));
+	temp.direction = vector_reflect(ray->direction , get_normal(*ray->obj, temp.origin));
 	ft_lstadd_back(ray->next, lst_getpool_node(pool, ray_new, ray_cpy, &temp));
 	((t_ray *)ft_lstlast(*ray->next)->content)->reflect_level += 1;
 	((t_ray *)ft_lstlast(*ray->next)->content)->img_trace = 1;

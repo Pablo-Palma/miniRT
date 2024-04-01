@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 04:11:13 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 04:34:56 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ void	ray_mv_to_pool(t_list **pool, t_list **ray_list);
 void	ray_print(t_ray *ray);
 void	ray_print_list(t_list *ray, int level);
 void	ray_trace_light(t_ray *ray, t_list *obj_list, t_list **pool);
-void	ray_trace_img(t_ray *ray, t_list *obj_list, t_list **pool);
+void	ray_trace_img(t_ray *ray, t_list **pool);
 t_vec3	ray_sum(t_ray *ray, t_vec3 alight);
 
 ///////////////////////////////////////////////////////////////////////////////
