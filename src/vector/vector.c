@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:42:08 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 00:58:28 by math             ###   ########.fr       */
+/*   Updated: 2024/04/01 04:10:26 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ t_vec3	vector_fmin(t_vec3 v1, t_vec3 v2)
 		.y = fmin(v1.y, v2.y),
 		.z = fmin(v1.z, v2.z)
 	};
+}
+
+t_vec3	vector_proportion(t_vec3 v1, t_vec3 v2, double percent)
+{
+	return (vector_add(vector_scale(v1, percent), vector_scale(v2, 1.0 - percent)));
 }
 
 t_vec3 color_to_vec(int color)
