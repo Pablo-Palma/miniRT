@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 14:35:49 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/17 16:44:45 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,8 @@ void 	intersect(t_obj *obj, t_ray *ray);
 int 	trace_light(t_list *obj, t_ray *ray);
 t_vec3	get_normal(t_obj *obj, t_vec3 point);
 bool	is_child(t_obj *self, char *str);
+int		check(t_obj *obj);
+int 	check_all_obj(t_list *obj_list);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //

@@ -13,10 +13,10 @@ SRCS_FILES =	main/main.c								\
 				window/setup.c window/events.c			\
 				render/render.c			\
 				render/colors.c			\
-				vector/vector_1.c	\
-				vector/vector_2.c	\
-				vector/vector_3.c	\
-				vector/vector_4.c	\
+				classes/vector/vector_1.c	\
+				classes/vector/vector_2.c	\
+				classes/vector/vector_3.c	\
+				classes/vector/vector_4.c	\
 				light/lighting.c						\
 				utils/clean.c							\
 				classes/object/object.c \
@@ -25,6 +25,7 @@ SRCS_FILES =	main/main.c								\
 				classes/object/object_normal.c \
 				classes/object/object_print.c \
 				classes/object/object_trace.c \
+				classes/object/object_check.c \
 				classes/ray/ray.c \
 				utils/extra_list.c
 

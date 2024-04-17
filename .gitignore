@@ -6,6 +6,5 @@ minilibx_opengl_20191021/*
 minilibx-linux/*
 miniRT
 inc/libft/*
-*.a
+inc/libft.a
 obj/*
-libft.a
