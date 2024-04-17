@@ -3,54 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabpalma <pabpalma>                        +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:26:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/12 17:11:39 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:47:30 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-static	int	parse_line(char *line, t_scene	*scene)
+int check_all_obj(t_list *obj_list)
 {
-	if (line[0] == 'A')
-		return(parse_ambient(line, scene));
-//	else if (line[0] == 'C')
-//		return(parse_cam(line, scene));
-//	else if (line[0] == 'L')
-//		return(parse_light(line, scene));
-//	else if (ft_strncmp(line, "sp", 2) == 0)
-//		return(parse_sphere(line, scene));
-//	else if (ft_strncmp(line, "pl", 2) == 0)
-//		return(parse_plane(line, scene));
-//	else if (ft_strncmp(line, "cy", 2) == 0)
-//		return(parse_cylinder(line, scene));
-	return (1);
+	t_list	*cur;
+
+	cur = obj_list;
+	while (cur)
+	{
+		if (check((t_obj *)cur->content))
+			return (EXIT_FAILURE);
+		cur = cur->next;
+	}
+	return (EXIT_SUCCESS);
 }
 
-int	parse_file(char *file, t_scene	*scene)
+int	parse(t_graph *graph, int fd)
 {
-	int	fd;
-	char *line;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		perror ("Error opening file");
-		return (0);
-	}
-	while ((line = get_next_line(fd)) > 0)
-	{
-		if (!parse_line(line, scene))
-		{
-			free(line);
-			close(fd);
-			return(0);
-		}
-		free(line);
-	}
-	free(line);
-	close(fd);
-	return(1);
+	graph->obj_list = get_objects(fd);
+	if (check_all_obj(graph->obj_list))
+		return (EXIT_FAILURE);
+	ft_lstiter(graph->obj_list, print_obj);
+	return (EXIT_SUCCESS);
 }

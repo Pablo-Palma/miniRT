@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 16:44:45 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/17 18:53:40 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
 # include <stdio.h>
 # include <math.h>
 # include "libft/inc/libft.h"
-# include "scene.h"
-# include "object.h"
-# include "light.h"
+# include "structs.h"
 # include "events.h"
 
 # define	WIN_WIDTH 800
 # define	WIN_HEIGHT 800
-# define	MAX_REFLECT_LEVEL 1
+# ifndef	MAX_REFLECT_LEVEL
+#  define	MAX_REFLECT_LEVEL 0
+# endif
+
 // COLORS
 # define WHITE		0xFFFFFF
 # define BLACK		0x000000
@@ -178,6 +179,7 @@ int		convert_to_int(char *str, int min, int max);
 char 	**split_and_validate(char *line, int expected, char delim);
 // int	convert_to_int(char *str, int min, int max);
 double	convert_to_double(char *str, double min, double max);
+int		parse(t_graph *graph, int fd);
 
 
 ///////////////////////////////////////////////////////////////////////////////

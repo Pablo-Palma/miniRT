@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/23 10:40:10 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:17:30 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 	int		i = 0;
 	double	sign = 1.0;
 	*t_cap = INFINITY;
-
 	while(i < 2)
 	{
 		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
@@ -74,7 +73,6 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 		i++;
 		sign = -sign;
 	}
-
 	if (hit)
 	{
 		double	closest_t = cap_t[0];
@@ -83,8 +81,6 @@ int	intersect_cyl_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 		*t_cap = closest_t;
 	}
 	return(hit);
-
-
 }
 
 int	intersect_ray_cyl(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t)

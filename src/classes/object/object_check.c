@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:32:16 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/17 16:51:40 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/17 18:29:56 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,4 @@ int check(t_obj *obj)
 		printf("MiniRt: Invalid Object\n");
 	}
 	return (ret);
-}
-
-int check_all_obj(t_list *obj_list)
-{
-	t_list	*cur;
-
-	cur = obj_list;
-	while (cur)
-	{
-		if (check((t_obj *)cur->content))
-			return (EXIT_FAILURE);
-		cur = cur->next;
-	}
-	return (EXIT_SUCCESS);
 }
