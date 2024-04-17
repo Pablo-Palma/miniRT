@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:21:29 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/17 12:19:04 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/17 16:53:06 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ t_list *get_objects(int fd)
 	ft_lstadd_back(&obj, ft_lstnew(new_obj(line_cam)));
 	close(fd);
 	ft_lstiter(obj, constructor);
-	ft_lstiter(obj, print_obj);
 	return (obj);
 }
