@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   object_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:01:35 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/30 20:11:46 by math             ###   ########.fr       */
+/*   Updated: 2024/04/17 12:18:42 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
+#include "miniRT.h"
 #include <stdio.h>
 
 static void	print_a_light(void *obj)

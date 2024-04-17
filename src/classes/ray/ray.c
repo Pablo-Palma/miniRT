@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/01 18:21:49 by math             ###   ########.fr       */
+/*   Updated: 2024/04/17 12:39:19 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ void	ray_clean(void *node)
 	self->img_trace = 0;
 }
 
-// {
-// 	((t_ray *)self)->origin = (t_vec3){0,0,0};
-// 	((t_ray *)self)->direction = (t_vec3){0,0,0};
-// 	((t_ray *)self)->t = INFINITY;
-// 	*(((t_ray *)self)->obj) = NULL;
-// 	*((t_ray *)self)->next = NULL;
-// }
-
 void	ray_cpy(void *self, void *ray)
 {
 	((t_ray *)self)->origin = ((t_ray *)ray)->origin;
@@ -96,7 +88,6 @@ void	ray_mv_to_pool(t_list **pool, t_list **ray_list)
 		}
 		cur = cur->next;
 	}
-	 
 	lst_mv_all_to_pool(pool, ray_list, ray_clean);
 }
 

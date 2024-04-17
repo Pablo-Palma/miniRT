@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 04:36:08 by math             ###   ########.fr       */
+/*   Updated: 2024/04/17 12:35:20 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	ray_start(t_list *obj_list, t_list **pool, t_ray *ray)
 	t_list			*cur_ray = NULL;
 
 	//TRACING TO LIGHTS
-	ray_trace_light(ray, obj_list, pool); //initializate one ray.content.next (which is a t_list **), to each L, with its direction
+	//initializate one ray.content.next (which is a t_list **), to each L, with its direction
+	ray_trace_light(ray, obj_list, pool);
 	//TRACING IMAGE
 	ray_trace_img(ray, pool);
 	//INTERSECT

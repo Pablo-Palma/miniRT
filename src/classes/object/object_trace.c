@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   object_trace.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:36:23 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/30 13:53:52 by math             ###   ########.fr       */
+/*   Updated: 2024/04/17 12:18:38 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
+#include "miniRT.h"
 
 static int	trace_light_sp(t_list *obj, t_ray *ray)
 {
