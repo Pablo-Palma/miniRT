@@ -8,12 +8,15 @@ SRCS_DIR = src
 OBJS_DIR = obj
 LIBFT_DIR = inc/libft
 LIBFT = $(LIBFT_DIR)/libft.a
-##SRCS_FILES = main.c setup.c events.c render.c init.c geometry.c colors.c lighting.c vector.c sphere.c plane.c shadow.c cylinder.c
+
 SRCS_FILES =	main/main.c								\
 				window/setup.c window/events.c			\
 				render/render.c			\
 				render/colors.c			\
-				vector/vector.c	\
+				vector/vector_1.c	\
+				vector/vector_2.c	\
+				vector/vector_3.c	\
+				vector/vector_4.c	\
 				light/lighting.c						\
 				utils/clean.c							\
 				classes/object/object.c \
@@ -92,8 +95,6 @@ ifeq ($(UNAME), Darwin)
 else
     MLX_FILE := minilibx-linux.tgz
 endif
-
-
 
 ##RULES
 
