@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:32:16 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/17 20:21:23 by math             ###   ########.fr       */
+/*   Updated: 2024/04/17 20:22:05 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int check_sp(t_sphere *sphere)
 {
 	if (!sphere)
 		return (EXIT_FAILURE);
-	if (check_color(sphere->color0))
+	if (check_color(sphere->color))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
