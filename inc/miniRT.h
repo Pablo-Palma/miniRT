@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/01 18:05:35 by math             ###   ########.fr       */
+/*   Updated: 2024/04/17 14:35:49 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define	WIN_WIDTH 800
 # define	WIN_HEIGHT 800
-# define	MAX_REFLECT_LEVEL 0
+# define	MAX_REFLECT_LEVEL 1
 // COLORS
 # define WHITE		0xFFFFFF
 # define BLACK		0x000000

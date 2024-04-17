@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:19:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/03/30 03:27:10 by math             ###   ########.fr       */
+/*   Updated: 2024/04/17 12:33:39 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	handle_keyboard(int keycode, t_graph *graph, t_list *obj_list)
 		cur = cur->next;
 	}
 	cam = (t_cam *)obj->child;
-
 	move_step = 0.5;
 	if (keycode == KEY_UP)
 		cam->view_point.y += move_step;
