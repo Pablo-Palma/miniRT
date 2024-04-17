@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 18:53:40 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/17 20:12:49 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,10 @@ int		convert_to_int(char *str, int min, int max);
 char 	**split_and_validate(char *line, int expected, char delim);
 // int	convert_to_int(char *str, int min, int max);
 double	convert_to_double(char *str, double min, double max);
+
 int		parse(t_graph *graph, int fd);
+int 	check_all_obj(t_list *obj_list);
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -210,7 +213,10 @@ int 	trace_light(t_list *obj, t_ray *ray);
 t_vec3	get_normal(t_obj *obj, t_vec3 point);
 bool	is_child(t_obj *self, char *str);
 int		check(t_obj *obj);
-int 	check_all_obj(t_list *obj_list);
+int		check_color(int color);
+int 	check_light_brightness(double b);
+int		check_direction(t_vec3 vec);
+int 	check_fov(int fov);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
