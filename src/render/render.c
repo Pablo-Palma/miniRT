@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 20:44:40 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 21:18:29 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,5 @@ void	render_scene(t_graph *graph, t_list *obj_list)
 			put_pixel_to_image(graph, pixel.x, pixel.y, raytracing(graph->obj_list, pool, temp));
 		}
 	}
-	//CLEANING
 	ft_lstclear(pool, ray_delete);
 }

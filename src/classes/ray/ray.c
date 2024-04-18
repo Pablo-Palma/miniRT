@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/18 21:00:11 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 21:18:36 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 			diffuse = calculate_diffuse(light_dir, norm, ((t_light *)(*next_ray->obj)->child)->brigthness);
 			temp = vector_scale(temp, diffuse);
 			temp = vector_fmax(temp, alight);
-			if (CHECKERBOARD == 1)
+			if (CHECKERBOARD == 0)
 				temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
 			else
 				temp = vector_multiply(temp, normalize(color_to_vec(checkerboard(*ray->obj, next_ray->origin))));
@@ -221,7 +221,7 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 			/*handle reflection*/
 			temp = ray_sum(next_ray, alight);
 			temp = vector_fmax(temp, alight);
-			if (CHECKERBOARD == 1)
+			if (CHECKERBOARD == 0)
 				temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
 			else
 				temp = vector_multiply(temp, normalize(color_to_vec(checkerboard(*ray->obj, next_ray->origin))));
@@ -240,7 +240,7 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 	}
 	if (vector_cmp(pxl_light, color_to_vec(BLACK)))
 	{
-		if (CHECKERBOARD == 1)
+		if (CHECKERBOARD == 0)
 			pxl_light = vector_multiply(alight, normalize(color_to_vec(*(*ray->obj)->color)));
 		else
 			pxl_light = vector_multiply(alight, normalize(color_to_vec(checkerboard(*ray->obj, next_ray->origin))));
