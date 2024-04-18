@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 18:33:24 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 18:12:52 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cyl
 	double	radius;
 	double	h;
 	int		color;
+	int		caps;
 }			t_cyl;
 
 typedef struct s_plane

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_normal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:27:31 by math              #+#    #+#             */
-/*   Updated: 2024/03/30 13:48:03 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 18:21:25 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static t_vec3	normal_sp(t_sphere *sphere, t_vec3 point)
 
 static t_vec3	normal_cyl(t_cyl *cyl, t_vec3 point)
 {
+	if (cyl->caps == 2)
+		return (normalize(cyl->dir));
+	else if (cyl->caps == 1)
+		return (normalize(vector_negate(cyl->dir)));
 	t_vec3 center_to_hit = vector_sub(point, cyl->center);
 	double proj_length = vector_dot_product(center_to_hit, cyl->dir);
 	t_vec3 proj_point = vector_add(cyl->center, vector_scale(cyl->dir, proj_length));

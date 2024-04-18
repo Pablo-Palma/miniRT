@@ -83,19 +83,23 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t
 		if (cap_t[1] < cap_t[0])
 			closest_t = cap_t[1];
 		*t_cap = closest_t;
+		if (cap_t[1] < cap_t[0])
+			return (1);
+		return (2);
 	}
-	return(hit);
+	return(0);
 }
 
-static int	intersect_cyl(t_cyl cyl, t_ray *ray)
+static int	intersect_cyl(t_cyl *cyl, t_ray *ray)
 {
-	t_vec3 diff = vector_sub(ray->origin, cyl.center);	//	vecot Origen-centro cilindro
-	t_vec3 dir_cross_cyl_dir = vector_cross(ray->direction, cyl.dir); //Cruz entre el rayo y el cilindro
-	t_vec3 diff_cross_cyl_dir = vector_cross(diff, cyl.dir); // Cruz entre diff y el cilindro
+	cyl->caps = 0;
+	t_vec3 diff = vector_sub(ray->origin, cyl->center);	//	vecot Origen-centro cilindro
+	t_vec3 dir_cross_cyl_dir = vector_cross(ray->direction, cyl->dir); //Cruz entre el rayo y el cilindro
+	t_vec3 diff_cross_cyl_dir = vector_cross(diff, cyl->dir); // Cruz entre diff y el cilindro
 	
 	double a = vector_dot_product(dir_cross_cyl_dir, dir_cross_cyl_dir); // Cuadrado del cruz de direcciones (rayo x cilindro)
 	double b = 2 * vector_dot_product(dir_cross_cyl_dir, diff_cross_cyl_dir); // 2 producto punto  ((cruz de rayo-cilindor) * (cruz de diff-cilindro))
-	double c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir) - (cyl.radius * cyl.radius); //cuadrado de (cruz de diff-cilindro) - (radio^2)
+	double c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir) - (cyl->radius * cyl->radius); //cuadrado de (cruz de diff-cilindro) - (radio^2)
 	
 	double discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
@@ -110,8 +114,8 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 	//////******	t0	******///////
 	if (t0 >= EPSILON) //Evitar errores.
 	{
-	    double h0 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t0)), cyl.dir); // medida desde la base sobre el eje hasta el hitpoint
-	    if (fabs(h0) <= cyl.h / 2) //Si está entre 0 y la altura máxima
+	    double h0 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t0)), cyl->dir); // medida desde la base sobre el eje hasta el hitpoint
+	    if (fabs(h0) <= cyl->h / 2) //Si está entre 0 y la altura máxima
 		{
 	        t_body = t0;	//SI Pertenece, almacenamos ese punto en t_body
 	        body_hit = 1;	//Pertenece
@@ -121,8 +125,8 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 	//////******	t1	******///////		t1 es un punto más lejano que t0
 	if (t1 >= EPSILON && t1 < t_body)	// si t1 es mayor que t_body, ya tenemos un punto más cercano, por tanto el lejano ya no nos interesa
 	{
-	    double h1 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t1)), cyl.dir);
-	    if (fabs(h1) <= cyl.h / 2)
+	    double h1 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t1)), cyl->dir);
+	    if (fabs(h1) <= cyl->h / 2)
 		{
 			t_body = t1;
 			body_hit = 1;
@@ -134,7 +138,7 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 
 	// Intersección con las tapas del cilindro
 	double t_cap = INFINITY;
-	int cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, cyl, &t_cap);
+	int cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, *cyl, &t_cap);
 	
 	// calcular la intersección más cercana
 	if (cap_hit && (t_cap < t_body || !body_hit))
@@ -142,7 +146,8 @@ static int	intersect_cyl(t_cyl cyl, t_ray *ray)
 		if (ray->t < t_cap)
 			return (0);
 		ray->t = t_cap;
-		return 1;
+		cyl->caps = cap_hit;
+		return (1);
 	}
 	else if (body_hit)
 	{
@@ -200,7 +205,7 @@ void intersect(t_obj *obj, t_ray *ray)
     else if (is_child(obj, "sp"))
         ret = intersect_sp(*(t_sphere *)(obj->child), ray);
 	else if (is_child(obj, "cy"))
-        ret = intersect_cyl(*(t_cyl *)(obj->child), ray);
+        ret = intersect_cyl((t_cyl *)(obj->child), ray);
 	else if (is_child(obj, "L"))
         ret = intersect_light(*(t_light *)(obj->child), ray);
 	else if (is_child(obj, "ci"))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 14:54:55 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 18:12:11 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	open_rt_file(char *file)
 {
 	int fd;
 
-	if (open(file, __O_DIRECTORY) > 0)
+	if (open(file, O_DIRECTORY) > 0)
 	{
 		ft_putstr_fd("miniRT: erro is a directory\n", 2);
 		return (-1);
 	}
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return(perror("open"), 1);
+		return(perror("open"), -1);
 	if (!is_extension(file))
 		return(-1);
 	return (fd);

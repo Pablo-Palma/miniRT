@@ -122,6 +122,9 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@$(CC) -o $(NAME) $(OBJS) $(INCLUDE) $(LIBS)
 	@echo "miniRT compiled successfully!"
 
+reflect: CFLAGS += -D MAX_REFLECT_LEVEL=1
+reflect: re
+
 bonus: CFLAGS += -D BONUS -Iinc/bonus
 bonus: $(LIBFT) $(BONUS_OBJS)
 	@$(CC) -o $(NAME) $(BONUS_OBJS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
