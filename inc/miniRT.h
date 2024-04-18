@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 22:27:31 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 00:33:17 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,11 +215,6 @@ t_list	*get_objects(int fd);
 t_list	*objchr(t_list *obj, char *str);
 int		obj_next(t_list **obj_ptr, char *str);
 bool	is_child(t_obj *self, char *str);
-
-int 	trace_light(t_list *obj, t_ray *ray);
-int		trace_light_sp(t_list *obj, t_ray *ray);
-int		trace_light_pl(t_list *obj, t_ray *ray);
-int		trace_light_cyl(t_list *obj, t_ray *ray);
 
 void	constructor(void *self);
 int		constructor_color(int *color, char *line);

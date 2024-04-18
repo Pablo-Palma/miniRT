@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:49:17 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 00:31:08 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 00:33:03 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,4 @@ t_vec3	get_normal(t_obj *obj, t_vec3 point)
 		return (normal_cyl((t_cyl *)obj->child, point));
 	else
 		return (point);
-}
-
-int	trace_light(t_list *obj, t_ray *ray)
-{
-	int	(*fptr)(t_list *, t_ray *);
-
-	fptr = NULL;
-	if (!ft_strncmp(((t_obj *)(obj->content))->line, "pl", 2))
-		fptr = trace_light_pl;
-	else if (!ft_strncmp(((t_obj *)(obj->content))->line, "sp", 2))
-		fptr = trace_light_sp;
-	else if (!ft_strncmp(((t_obj *)(obj->content))->line, "cy", 2))
-		fptr = trace_light_cyl;
-	else
-		return (0);
-	return (fptr(obj, ray));
 }

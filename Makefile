@@ -29,7 +29,6 @@ SRCS_FILES =	main/main.c								\
 				classes/object/object_normal.c \
 				classes/object/object_print.c \
 				classes/object/object_print2.c \
-				classes/object/object_trace.c \
 				classes/object/object_check.c \
 				classes/object/object_check2.c \
 				classes/object/object_check_attr.c \
