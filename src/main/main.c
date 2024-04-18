@@ -3,24 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 18:55:14 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 14:54:55 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+int	is_extension(char *file)
+{
+	char *extension;
+
+	extension = ft_strrchr(file, '.');
+	if (!extension || ft_strncmp(extension, ".rt", 4))
+	{
+		ft_putstr_fd("miniRT: not an rt file\n", 2);
+		return (0);
+	}
+	return (1);
+}
+
+int	open_rt_file(char *file)
+{
+	int fd;
+
+	if (open(file, __O_DIRECTORY) > 0)
+	{
+		ft_putstr_fd("miniRT: erro is a directory\n", 2);
+		return (-1);
+	}
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return(perror("open"), 1);
+	if (!is_extension(file))
+		return(-1);
+	return (fd);
+}
 
 int	main(int argc, char **argv)
 {
 	t_graph	graph;
 	int		fd;
 
-	(void)argc;
-	fd = open(argv[1], O_RDONLY);
+	if (argc != 2)
+		return (EXIT_FAILURE);
+	fd = open_rt_file(argv[1]);
 	if (fd == -1)
-		return(perror("open"), 1);
+		return (EXIT_FAILURE);
 	if (parse(&graph, fd))
 		return (EXIT_FAILURE);
 	if (setup_gui(&graph) == EXIT_FAILURE)

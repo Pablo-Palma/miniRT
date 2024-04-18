@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:32:16 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/18 11:25:51 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 14:02:23 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int check(t_obj *obj)
 {
 	int	ret;
 
-	ret = EXIT_FAILURE;
+	if (!obj->child)
+		return (EXIT_FAILURE);
     if (is_child(obj, "pl"))
         ret = check_pl((t_plane *)(obj->child));
     else if (is_child(obj, "sp"))
@@ -89,6 +90,8 @@ int check(t_obj *obj)
         ret = check_a_light((t_ambient_light *)(obj->child));
 	else if (is_child(obj, "C"))
         ret = check_cam((t_cam *)(obj->child));
+	else
+		ret = EXIT_FAILURE;
 	if (ret == EXIT_FAILURE)
 		ft_putstr_fd(obj->line, 2);
 	else if (ret == 2)

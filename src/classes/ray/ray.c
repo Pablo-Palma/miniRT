@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/17 12:39:19 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 15:23:53 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,8 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 			norm = normalize(get_normal(*ray->obj, next_ray->origin));
 			view_dir = normalize(ray->direction);
 			light_dir = normalize(next_ray->direction);
+			// if (vector_dot_product(norm, vector_sub(ray->origin, ray->direction)) < 0)
+			// 	norm = vector_negate(norm);
 			diffuse = calculate_diffuse(light_dir, norm, ((t_light *)(*next_ray->obj)->child)->brigthness);
 			temp = vector_scale(temp, diffuse);
 			temp = vector_fmax(temp, alight);

@@ -85,8 +85,6 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t
 		*t_cap = closest_t;
 	}
 	return(hit);
-
-
 }
 
 static int	intersect_cyl(t_cyl cyl, t_ray *ray)

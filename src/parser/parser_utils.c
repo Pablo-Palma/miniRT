@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:13:00 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 11:05:00 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 13:55:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,16 @@ char	**nsplit(char *line, char delim, int expected)
 	int		count;
 
 	parts = ft_split(line, delim);
+	if (!parts)
+		return (NULL);
 	count = 0;
 	while (parts && parts[count])
 		count++;
 	if (count != expected)
 	{
 		ft_putstr_fd("miniRT: Incorrect number of parameters: ", 2);
-		ft_putstr_fd(line, 2);
+		ft_putstr_fd(ft_strtrim(line, "\n"), 2);
+		ft_putstr_fd("\n", 2);
 		ft_free_arrays(parts);
 		return (NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/18 11:10:54 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 13:58:08 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static void	onfail_clean(char *line, void *self)
 {
-	ft_putstr_fd("line: ", 2);
-	ft_putstr_fd(line, 2);
+	ft_putstr_fd("\tline: ", 2);
+	ft_putstr_fd(ft_strtrim(line, "\n"), 2);
+	ft_putstr_fd("\n", 2);
 	if (self)
 		free(self);
 	self = NULL;
