@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:55:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/18 11:28:16 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 00:26:35 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_color(int color)
 	return (EXIT_FAILURE);
 }
 
-int check_light_brightness(double b)
+int	check_light_brightness(double b)
 {
 	if (b >= 0 && b <= 1)
 		return (EXIT_SUCCESS);
@@ -36,7 +36,7 @@ int	check_direction(t_vec3 vec)
 	return (EXIT_FAILURE);
 }
 
-int check_fov(int fov)
+int	check_fov(int fov)
 {
 	if (fov >= 0 && fov <= 180)
 		return (EXIT_SUCCESS);
@@ -44,7 +44,7 @@ int check_fov(int fov)
 	return (EXIT_FAILURE);
 }
 
-int check_unitary_vec(t_vec3 *vec)
+int	check_unitary_vec(t_vec3 *vec)
 {
 	if (vector_length(*vec) == 1)
 		return (EXIT_SUCCESS);

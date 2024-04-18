@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_constructors.c                              :+:      :+:    :+:   */
+/*   object_constructor.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/18 13:58:08 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 22:29:19 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-static void	onfail_clean(char *line, void *self)
-{
-	ft_putstr_fd("\tline: ", 2);
-	ft_putstr_fd(ft_strtrim(line, "\n"), 2);
-	ft_putstr_fd("\n", 2);
-	if (self)
-		free(self);
-	self = NULL;
-}
 
 void	a_light(void *parent)
 {
@@ -107,26 +97,6 @@ void	plane(void *parent)
 	if (self && str && !constructor_vec(&self->point, str[1]) && !constructor_vec(&self->normal, str[2]) && !constructor_color(&self->color, str[3]))
 	{
 		*((t_obj *)parent)->origin = &self->point;
-		*((t_obj *)parent)->color = self->color;
-	}
-	else
-		onfail_clean(((t_obj *)parent)->line, self);
-	dbfree(str);
-}
-
-void	cylinder(void *parent)
-{
-	t_cyl	*self;
-	char	**str;
-
-	self = (t_cyl *)malloc(sizeof(t_cyl));
-	((t_obj *)parent)->child = self;
-	str = nsplit(((t_obj *)parent)->line, ' ', 6);
-	if (self && str && !constructor_vec(&self->center, str[1]) && !constructor_vec(&self->dir, str[2]) && !constructor_color(&self->color, str[5]))
-	{
-		self->radius = ft_atof(str[3]) / 2;
-		self->h = ft_atof(str[4]);
-		*((t_obj *)parent)->origin = &self->center;
 		*((t_obj *)parent)->color = self->color;
 	}
 	else

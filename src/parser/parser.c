@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:26:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 12:42:59 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 22:27:20 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,14 @@ int	parse(t_graph *graph, int fd)
 		return (EXIT_FAILURE);
 	ft_lstiter(graph->obj_list, print_obj);
 	return (EXIT_SUCCESS);
+}
+
+void	onfail_clean(char *line, void *self)
+{
+	ft_putstr_fd("\tline: ", 2);
+	ft_putstr_fd(ft_strtrim(line, "\n"), 2);
+	ft_putstr_fd("\n", 2);
+	if (self)
+		free(self);
+	self = NULL;
 }

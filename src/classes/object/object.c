@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   object.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:21:29 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/17 16:53:06 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 23:21:42 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-static void	constructor(void *self)
-{
-	void	(*constructor)(void *);
-	
-	if (!ft_strncmp(((t_obj *)self)->line, "A", 1)) //ambient light
-		constructor = a_light;
-	else if (!ft_strncmp(((t_obj *)self)->line, "C", 1)) //camera
-		constructor = camera;
-	else if (!ft_strncmp(((t_obj *)self)->line, "L", 1)) //light
-		constructor = light;
-	else if (!ft_strncmp(((t_obj *)self)->line, "sp", 2)) //sphere
-		constructor = sphere;
-	else if (!ft_strncmp(((t_obj *)self)->line, "pl", 2)) //plane
-		constructor = plane;
-	else if (!ft_strncmp(((t_obj *)self)->line, "cy", 2)) //cylinder
-		constructor = cylinder;
-	else
-		constructor = NULL; // Handle unrecognized object types
-	if (constructor)
-		constructor(self);
-}
 
 static t_obj	*new_obj(char *line)
 {
@@ -72,7 +50,7 @@ bool	is_child(t_obj *self, char *str)
 	return (0);
 }
 
-t_list *get_objects(int fd)
+t_list	*get_objects(int fd)
 {
 	t_list	*obj;
 	char	*line;

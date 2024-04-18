@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 21:12:39 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 22:27:31 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int		parse(t_graph *graph, int fd);
 int 	check_all_obj(t_list *obj_list);
 char	**nsplit(char *line, char delim, int expected);
 void	dbfree(char **str);
+void	onfail_clean(char *line, void *self);
 
 
 
@@ -213,20 +214,61 @@ void    lst_mv_all_to_pool(t_list **pool, t_list **list, void (*clean)(void *nod
 t_list	*get_objects(int fd);
 t_list	*objchr(t_list *obj, char *str);
 int		obj_next(t_list **obj_ptr, char *str);
-void	print_obj(void *self);
-void 	intersect(t_obj *obj, t_ray *ray);
-int 	trace_light(t_list *obj, t_ray *ray);
-t_vec3	get_normal(t_obj *obj, t_vec3 point);
 bool	is_child(t_obj *self, char *str);
+
+int 	trace_light(t_list *obj, t_ray *ray);
+int		trace_light_sp(t_list *obj, t_ray *ray);
+int		trace_light_pl(t_list *obj, t_ray *ray);
+int		trace_light_cyl(t_list *obj, t_ray *ray);
+
+void	constructor(void *self);
+int		constructor_color(int *color, char *line);
+int		constructor_vec(t_vec3 *vec, char *line);
+void	a_light(void *parent);
+void	camera(void *parent);
+void	light(void *parent);
+void	sphere(void *parent);
+void	plane(void *parent);
+void	cylinder(void *parent);
+
 int		check(t_obj *obj);
+int		check_pl(t_plane *plane);
+int		check_sp(t_sphere *sphere);
+int		check_cyl(t_cyl *cylinder);
+int		check_light(t_light *light);
+int		check_a_light(t_ambient_light *a_light);
+int		check_cam(t_cam *cam);
 int		check_color(int color);
 int 	check_light_brightness(double b);
 int		check_direction(t_vec3 vec);
 int 	check_fov(int fov);
 int 	check_unitary_vec(t_vec3 *vec);
-int		constructor_color(int *color, char *line);
-int		constructor_vec(t_vec3 *vec, char *line);
+
+void	print_obj(void *self);
+void	print_a_light(void *obj);
+void	print_camera(void *obj);
+void	print_light(void *obj);
+void	print_sphere(void *obj);
+void	print_plane(void *obj);
+void	print_cylinder(void *obj);
+
+void 	intersect(t_obj *obj, t_ray *ray);
+int		intersect_pl(t_plane plane, t_ray *ray);
+int		intersect_sp(t_sphere sphere, t_ray *ray);
+int		intersect_cyl(t_cyl *cyl, t_ray *ray);
+int		intersect_light(t_light light, t_ray *ray);
+int		intersect_circle(t_circle circle, t_ray *ray);
+
+t_vec3	get_normal(t_obj *obj, t_vec3 point);
+t_vec3	normal_pl(t_plane *plane, t_vec3 point);
+t_vec3	normal_sp(t_sphere *sphere, t_vec3 point);
+t_vec3	normal_cyl(t_cyl *cyl, t_vec3 point);
+
 int		checkerboard(t_obj *obj, t_vec3 point);
+int		checkerboard_pl(t_vec3 point);
+int		checkerboard_sp(t_sphere sphere, t_vec3 point);
+int		checkerboard_cyl(t_cyl cyl, t_vec3 point);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -245,18 +287,6 @@ void	ray_trace_light(t_ray *ray, t_list *obj_list, t_list **pool);
 void	ray_trace_img(t_ray *ray, t_list **pool);
 t_vec3	ray_sum(t_ray *ray, t_vec3 alight);
 
-///////////////////////////////////////////////////////////////////////////////
-//                                                                           //
-//                                  CONSTRUCTORS                             //
-//                                                                           //
-///////////////////////////////////////////////////////////////////////////////
-
-void	a_light(void *parent);
-void	camera(void *parent);
-void	light(void *parent);
-void	sphere(void *parent);
-void	plane(void *parent);
-void	cylinder(void *parent);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -264,8 +294,8 @@ void	cylinder(void *parent);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
-int		apply_checkerboard_texture(t_vec3 point);
-int		apply_checkerboard_texture_uv(double u, double v);
+int			apply_checkerboard_texture(t_vec3 point);
+int			apply_checkerboard_texture_uv(double u, double v);
 // void	cap_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v);
 int		apply_checkerboard_texture_uv_cyl(double u, double v, t_cyl cyl);
 int		calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,

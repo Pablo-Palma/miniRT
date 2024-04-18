@@ -20,12 +20,18 @@ SRCS_FILES =	main/main.c								\
 				light/lighting.c						\
 				utils/clean.c							\
 				classes/object/object.c \
-				classes/object/object_constructors.c \
+				classes/object/object_constructor.c \
+				classes/object/object_constructor2.c \
 				classes/object/object_intersect.c \
+				classes/object/object_intersect2.c \
+				classes/object/object_method.c \
+				classes/object/object_method2.c \
 				classes/object/object_normal.c \
 				classes/object/object_print.c \
+				classes/object/object_print2.c \
 				classes/object/object_trace.c \
 				classes/object/object_check.c \
+				classes/object/object_check2.c \
 				classes/object/object_check_attr.c \
 				classes/object/object_constructor_attr.c \
 				classes/object/object_checkerboard.c \
