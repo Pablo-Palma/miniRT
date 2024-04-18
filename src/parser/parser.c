@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:26:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 12:24:58 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 12:42:59 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_scene(t_list *obj_list)
 	}
 	if (scene_count_obj(obj_list, "A") != 1)
 	{
-		if (scene_count_obj(obj_list, "C") < 1)
+		if (scene_count_obj(obj_list, "A") < 1)
 			ft_putstr_fd("miniRT: No ambient light set\n", 2);
 		else
 			ft_putstr_fd("miniRT: Many ambient lights\n", 2);
@@ -48,10 +48,10 @@ int	check_scene(t_list *obj_list)
 	}
 	if (scene_count_obj(obj_list, "L") != 1)
 	{
-		if (scene_count_obj(obj_list, "C") < 1)
+		if (scene_count_obj(obj_list, "L") < 1)
 			ft_putstr_fd("miniRT: No light found\n", 2);
 		else
-			return (ft_putstr_fd("miniRT: Warning: Many cameras, this is bonus part!\n", 2), EXIT_SUCCESS);
+			return (ft_putstr_fd("miniRT: Warning: Many lights, this is bonus part!\n", 2), EXIT_SUCCESS);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
