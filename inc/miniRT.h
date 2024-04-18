@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 18:31:15 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/18 20:32:33 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # ifndef	MAX_REFLECT_LEVEL
 #  define	MAX_REFLECT_LEVEL 0
 # endif
+# ifndef	CHECKERBOARD
+#  define	CHECKERBOARD 0
+# endif
+
 
 // COLORS
 # define WHITE		0xFFFFFF
@@ -222,6 +226,7 @@ int 	check_fov(int fov);
 int 	check_unitary_vec(t_vec3 *vec);
 int		constructor_color(int *color, char *line);
 int		constructor_vec(t_vec3 *vec, char *line);
+int		checkerboard(t_obj *obj, t_vec3 point);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -261,7 +266,7 @@ void	cylinder(void *parent);
 
 int		apply_checkerboard_texture(t_vec3 point);
 int		apply_checkerboard_texture_uv(double u, double v);
-void	cap_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v);
+// void	cap_uv(t_vec3 hit_point, t_cyl cyl, double *u, double *v);
 int		apply_checkerboard_texture_uv_cyl(double u, double v, t_cyl cyl);
 int		calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,
 	t_vec3 incident_ray);

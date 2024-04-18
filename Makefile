@@ -28,6 +28,7 @@ SRCS_FILES =	main/main.c								\
 				classes/object/object_check.c \
 				classes/object/object_check_attr.c \
 				classes/object/object_constructor_attr.c \
+				classes/object/object_checkerboard.c \
 				classes/ray/ray.c \
 				utils/extra_list.c \
 				parser/parser.c \

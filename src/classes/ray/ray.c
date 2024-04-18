@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:28:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/18 15:23:53 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 21:00:11 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,10 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 			diffuse = calculate_diffuse(light_dir, norm, ((t_light *)(*next_ray->obj)->child)->brigthness);
 			temp = vector_scale(temp, diffuse);
 			temp = vector_fmax(temp, alight);
-			temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+			if (CHECKERBOARD == 1)
+				temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+			else
+				temp = vector_multiply(temp, normalize(color_to_vec(checkerboard(*ray->obj, next_ray->origin))));
 			specular = calculate_specular(view_dir, light_dir, norm, 1.0, 100.0);
 			temp = vector_add(temp, vector_scale(color_to_vec(*(*next_ray->obj)->color), specular));
 			pxl_light = vector_add(pxl_light, temp);
@@ -218,22 +221,29 @@ t_vec3	ray_sum(t_ray *ray, t_vec3 alight)
 			/*handle reflection*/
 			temp = ray_sum(next_ray, alight);
 			temp = vector_fmax(temp, alight);
-			temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+			if (CHECKERBOARD == 1)
+				temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+			else
+				temp = vector_multiply(temp, normalize(color_to_vec(checkerboard(*ray->obj, next_ray->origin))));
 			pxl_light = temp;
 			//pxl_light = vector_add(pxl_light, temp);
 		}
 		// else
 		// {
-		// 	//temp = color_to_vec(BLACK);
-		// 	//temp = vector_fmax(temp, alight);
-		// 	//temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
-		// 	//pxl_light = temp;
+		// 	temp = color_to_vec(BLACK);
+		// 	temp = vector_fmax(temp, alight);
+		// 	temp = vector_multiply(temp, normalize(color_to_vec(*(*ray->obj)->color)));
+		// 	temp = color_to_vec(BLACK);
+		// 	pxl_light = temp;
 		// }
 		ray_list = ray_list->next;
 	}
 	if (vector_cmp(pxl_light, color_to_vec(BLACK)))
 	{
-		pxl_light = vector_multiply(alight, normalize(color_to_vec(*(*ray->obj)->color)));
+		if (CHECKERBOARD == 1)
+			pxl_light = vector_multiply(alight, normalize(color_to_vec(*(*ray->obj)->color)));
+		else
+			pxl_light = vector_multiply(alight, normalize(color_to_vec(checkerboard(*ray->obj, next_ray->origin))));
 		// pxl_light = vector_fmax(pxl_light, alight);
 		// pxl_light = alight;
 	}

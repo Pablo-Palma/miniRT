@@ -62,15 +62,19 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t
 	while(i < 2)
 	{
 		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
-		double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / vector_dot_product(dir, cap_normal);
-		if (d >= 0 && d < *t_cap)
+		double denominator = vector_dot_product(dir, cap_normal);
+		if (fabs(denominator) > EPSILON)
 		{
-			t_vec3	p = vector_add(origin, vector_scale(dir, d));
-			double	distance = vector_length(vector_sub(p, cap_center));
-			if (distance <= cyl.radius)
+			double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / denominator;
+			if (d >= 0 && d < *t_cap)
 			{
-				cap_t[i] = d;
-				hit = 1;
+				t_vec3	p = vector_add(origin, vector_scale(dir, d));
+				double	distance = vector_length(vector_sub(p, cap_center));
+				if (distance <= cyl.radius + EPSILON)
+				{
+					cap_t[i] = d;
+					hit = 1;
+				}
 			}
 		}
 		i++;
