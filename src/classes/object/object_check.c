@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:32:16 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/17 20:22:05 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 11:25:51 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int check_pl(t_plane *plane)
 		return (EXIT_FAILURE);
 	if (check_direction(plane->normal) || check_color(plane->color))
 		return (EXIT_FAILURE);
+	if (check_unitary_vec(&plane->normal))
+		return (2);
 	return (EXIT_SUCCESS);
 }
 
@@ -36,6 +38,8 @@ static int check_cyl(t_cyl *cylinder)
 		return (EXIT_FAILURE);
 	if (check_direction(cylinder->dir) || check_color(cylinder->color))
 		return (EXIT_FAILURE);
+	if (check_unitary_vec(&cylinder->dir))
+		return (2);
 	return (EXIT_SUCCESS);
 }
 
@@ -52,7 +56,7 @@ static int check_a_light(t_ambient_light *a_light)
 {
 	if (!a_light)
 		return (EXIT_FAILURE);
-	if (check_light_brightness(a_light->intensity))
+	if (check_light_brightness(a_light->intensity) || check_color(a_light->color))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -63,6 +67,8 @@ static int check_cam(t_cam *cam)
 		return (EXIT_FAILURE);
 	if (check_direction(cam->orientation) || check_fov(cam->fov))
 		return (EXIT_FAILURE);
+	if (check_unitary_vec(&cam->orientation))
+		return (2);
 	return (EXIT_SUCCESS);
 }
 
@@ -83,9 +89,12 @@ int check(t_obj *obj)
         ret = check_a_light((t_ambient_light *)(obj->child));
 	else if (is_child(obj, "C"))
         ret = check_cam((t_cam *)(obj->child));
-	if (ret)
+	if (ret == EXIT_FAILURE)
+		ft_putstr_fd(obj->line, 2);
+	else if (ret == 2)
 	{
-		printf("MiniRt: Invalid Object\n");
+		ft_putstr_fd(obj->line, 2);
+		return (EXIT_SUCCESS);
 	}
 	return (ret);
 }

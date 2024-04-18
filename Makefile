@@ -26,9 +26,12 @@ SRCS_FILES =	main/main.c								\
 				classes/object/object_print.c \
 				classes/object/object_trace.c \
 				classes/object/object_check.c \
+				classes/object/object_check_attr.c \
+				classes/object/object_constructor_attr.c \
 				classes/ray/ray.c \
 				utils/extra_list.c \
-				parser/parser.c
+				parser/parser.c \
+				parser/parser_utils.c
 
 
 BONUS_FILES =	bonus/checkerboard_bonus.c bonus/plane_bonus.c	\

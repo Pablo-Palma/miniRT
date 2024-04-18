@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 20:12:49 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 11:20:14 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ double	convert_to_double(char *str, double min, double max);
 
 int		parse(t_graph *graph, int fd);
 int 	check_all_obj(t_list *obj_list);
+char	**nsplit(char *line, char delim, int expected);
+void	dbfree(char **str);
 
 
 
@@ -217,6 +219,9 @@ int		check_color(int color);
 int 	check_light_brightness(double b);
 int		check_direction(t_vec3 vec);
 int 	check_fov(int fov);
+int 	check_unitary_vec(t_vec3 *vec);
+int		constructor_color(int *color, char *line);
+int		constructor_vec(t_vec3 *vec, char *line);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //

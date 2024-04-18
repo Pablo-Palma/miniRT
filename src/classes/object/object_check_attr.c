@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   obeject_attr_check.c                               :+:      :+:    :+:   */
+/*   object_check_attr.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:55:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/17 20:10:19 by math             ###   ########.fr       */
+/*   Updated: 2024/04/18 11:28:16 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,17 @@ int	check_direction(t_vec3 vec)
 
 int check_fov(int fov)
 {
-	if (fov >= 0 && fov <= 1)
+	if (fov >= 0 && fov <= 180)
 		return (EXIT_SUCCESS);
 	ft_putstr_fd("miniRT: FOV out of range: ", 2);
+	return (EXIT_FAILURE);
+}
+
+int check_unitary_vec(t_vec3 *vec)
+{
+	if (vector_length(*vec) == 1)
+		return (EXIT_SUCCESS);
+	*vec = normalize(*vec);
+	ft_putstr_fd("miniRT: Warning: Not an normalized vector: ", 2);
 	return (EXIT_FAILURE);
 }
