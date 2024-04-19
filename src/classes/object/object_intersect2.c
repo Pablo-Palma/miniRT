@@ -6,21 +6,24 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:30:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 14:05:21 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 18:41:18 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
+static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl,
+		double *t_cap)
 {
-	t_vec3	cap_normal = cyl.dir;
+	t_vec3	cap_normal;
 	double	cap_t[2] = {INFINITY, INFINITY};
 	int		hit = 0;
 	int		i = 0;
-	double	sign = 1.0;
+	double	sign;
 
-	while(i < 2)
+	cap_normal = cyl.dir;
+	sign = 1.0;
+	while (i < 2)
 	{
 		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
 		double denominator = vector_dot_product(dir, cap_normal);
@@ -41,7 +44,6 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t
 		i++;
 		sign = -sign;
 	}
-
 	if (hit)
 	{
 		double	closest_t = cap_t[0];
@@ -55,31 +57,34 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t
 	return(0);
 }
 
-static void	get_discriminant_cyl(t_cyl *cyl, t_ray *ray, t_vec3 diff, t_bhaskara *eq)
+static void	get_discriminant_cyl(t_cyl *cyl, t_ray *ray,
+	t_vec3 diff, t_bhaskara *eq)
 {
-	t_vec3 dir_cross_cyl_dir;
-	t_vec3 diff_cross_cyl_dir;
-	
+	t_vec3	dir_cross_cyl_dir;
+	t_vec3	diff_cross_cyl_dir;
+
 	dir_cross_cyl_dir = vector_cross(ray->direction, cyl->dir);
-	diff_cross_cyl_dir= vector_cross(diff, cyl->dir);
+	diff_cross_cyl_dir = vector_cross(diff, cyl->dir);
 	eq->a = vector_dot_product(dir_cross_cyl_dir, dir_cross_cyl_dir);
 	eq->b = 2 * vector_dot_product(dir_cross_cyl_dir, diff_cross_cyl_dir);
-	eq->c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir) - (cyl->radius * cyl->radius);
+	eq->c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir)
+		- (cyl->radius * cyl->radius);
 	eq->discriminant = eq->b * eq->b - 4 * eq->a * eq->c;
 }
 
 static int	is_real_point(double *t, t_vec3 *cyl_origin, t_ray *ray, t_cyl *cyl)
 {
-	double h;
+	double	h;
 
 	if (*t >= EPSILON)
 	{
-		h = vector_dot_product(vector_add(*cyl_origin, vector_scale(ray->direction, *t)), cyl->dir); // medida desde la base sobre el eje hasta el hitpoint
-	    if (fabs(h) <= cyl->h / 2 && *t < ray->t) //Si está entre 0 y la altura máxima
+		h = vector_dot_product(vector_add(*cyl_origin,
+					vector_scale(ray->direction, *t)), cyl->dir);
+		if (fabs(h) <= cyl->h / 2 && *t < ray->t)
 		{
 			ray->t = *t;
 			return (1);
-		}	
+		}
 	}
 	return (0);
 }
