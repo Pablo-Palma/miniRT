@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 18:12:52 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 01:10:02 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,17 @@ typedef struct	s_ray
 	ssize_t			reflect_level;
 	bool			img_trace;
 }					t_ray;
+
+typedef struct s_bhaskara
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	double	sqrt_discriminant;
+	double	t0;
+	double	t1;
+}			t_bhaskara;
+
 
 #endif

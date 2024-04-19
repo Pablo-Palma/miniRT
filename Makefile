@@ -36,6 +36,7 @@ SRCS_FILES =	main/main.c								\
 				classes/object/object_checkerboard.c \
 				classes/ray/ray.c \
 				utils/extra_list.c \
+				utils/extra_list2.c \
 				parser/parser.c \
 				parser/parser_utils.c
 
