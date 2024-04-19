@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:26:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 00:38:40 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 12:17:42 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int	check_scene(t_list *obj_list)
 		if (scene_count_obj(obj_list, "L") < 1)
 			ft_putstr_fd("miniRT: No light found\n", 2);
 		else
-			return (ft_putstr_fd("miniRT: Warning: Many lights, this is bonus part!\n", 2), EXIT_SUCCESS);
+			return (ft_putstr_fd("miniRT: Many lights bonus\n", 2), 0);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
 
-int check_all_obj(t_list *obj_list)
+int	check_all_obj(t_list *obj_list)
 {
 	t_list	*cur;
 

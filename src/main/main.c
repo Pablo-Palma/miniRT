@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 18:12:11 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 12:14:45 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_extension(char *file)
 {
-	char *extension;
+	char	*extension;
 
 	extension = ft_strrchr(file, '.');
 	if (!extension || ft_strncmp(extension, ".rt", 4))
@@ -27,7 +27,7 @@ int	is_extension(char *file)
 
 int	open_rt_file(char *file)
 {
-	int fd;
+	int	fd;
 
 	if (open(file, O_DIRECTORY) > 0)
 	{
@@ -36,9 +36,9 @@ int	open_rt_file(char *file)
 	}
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return(perror("open"), -1);
+		return (perror("open"), -1);
 	if (!is_extension(file))
-		return(-1);
+		return (-1);
 	return (fd);
 }
 

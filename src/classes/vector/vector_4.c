@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:25:46 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/17 12:37:29 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 12:13:40 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_vec3	normalize(t_vec3 v)
 	normalized.z = v.z / len;
 	return (normalized);
 }
+
 t_vec3	reflect(t_vec3 v, t_vec3 n)
 {
 	double	dot;
