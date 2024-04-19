@@ -37,6 +37,7 @@ SRCS_FILES =	main/main.c								\
 				utils/bhaskara.c \
 				parser/parser.c \
 				parser/parser_utils.c
+
 BONUS_OBJS = $(BONUS_FILES:%.c=$(OBJS_DIR)/%.o)
 OBJS = $(SRCS_FILES:%.c=$(OBJS_DIR)/%.o)
 SRCS = $(addprefix $(SRCS_DIR)/,$(SRCS_FILES))
@@ -58,14 +59,16 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) -o $(NAME) $(OBJS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
 	@echo "miniRT compiled successfully!"
 
+mandatory: clean all
+
 reflect: CFLAGS += -D MAX_REFLECT_LEVEL=1
-reflect: re
+reflect: clean all
 
 checkerboard: CFLAGS += -D CHECKERBOARD=1
-checkerboard: re
+checkerboard: clean all
 
 both: CFLAGS += -D CHECKERBOARD=1 -D MAX_REFLECT_LEVEL=1
-both: re
+both: clean all
 
 clean :
 	@rm -f libmlx.dylib

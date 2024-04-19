@@ -6,101 +6,101 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 17:30:06 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 17:58:34 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	STRUCTS_H
+#ifndef STRUCTS_H
 # define STRUCTS_H
 
 typedef struct s_vec3
 {
-	double	x;
-	double	y;
-	double	z;
-}				t_vec3;
+	double			x;
+	double			y;
+	double			z;
+}					t_vec3;
 
 typedef struct s_sphere
 {
-	char	identifier[3];	// 'sp'
-	t_vec3	center;
-	double	radius;
-	int		color;
-	double	diameter;
-}				t_sphere;
+	char identifier[3]; // 'sp'
+	t_vec3			center;
+	double			radius;
+	int				color;
+	double			diameter;
+}					t_sphere;
 
 typedef struct s_cyl
 {
-	char	id[2];	//	'cl'
-	t_vec3	center;
-	t_vec3	dir;
-	double	radius;
-	double	h;
-	int		color;
-	int		caps;
-}			t_cyl;
+	char id[2]; //	'cl'
+	t_vec3			center;
+	t_vec3			dir;
+	double			radius;
+	double			h;
+	int				color;
+	int				caps;
+}					t_cyl;
 
 typedef struct s_plane
 {
-	char 	id[2];	//	'pl'
-	t_vec3	point;
-	t_vec3	normal;
-	int		color;
-}			t_plane;
+	char id[2]; //	'pl'
+	t_vec3			point;
+	t_vec3			normal;
+	int				color;
+}					t_plane;
 
 typedef struct s_circle
 {
-	char 	id[2];	//	'ci'
-	t_vec3	center;
-	t_vec3	normal;
-	double	radius;
-	int		color;
-}			t_circle;
+	char id[2]; //	'ci'
+	t_vec3			center;
+	t_vec3			normal;
+	double			radius;
+	int				color;
+}					t_circle;
 
-typedef struct	s_light
+typedef struct s_light
 {
-	char 	id[2];	//	'L'
-	t_vec3	pos;
-	double	brigthness;
-	int		color;
-}				t_light;
+	char id[2]; //	'L'
+	t_vec3			pos;
+	double			brigthness;
+	int				color;
+}					t_light;
 
 typedef struct light_params
 {
-    t_vec3 view_dir;
-    t_vec3 light_dir;
-    t_vec3 norm;
-} 				t_light_params;
+	t_vec3			view_dir;
+	t_vec3			light_dir;
+	t_vec3			norm;
+}					t_light_params;
 
-typedef struct	s_ambient_light
+typedef struct s_ambient_light
 {
-	char 	id[2];	//	'A'
-	double	intensity;
-	int		color;
-}				t_ambient_light;
+	char id[2]; //	'A'
+	double			intensity;
+	int				color;
+}					t_ambient_light;
 
-typedef struct	s_cam
+typedef struct s_cam
 {
-	char	identifier[2];	//	'C'
-	t_vec3	view_point;
-	t_vec3	orientation;
-	int		fov; //Field of view(campo de vision).
-}	t_cam;
+	char identifier[2]; //	'C'
+	t_vec3			view_point;
+	t_vec3			orientation;
+	int fov; //Field of view(campo de vision).
+}					t_cam;
 
 typedef struct s_obj
 {
-	char	*line;
-	void	*child;
-	t_vec3	**origin;
-	int		*color;
-	double	reflective;
-}			t_obj;
+	char			*line;
+	void			*child;
+	t_vec3			**origin;
+	int				*color;
+	double			reflective;
+}					t_obj;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
-    t_vec3			origin;
-    t_vec3			direction;
-    double			t;
+	t_vec3			origin;
+	t_vec3			direction;
+	double			t;
 	t_obj			**obj;
 	t_list			**next;
 	ssize_t			reflect_level;
@@ -109,26 +109,28 @@ typedef struct	s_ray
 
 typedef struct s_bhaskara
 {
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
-	double	sqrt_discriminant;
-	double	t0;
-	double	t1;
-}			t_bhaskara;
+	double			a;
+	double			b;
+	double			c;
+	double			discriminant;
+	double			sqrt_discriminant;
+	double			t0;
+	double			t1;
+}					t_bhaskara;
 
 typedef struct s_raysum
 {
-	t_list	*ray_list;
-	t_ray	*next_ray;
-	t_vec3	pxl_light;
-	t_vec3	temp;
-	t_vec3	view_dir;
-	t_vec3	light_dir;
-	t_vec3	norm;
-	double	diffuse;
-	double	specular;
-}			t_raysum;
+	t_list			*ray_list;
+	t_ray			*next_ray;
+	t_vec3			pxl_light;
+	t_vec3			temp;
+	t_vec3			view_dir;
+	t_vec3			light_dir;
+	t_vec3			norm;
+	double			diffuse;
+	double			specular;
+	t_ambient_light	ambient_light;
+	t_vec3			alight;
+}					t_raysum;
 
 #endif

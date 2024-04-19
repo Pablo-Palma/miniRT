@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:05 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 09:58:54 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:43:08 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ t_list	*lst_strip_node(t_list **list, t_list *node)
 
 t_list	**lst_create(void)
 {
-	t_list	**pool;
+	t_list	**node_list;
 
-	pool = (t_list **)malloc(sizeof(t_list *));
-	*pool = NULL;
-	return (pool);
+	node_list = (t_list **)malloc(sizeof(t_list *));
+	*node_list = NULL;
+	return (node_list);
 }
 
 t_list	*lst_getpool_node(t_list **pool, void *(*new)(void *),
