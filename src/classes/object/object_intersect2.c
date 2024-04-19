@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_intersect2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:30:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 01:28:21 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 11:55:03 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,6 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t
 		return (2);
 	}
 	return(0);
-}
-
-static void get_bhaskara(t_bhaskara *eq)
-{
-	eq->sqrt_discriminant = sqrt(eq->discriminant);
-	eq->t0 = (-eq->b - eq->sqrt_discriminant) / (2 * eq->a);
-	eq->t1 = (-eq->b + eq->sqrt_discriminant) / (2 * eq->a);
 }
 
 static void	get_discriminant_cyl(t_cyl *cyl, t_ray *ray, t_vec3 diff, t_bhaskara *eq)

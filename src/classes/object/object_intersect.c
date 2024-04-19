@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_intersect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:28:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 22:33:33 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 11:56:50 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,21 @@ int	intersect_pl(t_plane plane, t_ray *ray)
 
 int	intersect_sp(t_sphere sphere, t_ray *ray)
 {
-	t_vec3	oc;
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
-	double	t0;
-	double	t1;
+	t_vec3		oc;
+	t_bhaskara	eq;
 
 	oc = vector_sub(ray->origin, sphere.center);
-	a = vector_dot_product(ray->direction, ray->direction);
-	b = 2.0 * vector_dot_product(oc, ray->direction);
-	c = vector_dot_product(oc, oc) - sphere.radius * sphere.radius;
-	discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
+	eq.a = vector_dot_product(ray->direction, ray->direction);
+	eq.b = 2.0 * vector_dot_product(oc, ray->direction);
+	eq.c = vector_dot_product(oc, oc) - sphere.radius * sphere.radius;
+	eq.discriminant = eq.b * eq.b - 4 * eq.a * eq.c;
+	if (eq.discriminant < 0)
 		return (0);
-	t0 = (-b - sqrt(discriminant)) / (2.0 * a);
-	t1 = (-b + sqrt(discriminant)) / (2.0 * a);
-	if (t0 > 0.0f && t0 < ray->t)
-		ray->t = t0;
-	else if (t1 > 0.0f && t1 < ray->t)
-		ray->t = t1;
+	get_bhaskara(&eq);
+	if (eq.t0 > 0.0f && eq.t0 < ray->t)
+		ray->t = eq.t0;
+	else if (eq.t1 > 0.0f && eq.t1 < ray->t)
+		ray->t = eq.t1;
 	else
 		return (0);
 	return (1);
