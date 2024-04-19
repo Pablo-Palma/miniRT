@@ -6,35 +6,57 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:30:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 10:33:23 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:05:57 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+static int	finalize_intersection(double cap_t[2], double *t_cap)
+{
+	double  closest_t;
+
+	closest_t = cap_t[0];
+	if (cap_t[1] < cap_t[0])
+		closest_t = cap_t[1];
+	*t_cap = closest_t;
+	if (cap_t[1] < cap_t[0])
+		return (1);
+	return (2);
+}
+
 static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl,
 	double *t_cap)
 {
-	t_vec3	cap_normal = cyl.dir;
-	double	cap_t[2] = {INFINITY, INFINITY};
-	int		hit = 0;
-	int		i = 0;
-	double	sign = 1.0;
+	double	cap_t[2];
+	int		hit;
+	int		i;
+	double	sign;
+	t_vec3	cap_center;
+	double	denominator;
+	double	d_to_hit;
+	double	d_to_center;
+	t_vec3	p;
 
+	hit = 0;
+	i = 0;
+	sign = 1.0;
+	cap_t[0] = INFINITY;
+	cap_t[1] = INFINITY;
 	while (i < 2)
 	{
-		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
-		double denominator = vector_dot_product(dir, cap_normal);
+		cap_center = vector_add(cyl.center, vector_scale(cyl.dir, sign * (cyl.h / 2)));
+		denominator = vector_dot_product(dir, cyl.dir);
 		if (fabs(denominator) > EPSILON)
 		{
-			double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / denominator;
-			if (d >= 0 && d < *t_cap)
+			d_to_hit = vector_dot_product(vector_sub(cap_center, origin), cyl.dir) / denominator;
+			if (d_to_hit >= 0 && d_to_hit < *t_cap)
 			{
-				t_vec3	p = vector_add(origin, vector_scale(dir, d));
-				double	distance = vector_length(vector_sub(p, cap_center));
-				if (distance <= cyl.radius + EPSILON)
+				p = vector_add(origin, vector_scale(dir, d_to_hit));
+				d_to_center = vector_length(vector_sub(p, cap_center));
+				if (d_to_center <= cyl.radius + EPSILON)
 				{
-					cap_t[i] = d;
+					cap_t[i] = d_to_hit;
 					hit = 1;
 				}
 			}
@@ -42,18 +64,9 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl,
 		i++;
 		sign = -sign;
 	}
-
 	if (hit)
-	{
-		double	closest_t = cap_t[0];
-		if (cap_t[1] < cap_t[0])
-			closest_t = cap_t[1];
-		*t_cap = closest_t;
-		if (cap_t[1] < cap_t[0])
-			return (1);
-		return (2);
-	}
-	return(0);
+		return(finalize_intersection(cap_t, t_cap));
+	return (0);
 }
 
 int	intersect_cyl(t_cyl *cyl, t_ray *ray)
