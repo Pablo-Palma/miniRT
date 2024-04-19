@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 18:12:52 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 13:21:28 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ typedef struct	s_light
 	double	brigthness;
 	int		color;
 }				t_light;
+
+typedef struct light_params
+{
+    t_vec3 view_dir;
+    t_vec3 light_dir;
+    t_vec3 norm;
+} 				t_light_params;
 
 typedef struct	s_ambient_light
 {

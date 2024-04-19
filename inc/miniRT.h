@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 10:22:50 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:14:26 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int		vec_to_color(t_vec3 vec);
 ///////////////////////////////////////////////////////////////////////////////
 // int	shadow(t_scene *scene, t_vec3 hit_point, t_light light, t_vec3 normal);
 // int shadow_plane(t_scene *scene, t_vec3 hit_point);
-double	calculate_specular(t_vec3 view_dir, t_vec3 ligh_dir, t_vec3 normal, double intensity, double shine);
+double  calculate_specular(t_light_params params, double intensity, double shine);
 double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightness);
 t_vec3	reflect(t_vec3 v, t_vec3 n);
 
