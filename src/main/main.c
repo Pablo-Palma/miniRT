@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 09:24:07 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 19:49:34 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	main(int argc, char **argv)
 	int		fd;
 
 	if (argc != 2)
-		return (EXIT_FAILURE);
+		return (ft_putstr_fd("miniRT: Wrong number of arguments\n"
+			, 2) , EXIT_FAILURE);
 	fd = open_rt_file(argv[1]);
 	if (fd == -1)
 		return (EXIT_FAILURE);
