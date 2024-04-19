@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 17:58:34 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 19:39:29 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_vec3
 
 typedef struct s_sphere
 {
-	char identifier[3]; // 'sp'
+	char			identifier[3];
 	t_vec3			center;
 	double			radius;
 	int				color;
@@ -31,7 +31,7 @@ typedef struct s_sphere
 
 typedef struct s_cyl
 {
-	char id[2]; //	'cl'
+	char			id[2];
 	t_vec3			center;
 	t_vec3			dir;
 	double			radius;
@@ -42,7 +42,7 @@ typedef struct s_cyl
 
 typedef struct s_plane
 {
-	char id[2]; //	'pl'
+	char			id[2];
 	t_vec3			point;
 	t_vec3			normal;
 	int				color;
@@ -50,7 +50,7 @@ typedef struct s_plane
 
 typedef struct s_circle
 {
-	char id[2]; //	'ci'
+	char			id[2];
 	t_vec3			center;
 	t_vec3			normal;
 	double			radius;
@@ -59,7 +59,7 @@ typedef struct s_circle
 
 typedef struct s_light
 {
-	char id[2]; //	'L'
+	char			id[2];
 	t_vec3			pos;
 	double			brigthness;
 	int				color;
@@ -74,17 +74,17 @@ typedef struct light_params
 
 typedef struct s_ambient_light
 {
-	char id[2]; //	'A'
+	char			id[2];
 	double			intensity;
 	int				color;
 }					t_ambient_light;
 
 typedef struct s_cam
 {
-	char identifier[2]; //	'C'
+	char			identifier[2];
 	t_vec3			view_point;
 	t_vec3			orientation;
-	int fov; //Field of view(campo de vision).
+	int				fov;
 }					t_cam;
 
 typedef struct s_obj
