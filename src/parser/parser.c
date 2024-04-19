@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:26:25 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/18 22:27:20 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 09:26:18 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int	check_scene(t_list *obj_list)
 		if (scene_count_obj(obj_list, "L") < 1)
 			ft_putstr_fd("miniRT: No light found\n", 2);
 		else
-			return (ft_putstr_fd("miniRT: Warning: Many lights, this is bonus part!\n", 2), EXIT_SUCCESS);
+			return (ft_putstr_fd("miniRT: Many lights\n", 2), EXIT_SUCCESS);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
 
-int check_all_obj(t_list *obj_list)
+int	check_all_obj(t_list *obj_list)
 {
 	t_list	*cur;
 

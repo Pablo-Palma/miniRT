@@ -6,13 +6,14 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:50:06 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 12:37:51 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 09:20:46 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightness)
+double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal,
+	double light_brightness)
 {
 	double	dot;
 
@@ -20,12 +21,14 @@ double	calculate_diffuse(t_vec3 light_dir, t_vec3	normal, double light_brightnes
 	return (dot * light_brightness);
 }
 
-double	calculate_specular(t_vec3 view_dir, t_vec3 light_dir, t_vec3 normal, double intensity, double shine)
+double	calculate_specular(t_vec3 view_dir, t_vec3 light_dir, t_vec3 normal,
+	double intensity, double shine)
 {
 	t_vec3	reflect_dir;
 	double	spec;
 
 	reflect_dir = reflect(vector_negate(light_dir), normal);
-	spec = pow(fmax(vector_dot_product(vector_negate(view_dir), reflect_dir), 0.0), shine);
+	spec = pow(fmax(vector_dot_product(vector_negate(view_dir), reflect_dir),
+				0.0), shine);
 	return (intensity * spec);
 }

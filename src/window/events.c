@@ -6,18 +6,37 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:19:33 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/17 12:33:39 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 10:10:31 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
+
+void	update_cam_pos(t_cam *cam, int keycode)
+{
+	double	move_step;
+
+	move_step = 0.5;
+	if (keycode == KEY_UP)
+		cam->view_point.y += move_step;
+	else if (keycode == KEY_DOWN)
+		cam->view_point.y -= move_step;
+	else if (keycode == KEY_W)
+		cam->view_point.z -= move_step;
+	else if (keycode == KEY_S)
+		cam->view_point.z += move_step;
+	else if (keycode == KEY_A)
+		cam->orientation.x -= move_step;
+	else if (keycode == KEY_D)
+		cam->orientation.x += move_step;
+	cam->orientation = normalize(cam->orientation);
+}
 
 int	handle_keyboard(int keycode, t_graph *graph, t_list *obj_list)
 {
 	t_list	*cur;
 	t_obj	*obj;
 	t_cam	*cam;
-	double	move_step;
 
 	obj = NULL;
 	cam = NULL;
@@ -30,24 +49,7 @@ int	handle_keyboard(int keycode, t_graph *graph, t_list *obj_list)
 		cur = cur->next;
 	}
 	cam = (t_cam *)obj->child;
-	move_step = 0.5;
-	if (keycode == KEY_UP)
-		cam->view_point.y += move_step;
-	else if (keycode == KEY_DOWN)
-		cam->view_point.y -= move_step;
-	else if (keycode == KEY_LEFT)
-		cam->view_point.x -= move_step;
-	else if (keycode == KEY_RIGHT)
-		cam->view_point.x += move_step;
-	else if (keycode == KEY_W)
-		cam->view_point.z -= move_step;
-	else if (keycode == KEY_S)
-		cam->view_point.z += move_step;
-	else if (keycode == KEY_A)
-		cam->orientation.x -= 0.1;
-	else if (keycode == KEY_D)
-		cam->orientation.x += 0.1;
-	cam->orientation = normalize(cam->orientation);
+	update_cam_pos(cam, keycode);
 	render_scene(graph, obj_list);
 	mlx_put_image_to_window(graph->mlx, graph->win, graph->img, 0, 0);
 	return (0);
