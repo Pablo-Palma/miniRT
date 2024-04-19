@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:30:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 11:55:03 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/19 14:05:21 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,72 +68,51 @@ static void	get_discriminant_cyl(t_cyl *cyl, t_ray *ray, t_vec3 diff, t_bhaskara
 	eq->discriminant = eq->b * eq->b - 4 * eq->a * eq->c;
 }
 
+static int	is_real_point(double *t, t_vec3 *cyl_origin, t_ray *ray, t_cyl *cyl)
+{
+	double h;
+
+	if (*t >= EPSILON)
+	{
+		h = vector_dot_product(vector_add(*cyl_origin, vector_scale(ray->direction, *t)), cyl->dir); // medida desde la base sobre el eje hasta el hitpoint
+	    if (fabs(h) <= cyl->h / 2 && *t < ray->t) //Si está entre 0 y la altura máxima
+		{
+			ray->t = *t;
+			return (1);
+		}	
+	}
+	return (0);
+}
+
 int	intersect_cyl(t_cyl *cyl, t_ray *ray)
 {
+	int			hit;
 	t_bhaskara	eq;
-	t_vec3		diff;
+	t_vec3		cyl_origin;
 
 	cyl->caps = 0;
-
-	diff = vector_sub(ray->origin, cyl->center);
-	get_discriminant_cyl(cyl, ray, diff, &eq);
+	cyl_origin = vector_sub(ray->origin, cyl->center);
+	get_discriminant_cyl(cyl, ray, cyl_origin, &eq);
 	if (eq.discriminant < 0)
 		return (0);
 	get_bhaskara(&eq);
-	
-	double t_body;
-	int body_hit;
-	double h0;
-	double h1;
-	
-	body_hit = 0;
-	t_body = INFINITY;
+	hit = 0;
+	hit += is_real_point(&eq.t0, &cyl_origin, ray, cyl);
+	hit += is_real_point(&eq.t1, &cyl_origin, ray, cyl);
 
-	//////******	t0	******///////
-	if (eq.t0 >= EPSILON) //Evitar errores.
+	double t_temp;
+	t_temp = INFINITY;
+	int	cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, *cyl, &t_temp);
+	if (cap_hit)
 	{
-		
-		h0 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, eq.t0)), cyl->dir); // medida desde la base sobre el eje hasta el hitpoint
-	    if (fabs(h0) <= cyl->h / 2) //Si está entre 0 y la altura máxima
+		hit ++;
+		if (t_temp < ray->t)
 		{
-	        t_body = eq.t0;	//SI Pertenece, almacenamos ese punto en t_body
-	        body_hit = 1;	//Pertenece
-	    }
+			cyl->caps = cap_hit;
+			ray->t = t_temp;
+		}
 	}
-	
-	//////******	t1	******///////		t1 es un punto más lejano que t0
-	if (eq.t1 >= EPSILON && eq.t1 < t_body)	// si t1 es mayor que t_body, ya tenemos un punto más cercano, por tanto el lejano ya no nos interesa
-	{
-		h1 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, eq.t1)), cyl->dir);
-	    if (fabs(h1) <= cyl->h / 2)
-		{
-			t_body = eq.t1;
-			body_hit = 1;
-	    }
-	}
-	
-	// if (body_hit)
-	// 	ray->t = t_body;
-
-	// Intersección con las tapas del cilindro
-	double t_cap = INFINITY;
-	int cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, *cyl, &t_cap);
-	
-	// calcular la intersección más cercana
-	if (cap_hit && (t_cap < t_body || !body_hit))
-	{
-		if (ray->t < t_cap)
-			return (0);
-		ray->t = t_cap;
-		cyl->caps = cap_hit;
+	if (hit)
 		return (1);
-	}
-	else if (body_hit)
-	{
-		if (ray->t < body_hit)
-			return (0);
-		ray->t = t_body;
-		return 1;
-	}
-	return 0;
+	return (0);
 }
