@@ -56,14 +56,14 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) -o $(NAME) $(OBJS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
 	@echo "miniRT compiled successfully!"
 
-mac: $(LIBFT) $(OBJS)
-	@$(CC) -o $(NAME) $(SRCS) $(CFLAGS) $(MLX_FLAGS_MAC)
-	@echo "miniRT compiled successfully on macOS!"
+reflect: CFLAGS += -D MAX_REFLECT_LEVEL=1
+reflect: re
 
-bonus: CFLAGS += -D BONUS -Iinc/bonus
-bonus: $(LIBFT) $(BONUS_OBJS)
-	@$(CC) -o $(NAME) $(BONUS_OBJS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
-	@echo "miniRT with bonus compiled successfully!"
+checkerboard: CFLAGS += -D CHECKERBOARD=1
+checkerboard: re
+
+both: CFLAGS += -D CHECKERBOARD=1 -D MAX_REFLECT_LEVEL=1
+both: re
 
 clean :
 	@rm -f libmlx.dylib
@@ -79,4 +79,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re mac
+.PHONY: all clean fclean re reflect checkerboard both
