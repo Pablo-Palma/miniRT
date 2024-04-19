@@ -3,138 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   object_intersect2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:30:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 11:28:13 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:05:21 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static int	check_intersection_on_cap(t_vec3 origin, t_vec3 dir, double d_to_hit, t_vec3 cap_center, double radius, double *cap_t)
+static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl, double *t_cap)
 {
-	t_vec3	point;
-	double	d_to_center;
+	t_vec3	cap_normal = cyl.dir;
+	double	cap_t[2] = {INFINITY, INFINITY};
+	int		hit = 0;
+	int		i = 0;
+	double	sign = 1.0;
 
-	point = vector_add(origin, vector_scale(dir, d_to_hit));
-	d_to_center = vector_length(vector_sub(point, cap_center));
-	if (d_to_center <= radius + EPSILON)
+	while(i < 2)
 	{
-		*cap_t = d_to_hit;
-		return (1);
-	}
-	return (0);
-}
-
-static int	finalize_intersection(double cap_t[2], double *t_cap)
-{
-	double	closest_t;
-
-	closest_t = cap_t[0];
-	if (cap_t[1] < cap_t[0])
-		closest_t = cap_t[1];
-	*t_cap = closest_t;
-	if (cap_t[1] < cap_t[0])
-		return (1);
-	return (2);
-}
-
-static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl,
-	double *t_cap)
-{
-	double	cap_t[2];
-	int		hit;
-	int		i;
-	double	sign;
-	t_vec3	cap_center;
-	double	denominator;
-	double	d_to_hit;
-
-	hit = 0;
-	i = 0;
-	sign = 1.0;
-	cap_t[0] = INFINITY;
-	cap_t[1] = INFINITY;
-	while (i < 2)
-	{
-		cap_center = vector_add(cyl.center, vector_scale(cyl.dir, sign * (cyl.h / 2)));
-		denominator = vector_dot_product(dir, cyl.dir);
+		t_vec3	cap_center = vector_add(cyl.center, vector_scale(cap_normal, sign * (cyl.h / 2)));
+		double denominator = vector_dot_product(dir, cap_normal);
 		if (fabs(denominator) > EPSILON)
 		{
-			d_to_hit = vector_dot_product(vector_sub(cap_center, origin), cyl.dir) / denominator;
-			if (d_to_hit >= 0 && d_to_hit < *t_cap)
+			double d = vector_dot_product(vector_sub(cap_center, origin), cap_normal) / denominator;
+			if (d >= 0 && d < *t_cap)
 			{
-				if (check_intersection_on_cap(origin, dir, d_to_hit, cap_center, cyl.radius, &cap_t[i]))
+				t_vec3	p = vector_add(origin, vector_scale(dir, d));
+				double	distance = vector_length(vector_sub(p, cap_center));
+				if (distance <= cyl.radius + EPSILON)
+				{
+					cap_t[i] = d;
 					hit = 1;
+				}
 			}
 		}
 		i++;
 		sign = -sign;
 	}
+
 	if (hit)
-		return(finalize_intersection(cap_t, t_cap));
+	{
+		double	closest_t = cap_t[0];
+		if (cap_t[1] < cap_t[0])
+			closest_t = cap_t[1];
+		*t_cap = closest_t;
+		if (cap_t[1] < cap_t[0])
+			return (1);
+		return (2);
+	}
+	return(0);
+}
+
+static void	get_discriminant_cyl(t_cyl *cyl, t_ray *ray, t_vec3 diff, t_bhaskara *eq)
+{
+	t_vec3 dir_cross_cyl_dir;
+	t_vec3 diff_cross_cyl_dir;
+	
+	dir_cross_cyl_dir = vector_cross(ray->direction, cyl->dir);
+	diff_cross_cyl_dir= vector_cross(diff, cyl->dir);
+	eq->a = vector_dot_product(dir_cross_cyl_dir, dir_cross_cyl_dir);
+	eq->b = 2 * vector_dot_product(dir_cross_cyl_dir, diff_cross_cyl_dir);
+	eq->c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir) - (cyl->radius * cyl->radius);
+	eq->discriminant = eq->b * eq->b - 4 * eq->a * eq->c;
+}
+
+static int	is_real_point(double *t, t_vec3 *cyl_origin, t_ray *ray, t_cyl *cyl)
+{
+	double h;
+
+	if (*t >= EPSILON)
+	{
+		h = vector_dot_product(vector_add(*cyl_origin, vector_scale(ray->direction, *t)), cyl->dir); // medida desde la base sobre el eje hasta el hitpoint
+	    if (fabs(h) <= cyl->h / 2 && *t < ray->t) //Si está entre 0 y la altura máxima
+		{
+			ray->t = *t;
+			return (1);
+		}	
+	}
 	return (0);
 }
 
 int	intersect_cyl(t_cyl *cyl, t_ray *ray)
 {
+	int			hit;
+	t_bhaskara	eq;
+	t_vec3		cyl_origin;
+
 	cyl->caps = 0;
-	t_vec3 diff = vector_sub(ray->origin, cyl->center);
-	t_vec3 dir_cross_cyl_dir = vector_cross(ray->direction, cyl->dir);
-	t_vec3 diff_cross_cyl_dir = vector_cross(diff, cyl->dir);
-	
-	double a = vector_dot_product(dir_cross_cyl_dir, dir_cross_cyl_dir);
-	double b = 2 * vector_dot_product(dir_cross_cyl_dir, diff_cross_cyl_dir);
-	double c = vector_dot_product(diff_cross_cyl_dir, diff_cross_cyl_dir) - (cyl->radius * cyl->radius);
-	
-	double discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
-	    return 0;
-	
-	double sqrt_discriminant = sqrt(discriminant);
-	double t0 = (-b - sqrt_discriminant) / (2 * a);
-	double t1 = (-b + sqrt_discriminant) / (2 * a);
-	
-	double t_body = INFINITY;
-	int body_hit = 0;
-	if (t0 >= EPSILON)
+	cyl_origin = vector_sub(ray->origin, cyl->center);
+	get_discriminant_cyl(cyl, ray, cyl_origin, &eq);
+	if (eq.discriminant < 0)
+		return (0);
+	get_bhaskara(&eq);
+	hit = 0;
+	hit += is_real_point(&eq.t0, &cyl_origin, ray, cyl);
+	hit += is_real_point(&eq.t1, &cyl_origin, ray, cyl);
+
+	double t_temp;
+	t_temp = INFINITY;
+	int	cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, *cyl, &t_temp);
+	if (cap_hit)
 	{
-	    double h0 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t0)), cyl->dir);
-	    if (fabs(h0) <= cyl->h / 2)
+		hit ++;
+		if (t_temp < ray->t)
 		{
-	        t_body = t0;
-	        body_hit = 1;
-	    }
+			cyl->caps = cap_hit;
+			ray->t = t_temp;
+		}
 	}
-	
-	if (t1 >= EPSILON && t1 < t_body)
-	{
-	    double h1 = vector_dot_product(vector_add(diff, vector_scale(ray->direction, t1)), cyl->dir);
-	    if (fabs(h1) <= cyl->h / 2)
-		{
-			t_body = t1;
-			body_hit = 1;
-	    }
-	}
-	
-	double t_cap = INFINITY;
-	int cap_hit = get_intersect_cy_caps(ray->origin, ray->direction, *cyl, &t_cap);
-	
-	if (cap_hit && (t_cap < t_body || !body_hit))
-	{
-		if (ray->t < t_cap)
-			return (0);
-		ray->t = t_cap;
-		cyl->caps = cap_hit;
+	if (hit)
 		return (1);
-	}
-	else if (body_hit)
-	{
-		if (ray->t < body_hit)
-			return (0);
-		ray->t = t_body;
-		return 1;
-	}
-	return 0;
+	return (0);
 }

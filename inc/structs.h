@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 13:21:28 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:02:45 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,17 @@ typedef struct	s_ray
 	ssize_t			reflect_level;
 	bool			img_trace;
 }					t_ray;
+
+typedef struct s_bhaskara
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	double	sqrt_discriminant;
+	double	t0;
+	double	t1;
+}			t_bhaskara;
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_constructor_attr.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:55:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 10:29:10 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:47:27 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	constructor_color(int *color, char *line)
 	str_color = nsplit(line, ',', 3);
 	if (!str_color)
 		return (EXIT_FAILURE);
-	*color = ((ft_atoi(str_color[0]) << 16) | (ft_atoi(str_color[1]) << 8)
+	*color = ((ft_atoi(str_color[0]) << 16)
+			| (ft_atoi(str_color[1]) << 8)
 			| (ft_atoi(str_color[2])));
 	dbfree(str_color);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 13:14:26 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:03:07 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ int		convert_rgb_to_int(char *rgb_str);
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 int	cleanup_and_exit(char **parts, char *error_msg, int r_value);
+void get_bhaskara(t_bhaskara *eq);
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -299,9 +300,6 @@ int		calculate_reflection(t_vec3	hit_point, t_vec3 normal, t_scene *scene,
 int		mix_colors_reflect(int	reflected_color, int base_color, double reflectivity);
 int		trace_ray_for_reflection(t_vec3 origin, t_vec3 dir, t_scene *scene, int depth);
 int		bonus_colors(int material_color, int reflected_color, float reflective);
-void	get_uv_sp(double *u, double *v, t_vec3 p);
-void	get_uv_cap(double *u, double *v, t_cyl cyl, t_vec3 point);
-void	get_uv_cyl(double *u, double *v, t_cyl cyl, t_vec3 point);
 
 
 #endif
