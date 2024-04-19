@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:55:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/18 22:26:31 by math             ###   ########.fr       */
+/*   Updated: 2024/04/19 10:29:10 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ int	constructor_color(int *color, char *line)
 	str_color = nsplit(line, ',', 3);
 	if (!str_color)
 		return (EXIT_FAILURE);
-	*color = ((ft_atoi(str_color[0]) << 16) | (ft_atoi(str_color[1]) << 8) | (ft_atoi(str_color[2])));
+	*color = ((ft_atoi(str_color[0]) << 16) | (ft_atoi(str_color[1]) << 8)
+			| (ft_atoi(str_color[2])));
 	dbfree(str_color);
 	return (EXIT_SUCCESS);
 }
 
 int	constructor_vec(t_vec3 *vec, char *line)
 {
-	char **str_vec;
+	char	**str_vec;
 
 	str_vec = nsplit(line, ',', 3);
 	if (!str_vec)
