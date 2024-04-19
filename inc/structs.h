@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 17:02:45 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:30:06 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,17 @@ typedef struct s_bhaskara
 	double	t1;
 }			t_bhaskara;
 
+typedef struct s_raysum
+{
+	t_list	*ray_list;
+	t_ray	*next_ray;
+	t_vec3	pxl_light;
+	t_vec3	temp;
+	t_vec3	view_dir;
+	t_vec3	light_dir;
+	t_vec3	norm;
+	double	diffuse;
+	double	specular;
+}			t_raysum;
 
 #endif
