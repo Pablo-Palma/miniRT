@@ -6,15 +6,30 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:30:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/19 11:05:57 by pabpalma         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:28:13 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+static int	check_intersection_on_cap(t_vec3 origin, t_vec3 dir, double d_to_hit, t_vec3 cap_center, double radius, double *cap_t)
+{
+	t_vec3	point;
+	double	d_to_center;
+
+	point = vector_add(origin, vector_scale(dir, d_to_hit));
+	d_to_center = vector_length(vector_sub(point, cap_center));
+	if (d_to_center <= radius + EPSILON)
+	{
+		*cap_t = d_to_hit;
+		return (1);
+	}
+	return (0);
+}
+
 static int	finalize_intersection(double cap_t[2], double *t_cap)
 {
-	double  closest_t;
+	double	closest_t;
 
 	closest_t = cap_t[0];
 	if (cap_t[1] < cap_t[0])
@@ -35,8 +50,6 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl,
 	t_vec3	cap_center;
 	double	denominator;
 	double	d_to_hit;
-	double	d_to_center;
-	t_vec3	p;
 
 	hit = 0;
 	i = 0;
@@ -52,13 +65,8 @@ static int	get_intersect_cy_caps(t_vec3 origin, t_vec3 dir, t_cyl cyl,
 			d_to_hit = vector_dot_product(vector_sub(cap_center, origin), cyl.dir) / denominator;
 			if (d_to_hit >= 0 && d_to_hit < *t_cap)
 			{
-				p = vector_add(origin, vector_scale(dir, d_to_hit));
-				d_to_center = vector_length(vector_sub(p, cap_center));
-				if (d_to_center <= cyl.radius + EPSILON)
-				{
-					cap_t[i] = d_to_hit;
+				if (check_intersection_on_cap(origin, dir, d_to_hit, cap_center, cyl.radius, &cap_t[i]))
 					hit = 1;
-				}
 			}
 		}
 		i++;
