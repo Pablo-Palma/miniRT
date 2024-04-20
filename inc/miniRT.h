@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:30:17 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 19:37:13 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/20 09:32:35 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,7 @@ int					checkerboard_cyl(t_cyl cyl, t_vec3 point);
 //                                  RAY				                          //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+t_vec3				compute_ray_dir(int x, int y, t_cam cam);
 t_ray				ray_generic(t_vec3 origin, t_vec3 direction);
 void				*ray_new(void *ray);
 void				ray_delete(void *param);

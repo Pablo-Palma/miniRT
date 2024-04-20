@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:18:50 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 19:39:29 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/20 09:58:01 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,16 @@ typedef struct s_raysum
 	t_ambient_light	ambient_light;
 	t_vec3			alight;
 }					t_raysum;
+
+typedef struct s_ray_config
+{
+	double	fov_rad;
+	double	aspect_ratio;
+	double	scale;
+	t_vec3	global_up;
+	t_vec3	right;
+	t_vec3	up;
+
+}			t_ray_config;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:21:29 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/18 23:21:42 by math             ###   ########.fr       */
+/*   Updated: 2024/04/20 10:44:08 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,39 @@ bool	is_child(t_obj *self, char *str)
 	return (0);
 }
 
-t_list	*get_objects(int fd)
+void	read_classify(int fd, char **line_cam, char **line_al, t_list **obj)
 {
-	t_list	*obj;
 	char	*line;
-	char	*line_cam;
-	char	*line_ambient_light;
 
-	obj = NULL;
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (*line == 'A')
-			line_ambient_light = line;
-		else if (*line == 'C')
-			line_cam = line;
+		if (*line == 'A' && !*line_al)
+			*line_al = line;
+		else if (*line == 'C' && !*line_cam)
+			*line_cam = line;
 		else if (*line == 'L')
-			ft_lstadd_back(&obj, ft_lstnew(new_obj(line)));
+			ft_lstadd_back(obj, ft_lstnew(new_obj(line)));
 		else
-			ft_lstadd_front(&obj, ft_lstnew(new_obj(line)));
+			ft_lstadd_front(obj, ft_lstnew(new_obj(line)));
 		line = get_next_line(fd);
 	}
-	ft_lstadd_back(&obj, ft_lstnew(new_obj(line_ambient_light)));
-	ft_lstadd_back(&obj, ft_lstnew(new_obj(line_cam)));
+}
+
+t_list	*get_objects(int fd)
+{
+	t_list	*obj;
+	char	*line_cam;
+	char	*line_al;
+
+	line_cam = NULL;
+	line_al = NULL;
+	obj = NULL;
+	read_classify(fd, &line_cam, &line_al, &obj);
+	if (line_al)
+		ft_lstadd_back(&obj, ft_lstnew(new_obj(line_al)));
+	if (line_cam)
+		ft_lstadd_back(&obj, ft_lstnew(new_obj(line_cam)));
 	close(fd);
 	ft_lstiter(obj, constructor);
 	return (obj);

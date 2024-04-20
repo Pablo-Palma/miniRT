@@ -6,27 +6,11 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:14:03 by pabpalma          #+#    #+#             */
-/*   Updated: 2024/04/19 18:38:05 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/20 09:58:17 by pabpalma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-t_vec3	compute_ray_dir(int x, int y, t_cam cam)
-{
-	double	fov_rad;
-	double	aspect_ratio;
-	double	scale;
-	t_vec3	ray_dir;
-
-	fov_rad = cam.fov * M_PI / 180.0;
-	aspect_ratio = (double)WIN_WIDTH / (double)WIN_HEIGHT;
-	scale = tan(fov_rad / 2.0);
-	ray_dir = cam.orientation;
-	ray_dir.x += (2 * (x + 0.5) / (double)WIN_WIDTH - 1) * aspect_ratio * scale;
-	ray_dir.y += (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * scale;
-	return (ray_dir);
-}
 
 void	ray_start(t_list *obj_list, t_list **pool, t_ray *ray)
 {
