@@ -1,42 +1,65 @@
-# Plan de Desarrollo del Proyecto miniRT
+# miniRT 
+## - Mi Primer RayTracer con miniLibX
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/minirtm.png" alt="Badge miniRT">
+</p>
 
-## FASE 1: Parseo
-- **Iniciación de Estructuras**: Crear y definir las estructuras de datos necesarias para la escena, incluyendo cámaras, luces y objetos geométricos.
-- **Integración**: Desarrollar un sistema que integre las diferentes partes del proyecto, permitiendo que trabajen juntas de manera eficiente.
-- **Manejo de Errores**: Implementar un sistema robusto de manejo de errores para el proceso de parseo, asegurando estabilidad y facilidad de depuración.
+## Introducción al Ray Tracing
 
-## FASE 2: Cámara y Objetos
-- **Movimientos Dinámicos de Cámara**: Permitir a los usuarios manipular la cámara en tiempo real para explorar la escena desde diferentes ángulos.
-- **Interacción con Objetos**: Desarrollar la lógica para mover y alterar objetos en la escena, proporcionando una experiencia interactiva.
+El Ray Tracing es una técnica computacional para el renderizado de imágenes que simula el comportamiento de la luz en un ambiente tridimensional. A diferencia de la rasterización, utilizada por la mayoría de los motores gráficos por su eficiencia, el Ray Tracing ofrece un realismo visual mucho más elevado aunque a un mayor coste computacional. El proyecto miniRT es una introducción a este fascinante mundo, permitiéndote renderizar imágenes generadas por computadora con objetos geométricos simples y sistemas de iluminación.
 
-## FASE 3: Pantalla
-- **Responsive Size Change**: Garantizar que la aplicación se ajuste dinámicamente a los cambios de tamaño de la ventana, manteniendo la calidad y proporciones de la imagen.
+<p align="left">
+  <img src="images/mix_shadow_colors.png" alt="Renderizado de Ray Tracing" width="50%">
+</p>
 
-## FASE 4: Bonus List
-1. **Specular Reflection**: Implementar la reflexión especular para añadir realismo a las superficies y mejorar la calidad visual de la escena.
-2. **Color Disruption (Checker Board)**: Crear un efecto de tablero de ajedrez para texturas, añadiendo complejidad visual y detalle a los objetos.
-3. **Colored and Multispot Lights**: Integrar luces de diferentes colores y múltiples fuentes de luz para enriquecer la iluminación de la escena y crear efectos más dinámicos.
-4. **One Other 2nd Degree Object**: Incorporar objetos geométricos adicionales como conos, hiperboloides y paraboloides para diversificar las formas presentes en la escena.
-5. **Handle Bump Map Textures**: Implementar texturas de bump mapping para simular relieve y textura en las superficies, aumentando el realismo de los objetos.
+## Estructura del Proyecto
 
+El proyecto está organizado en varios directorios que separan las funcionalidades de manera clara:
 
-## Idea
+- `src/classes`: Contiene las clases para objetos básicos como vectores y rayos.
+- `src/light`: Gestiona la iluminación.
+- `src/main`: El punto de entrada del programa.
+- `src/parser`: Parsea los archivos de escena.
+- `src/render`: Encargado del cálculo de rayos y el renderizado.
+- `src/utils`: Funciones auxiliares y de utilidad.
+- `src/window`: Gestiona eventos y la ventana de visualización.
 
-### Reflexiones, Refracciones, y Efectos Avanzados
-- Investigar y, si el tiempo lo permite, implementar efectos avanzados como reflexiones, refracciones, o texturas avanzadas.
-## Técnicas para Acelerar el Renderizado
+## Compilación y Ejecución
 
-### Culling
+Para compilar el proyecto, simplemente ejecuta:
 
-El **culling** o recorte es una técnica que consiste en descartar objetos o partes de la escena que no contribuyen al resultado final antes de realizar cálculos complejos. Hay diferentes tipos de culling:
+```bash
+make
+```
 
-- **Back-face culling:** Se descartan las caras de los objetos que no están orientadas hacia la cámara, ya que no son visibles para el observador.
-- **Frustum culling:** Se descartan los objetos que están fuera del campo de visión de la cámara, es decir, fuera del "frustum".
+Esto compilará `miniRT` junto con todas sus dependencias. Para ejecutar el programa y renderizar una escena:
 
-### Indexación Espacial
+```bash
+./miniRT scenes/scene.rt
+```
 
-La **indexación espacial** involucra estructuras de datos como árboles BVH (Bounding Volume Hierarchies), rejillas (grids), y octrees, que organizan los objetos de la escena de manera que se pueda determinar rápidamente cuáles objetos son relevantes para un rayo específico. Esto reduce el número de intersecciones que necesitan ser calculadas.
+### Opciones de Compilación
 
-- **Árboles BVH:** Dividen la escena en volúmenes delimitadores que encapsulan grupos de objetos, permitiendo descartar rápidamente muchos objetos con un mínimo de cálculos.
-- **Rejillas:** Dividen la escena en una cuadrícula regular, y solo se consideran para el cálculo de intersecciones aquellos objetos que residen en las celdas atravesadas por un rayo.
-- **Octrees:** Similar a los árboles BVH pero dividiendo el espacio en octantes, son especialmente útiles para escenas con una distribución espacial uniforme.
+- `make all`: Compila todos los componentes necesarios.
+- `make clean`: Elimina archivos objeto.
+- `make fclean`: Limpieza total incluyendo el ejecutable.
+- `make re`: Re-compila todo el proyecto.
+- `make reflect`: Añade reflejos especulares para un modelo completo de reflexión de Phong.
+- `make checkerboard`: Añade patrones de tablero de ajedrez a los objetos.
+
+## Funcionalidades
+
+El programa es capaz de renderizar imágenes utilizando varios tipos de objetos geométricos como esferas, planos y cilindros, y soporta transformaciones como traslación y rotación. La gestión de la luz incluye iluminación ambiental y sombras duras, mostrando las imágenes en una ventana gráfica que puede interactuar con el usuario.
+
+## Conclusión
+
+miniRT es un proyecto introductorio al Ray Tracing que demuestra que con bases matemáticas sólidas y programación en C, se pueden crear imágenes realistas. Este proyecto no solo desafía tu comprensión de la computación gráfica sino también tu habilidad para implementar y estructurar un software complejo.
+
+## Contacto
+
+- **Nombre:** Pablo Palma Rodíguez
+- **GitHub:** [Tu GitHub](https://github.com/Pablo-Palma)
+- **LinkedIn:** [Tu LinkedIn](https://linkedin.com/in/pablopalmarodríguez)
+
+---
+miniRT © 2024 Pablo Palma Rodríguez.
