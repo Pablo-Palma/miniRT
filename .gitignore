@@ -1,7 +1,7 @@
 *.o
 .vscode
 libmlx.dylib
-mlx/*
+//mlx/*
 minilibx_opengl_20191021/*
 minilibx-linux/*
 miniRT
