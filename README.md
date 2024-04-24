@@ -58,8 +58,8 @@ miniRT es un proyecto introductorio al Ray Tracing que demuestra que con bases m
 ## Contacto
 
 - **Nombre:** Pablo Palma Rodíguez
-- **GitHub:** [Tu GitHub](https://github.com/Pablo-Palma)
-- **LinkedIn:** [Tu LinkedIn](https://linkedin.com/in/pablopalmarodríguez)
+- **GitHub:** [GitHub](https://github.com/Pablo-Palma)
+- **LinkedIn:** [LinkedIn](https://linkedin.com/in/pablopalmarodríguez)
 
 ---
 miniRT © 2024 Pablo Palma Rodríguez.
