@@ -1,3 +1,0 @@
-https://www.desmos.com/3d?lang=es				##Visualización de puntos en 3d
-https://www.geogebra.org/3d						## Calculadora 3d
-https://www.scratchapixel.com/index.html		##Explicación detallada
